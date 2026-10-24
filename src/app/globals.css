@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+/* Design tokens: forest green, saffron gold, warm cream */
+:root {
+  --forest: #143627;
+  --forest-deep: #0f2c1f;
+  --forest-soft: #1c4b37;
+  --gold: #dfa84a;
+  --gold-deep: #c69238;
+  --gold-ink: #b07d22;
+  --gold-tint: #f7ecd3;
+  --cream: #faf7f2;
+  --cream-deep: #f3eee4;
+  --line: #e6dfd5;
+  --ink: #16201b;
+  --ink-muted: #5c6c64;
+
+  --bg-page: var(--cream);
+  --bg-card: #ffffff;
+  --text-main: var(--ink);
+  --text-muted: var(--ink-muted);
+  --border-subtle: var(--line);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+.font-serif {
+  font-family: var(--font-serif), Georgia, serif;
+}
+
+.font-script {
+  font-family: var(--font-script), cursive;
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Subtle paper grain for dark sections: add class "grain" */
+.grain {
+  position: relative;
+}
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Section eyebrow label with gold rule */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+}
+.eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: currentColor;
+}
+
+/* Entrance animation (respects reduced motion) */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise-in {
+  animation: rise-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: #c9bda6;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-ink);
+}
