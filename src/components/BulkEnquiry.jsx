@@ -1,13 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { Send, CheckCircle2, AlertCircle, Mail } from "lucide-react";
+import Image from "next/image";
+import { Send, CheckCircle2, AlertCircle, Mail, Sprout, Package, Truck } from "lucide-react";
 import { products } from "@/data/products";
 import { submitEnquiry } from "@/lib/enquiry";
 import { CONTACT_EMAIL } from "@/lib/site";
 import Reveal from "./Reveal";
 
-const initial = { name: "", phone: "", email: "", product: "", quantity: "", unit: "kg", message: "" };
+// Clove-specific enquiry: the product defaults to the catalogue clove entry.
+const DEFAULT_PRODUCT = (products.find((p) => p.slug === "cloves") || products[0] || {}).name || "";
+
+const highlights = [
+  { icon: Sprout, label: "Premium Idukki Cloves" },
+  { icon: Package, label: "Multiple Pack Sizes" },
+  { icon: Truck, label: "Pan India Delivery" },
+];
+
+const initial = { name: "", phone: "", email: "", product: DEFAULT_PRODUCT, quantity: "", unit: "kg", message: "" };
 
 function validate(v) {
   const e = {};
@@ -56,18 +66,41 @@ export default function BulkEnquiry() {
   const err = (k) => (errors[k] ? <p className="mt-1 text-xs text-red-700" role="alert">{errors[k]}</p> : null);
 
   return (
-    <section id="bulk-order" className="bg-deep text-white py-16 sm:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-10 lg:grid-cols-12 items-center">
-        <Reveal className="lg:col-span-5">
+    <section id="bulk-order" className="relative isolate overflow-hidden bg-night text-white py-16 sm:py-24 lg:min-h-[720px] lg:flex lg:items-center">
+      <Image
+        src="/images/clove-bulk-background.webp"
+        alt=""
+        fill
+        loading="lazy"
+        sizes="100vw"
+        className="-z-10 object-cover object-[12%_85%]"
+      />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-night/85 via-night/55 to-night/70 lg:bg-gradient-to-r lg:from-night/70 lg:via-night/20 lg:to-night/40" />
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-10 lg:grid-cols-12 items-center">
+        <Reveal className="lg:col-span-5 lg:self-start lg:pt-6">
           <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-gold">Bulk Orders</p>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mt-3">Need larger quantities?</h2>
-          <p className="mt-4 text-white/75 max-w-md">
-            Looking for larger quantities? Get in touch about your bulk order requirements.
+          <h2 className="font-serif text-4xl sm:text-5xl font-bold leading-[1.08] mt-3 text-[#F8F3E8]">
+            Need larger
+            <br />
+            <span className="text-gold">quantities?</span>
+          </h2>
+          <p className="mt-4 text-white/85 max-w-md leading-relaxed">
+            Looking for larger quantities of cloves? Get in touch about your bulk order requirements.
           </p>
+          <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
+            {highlights.map(({ icon: Icon, label }) => (
+              <li key={label} className="flex items-center gap-2.5 text-sm font-medium text-[#F8F3E8]">
+                <Icon className="h-5 w-5 shrink-0 text-gold" strokeWidth={1.5} aria-hidden="true" />
+                {label}
+              </li>
+            ))}
+          </ul>
         </Reveal>
 
         <Reveal delay={100} className="lg:col-span-7">
-          <form onSubmit={onSubmit} noValidate className="rounded-3xl bg-paper p-6 sm:p-8 text-forest">
+          <form onSubmit={onSubmit} noValidate className="rounded-3xl bg-[#FBF8F0] p-6 sm:p-8 text-forest shadow-2xl shadow-black/40">
+            <h3 className="font-serif text-2xl font-bold">Bulk Order Enquiry</h3>
+            <p className="mt-1 mb-5 text-sm text-forest/70">Fill in your details and we’ll get back to you shortly.</p>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label htmlFor="be-name" className="mb-1.5 block text-sm font-medium">Name</label>

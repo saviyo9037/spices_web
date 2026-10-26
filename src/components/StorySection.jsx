@@ -14,14 +14,14 @@ export default function StorySection() {
   return (
     <section id="story" className="relative isolate overflow-hidden bg-[#F8F3E8] text-[#0B3328] py-16 sm:py-24">
       <Image
-        src="/images/idukki-landscape.webp"
-        alt=""
+        src="/images/story-hills-sunrise.jpg"
+        alt="Misty spice plantation in the hills of Idukki at sunrise"
         fill
         loading="lazy"
         sizes="100vw"
-        className="-z-10 object-cover object-[75%_40%]"
+        className="-z-10 object-cover object-[center_35%]"
       />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#F8F3E8]/95 via-[#F8F3E8]/80 to-[#F8F3E8]/10 lg:bg-gradient-to-r lg:from-[#F8F3E8] lg:via-[#F8F3E8]/80 lg:via-35% lg:to-transparent lg:to-65%" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#F8F3E8]/95 via-[#F8F3E8]/85 to-[#F8F3E8]/20 lg:bg-gradient-to-r lg:from-[#F8F3E8] lg:via-[#F8F3E8]/90 lg:via-40% lg:to-transparent lg:to-70%" />
       <Leaf className="pointer-events-none absolute -left-8 bottom-0 h-56 w-56 text-forest/[0.07] rotate-12" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
         <Reveal className="lg:col-span-5">
@@ -59,46 +59,42 @@ export default function StorySection() {
         </Reveal>
 
         <Reveal delay={120} className="lg:col-span-7">
-          <div className="relative h-[380px] sm:h-[520px] lg:h-[560px]">
-            <div className="absolute inset-y-0 left-0 w-[72%] overflow-hidden rounded-3xl shadow-xl">
-              <Image
-                src="/images/story-hills-sunrise.jpg"
-                alt="Misty spice plantation in the hills of Idukki"
-                fill
-                loading="lazy"
-                sizes="(max-width: 1024px) 70vw, 40vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-night/50 via-transparent to-transparent" />
-              <p className="absolute bottom-5 left-5 font-script text-3xl sm:text-4xl leading-none text-white drop-shadow-lg -rotate-3">
+          <div className="relative h-[380px] sm:h-[500px] lg:h-[540px]">
+            {/* Pure Spices script text */}
+            <div className="absolute bottom-4 left-2 sm:bottom-8 sm:left-4 z-10">
+              <p className="font-script text-3xl sm:text-4xl lg:text-5xl leading-none text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)] -rotate-3 select-none">
                 Pure Spices
                 <br />
                 <span className="ml-4">Pure Kerala</span>
               </p>
             </div>
 
-            <div className="absolute right-0 top-0 h-[46%] w-[44%] rotate-3 overflow-hidden rounded-2xl border-4 border-white shadow-xl">
+            {/* Peppercorn Card */}
+            <div className="absolute right-0 top-0 h-[46%] w-[48%] sm:w-[44%] rotate-3 overflow-hidden rounded-2xl border-4 border-white shadow-xl transition-transform hover:rotate-0 hover:scale-105 duration-300">
               <Image
                 src="/images/story-green-peppercorn.jpg"
                 alt="Hands holding freshly harvested green pepper"
                 fill
                 loading="lazy"
-                sizes="(max-width: 1024px) 40vw, 22vw"
+                sizes="(max-width: 1024px) 45vw, 22vw"
                 className="object-cover"
               />
             </div>
-            <div className="absolute right-[6%] bottom-0 h-[46%] w-[44%] -rotate-3 overflow-hidden rounded-2xl border-4 border-white shadow-xl">
+
+            {/* Cardamom Card */}
+            <div className="absolute right-[4%] sm:right-[6%] bottom-0 h-[46%] w-[48%] sm:w-[44%] -rotate-3 overflow-hidden rounded-2xl border-4 border-white shadow-xl transition-transform hover:rotate-0 hover:scale-105 duration-300">
               <Image
                 src="/images/story-cardamom-bowl.jpg"
                 alt="Green cardamom pods"
                 fill
                 loading="lazy"
-                sizes="(max-width: 1024px) 40vw, 22vw"
+                sizes="(max-width: 1024px) 45vw, 22vw"
                 className="object-cover"
               />
             </div>
 
-            <div className="absolute left-[56%] top-[40%] flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-full bg-paper shadow-lg ring-1 ring-gold/40">
+            {/* Supporting Local Farmers Badge */}
+            <div className="absolute right-[36%] sm:right-[38%] top-[38%] flex h-22 w-22 sm:h-28 sm:w-28 items-center justify-center rounded-full bg-paper shadow-lg ring-1 ring-gold/40 z-20">
               <svg viewBox="0 0 120 120" className="absolute inset-0 h-full w-full" aria-hidden="true">
                 <defs>
                   <path id="badge-circle" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0" />
@@ -107,7 +103,7 @@ export default function StorySection() {
                   <textPath href="#badge-circle">SUPPORTING LOCAL FARMERS &#8226; </textPath>
                 </text>
               </svg>
-              <LeafIcon className="h-7 w-7 text-gold-ink" strokeWidth={1.4} aria-hidden="true" />
+              <LeafIcon className="h-6 w-6 sm:h-7 sm:w-7 text-gold-ink" strokeWidth={1.4} aria-hidden="true" />
             </div>
           </div>
         </Reveal>
