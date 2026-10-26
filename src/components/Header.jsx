@@ -3,17 +3,20 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Search,
-  ShoppingBag,
-  Heart,
-  User,
-  Menu,
-  X,
-} from "lucide-react";
+import { Search, ShoppingBag, Heart, User, Menu, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import SearchModal from "./SearchModal";
+
+const navLinks = [
+  { name: "Home", href: "/" },
+  { name: "Shop", href: "/shop" },
+  { name: "Spices", href: "/spices" },
+  { name: "Combos", href: "/combos" },
+  { name: "About", href: "/about" },
+  { name: "Recipes", href: "/blog" },
+  { name: "Contact", href: "/contact" },
+];
 
 export default function Header() {
   const pathname = usePathname();
@@ -23,60 +26,62 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
+
+  // On the home page the header floats over the hero image and uses light text.
+  // Everywhere else it is a normal sticky white bar.
+  const isHome = pathname === "/";
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Shop", href: "/shop" },
-    { name: "Categories", href: "/categories" },
-    { name: "About", href: "/about" },
-    { name: "Blog", href: "/blog" },
-    { name: "Contact", href: "/contact" },
-  ];
+  useEffect(() => {
+    // close the mobile menu on navigation
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  const position = isHome ? "fixed inset-x-0 top-0" : "sticky top-0";
+  const surface = isHome
+    ? isScrolled || mobileMenuOpen
+      ? "bg-[#08271D]/90 backdrop-blur-xl border-b border-white/10 shadow-lg py-3"
+      : "bg-gradient-to-b from-black/50 to-transparent border-b border-transparent py-5"
+    : isScrolled
+      ? "bg-white/95 backdrop-blur-md shadow-md border-b border-line py-3"
+      : "bg-white/90 backdrop-blur-xs border-b border-line py-4";
+
+  const text = isHome ? "text-white" : "text-[#143627]";
+  const textSoft = isHome ? "text-white/75 hover:text-white" : "text-[#143627]/70 hover:text-[#143627]";
+  const iconBtn = `w-9 h-9 flex items-center justify-center rounded-full transition-colors relative ${
+    isHome ? "text-white/85 hover:text-gold hover:bg-white/10" : "text-[#143627]/80 hover:text-[#143627] hover:bg-paper-deep"
+  }`;
 
   return (
     <>
-      <header
-        className={`sticky top-0 z-40 w-full transition-all duration-300 ${
-          isScrolled
-            ? "bg-white/95 backdrop-blur-md shadow-md py-3.5 border-b border-[#e6dfd5]"
-            : "bg-white/90 backdrop-blur-xs py-4 border-b border-[#e6dfd5]"
-        }`}
-      >
+      <header className={`${position} z-40 w-full transition-all duration-300 ${surface}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="text-[#c69238] group-hover:scale-105 transition-transform">
-              {/* Twin leaf logo matching reference */}
-              <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24">
-                <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z" />
-              </svg>
-            </div>
-            <span className="font-serif text-2xl font-bold tracking-tight text-[#143627] group-hover:text-[#b07d22] transition-colors">
-              Spices
+          <Link href="/" className="flex items-center gap-2.5 group shrink-0" aria-label="Idukki Spices home">
+            <svg className="w-7 h-7 fill-current text-gold group-hover:scale-105 transition-transform" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z" />
+            </svg>
+            <span className={`font-serif text-xl sm:text-2xl font-bold tracking-tight transition-colors ${text} group-hover:text-gold`}>
+              Idukki Spices
             </span>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-8" aria-label="Main">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-sm font-medium transition-colors ${
-                    isActive
-                      ? "text-[#143627] font-bold"
-                      : "text-[#143627]/70 hover:text-[#143627]"
+                  aria-current={isActive ? "page" : undefined}
+                  className={`relative text-sm font-medium py-1 transition-colors after:absolute after:left-0 after:-bottom-0.5 after:h-px after:bg-gold after:transition-all after:duration-300 ${
+                    isActive ? `${text} after:w-full` : `${textSoft} after:w-0 hover:after:w-full`
                   }`}
                 >
                   {link.name}
@@ -85,99 +90,83 @@ export default function Header() {
             })}
           </nav>
 
-          {/* Right Area: Search Pill + Icons */}
-          <div className="flex items-center gap-3 sm:gap-4 text-[#143627]">
-            {/* Search Input Pill */}
-            <div
-              onClick={() => setSearchOpen(true)}
-              className="hidden md:flex items-center justify-between w-44 lg:w-56 px-3.5 py-1.5 rounded-full bg-[#f3eee4] hover:bg-[#ece5d7] border border-[#e6dfd5] text-xs text-[#143627]/60 cursor-pointer transition-colors"
-            >
-              <span>Search spices...</span>
-              <Search className="w-3.5 h-3.5 text-[#143627]/60" />
-            </div>
-
-            {/* Mobile search icon */}
+          <div className="flex items-center gap-1 sm:gap-2">
             <button
               onClick={() => setSearchOpen(true)}
-              aria-label="Search"
-              className="md:hidden w-8 h-8 flex items-center justify-center text-[#143627]/80 hover:text-[#143627]"
+              aria-label="Search spices"
+              className={`hidden md:flex items-center justify-between gap-6 w-44 xl:w-56 h-9 pl-4 pr-3 rounded-full border text-xs transition-colors ${
+                isHome
+                  ? "border-white/25 bg-white/10 text-white/70 hover:bg-white/15 hover:border-white/40"
+                  : "border-line bg-paper-deep text-[#143627]/60 hover:bg-paper"
+              }`}
             >
+              <span>Search spices...</span>
+              <Search className="w-4 h-4" />
+            </button>
+            <button onClick={() => setSearchOpen(true)} aria-label="Search" className={`${iconBtn} md:hidden`}>
               <Search className="w-5 h-5" />
             </button>
 
-            {/* User Icon */}
-            <Link
-              href="/login"
-              aria-label="Account"
-              className="w-8 h-8 flex items-center justify-center text-[#143627]/80 hover:text-[#143627] transition-colors"
-            >
+            <Link href="/login" aria-label="Account" className={`${iconBtn} hidden sm:flex`}>
               <User className="w-5 h-5" />
             </Link>
 
-            {/* Wishlist Icon */}
-            <Link
-              href="/shop?tab=wishlist"
-              aria-label="Wishlist"
-              className="w-8 h-8 flex items-center justify-center text-[#143627]/80 hover:text-[#143627] transition-colors relative"
-            >
+            <Link href="/shop?tab=wishlist" aria-label="Wishlist" className={iconBtn}>
               <Heart className="w-5 h-5" />
               {wishlistCount > 0 && (
-                <span className="absolute top-0 right-0 w-4 h-4 bg-[#dfa84a] text-[#143627] rounded-full text-[10px] font-bold flex items-center justify-center">
+                <span className="absolute -top-0.5 -right-0.5 min-w-4 h-4 px-1 bg-gold text-forest rounded-full text-[10px] font-bold flex items-center justify-center">
                   {wishlistCount}
                 </span>
               )}
             </Link>
 
-            {/* Cart Icon */}
-            <button
-              onClick={openCart}
-              aria-label="Shopping Cart"
-              className="w-8 h-8 flex items-center justify-center text-[#143627]/80 hover:text-[#143627] transition-colors relative"
-            >
+            <button onClick={openCart} aria-label="Shopping cart" className={iconBtn}>
               <ShoppingBag className="w-5 h-5" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#dfa84a] text-[#143627] rounded-full text-[10px] font-bold flex items-center justify-center shadow-xs">
+                <span className="absolute -top-0.5 -right-0.5 min-w-4 h-4 px-1 bg-gold text-forest rounded-full text-[10px] font-bold flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
             </button>
 
-            {/* Mobile Hamburger Toggle */}
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={() => setMobileMenuOpen((o) => !o)}
               aria-label="Toggle menu"
-              className="lg:hidden w-8 h-8 flex items-center justify-center text-[#143627]/80 hover:text-[#143627]"
+              aria-expanded={mobileMenuOpen}
+              className={`${iconBtn} lg:hidden`}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-white border-t border-[#e6dfd5] px-4 pt-3 pb-6 space-y-2">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+          <nav
+            aria-label="Mobile"
+            className={`lg:hidden px-4 pt-3 pb-6 space-y-1 border-t ${isHome ? "border-white/10" : "bg-white border-line"}`}
+          >
+            {[...navLinks, { name: "Account", href: "/login" }].map((link) => {
+              const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                  className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                     isActive
-                      ? "bg-[#dfa84a] text-[#143627] font-bold"
-                      : "text-[#143627]/80 hover:bg-[#f3eee4]"
+                      ? "bg-gold text-forest font-bold"
+                      : isHome
+                        ? "text-white/85 hover:bg-white/10"
+                        : "text-[#143627]/80 hover:bg-paper-deep"
                   }`}
                 >
                   {link.name}
                 </Link>
               );
             })}
-          </div>
+          </nav>
         )}
       </header>
 
-      {/* Global Search Modal */}
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );

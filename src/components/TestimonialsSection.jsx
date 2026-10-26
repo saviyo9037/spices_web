@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { Star, Leaf, ArrowLeft, ArrowRight } from "lucide-react";
+import { Star, Leaf } from "lucide-react";
 import { testimonials } from "@/data/features";
 
 export default function TestimonialsSection() {
   return (
-    <section className="relative py-14 sm:py-20 bg-[#faf7f2] border-b border-[#e6dfd5] overflow-hidden">
+    <section className="relative py-14 sm:py-20 bg-paper border-t border-line overflow-hidden">
       {/* Decorative Botanical & Spices Background on Edges using testimonials-decoration.jpg */}
       <div className="absolute -left-16 top-0 bottom-0 w-48 opacity-25 pointer-events-none mix-blend-multiply hidden md:block">
         <Image
@@ -39,25 +39,10 @@ export default function TestimonialsSection() {
               What Our Customers Say
             </h2>
             <p className="text-xs sm:text-sm text-[#666666] mt-1">
-              Real stories from our happy customers.
+              Kind words from customers who cook with Idukki Spices.
             </p>
           </div>
 
-          {/* Slider Arrow Buttons matching reference */}
-          <div className="flex items-center gap-2 self-start sm:self-auto">
-            <button
-              aria-label="Previous testimonials"
-              className="w-8 h-8 rounded-full border border-[#e6dfd5] bg-white hover:bg-[#f3eee4] flex items-center justify-center text-[#555555] transition-colors"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-            </button>
-            <button
-              aria-label="Next testimonials"
-              className="w-8 h-8 rounded-full border border-[#e6dfd5] bg-white hover:bg-[#f3eee4] flex items-center justify-center text-[#555555] transition-colors"
-            >
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
         </div>
 
         {/* 3 Testimonial Cards matching reference */}

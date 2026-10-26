@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+/* Brand palette exposed as Tailwind utilities (bg-deep, text-gold, border-line ...) */
+@theme {
+  --color-deep: #08271d;
+  --color-night: #051c15;
+  --color-forest: #103b2d;
+  --color-gold: #d9a441;
+  --color-gold-light: #f0c274;
+  --color-gold-ink: #9a6b17;
+  --color-paper: #f7f2e8;
+  --color-paper-deep: #ece4d3;
+  --color-line: #e6dfd5;
+  --color-wood: #563521;
+}
+
 /* Design tokens: forest green, saffron gold, warm cream */
 :root {
   --forest: #143627;
@@ -106,6 +120,33 @@ p {
   animation: rise-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
+/* Cinematic motion: slow push-in, caption fade, scene progress */
+@keyframes kenburns {
+  from { transform: scale(1) translate3d(0, 0, 0); }
+  to { transform: scale(1.14) translate3d(-1.5%, -1%, 0); }
+}
+.kenburns {
+  animation: kenburns 9s ease-out both;
+}
+.kenburns-slow {
+  animation: kenburns 24s ease-in-out infinite alternate;
+}
+@keyframes film-caption {
+  0% { opacity: 0; transform: translateY(16px); }
+  20%, 80% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-8px); }
+}
+.film-caption {
+  animation: film-caption 4.5s ease both;
+}
+@keyframes film-progress {
+  from { width: 0; }
+  to { width: 100%; }
+}
+.film-progress {
+  animation: film-progress 4.5s linear both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
@@ -133,4 +174,20 @@ p {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--gold-ink);
+}
+
+/* Scroll reveal (see Reveal.jsx). Content stays visible without JS / with reduced motion. */
+.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js-reveal .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal .reveal { opacity: 1; transform: none; transition: none; }
+  .kenburns, .kenburns-slow { animation: none; }
 }

@@ -52,6 +52,8 @@ export const storyFeatures = [
   },
 ];
 
+export const features = storyFeatures;
+
 export const heroTrustItems = [
   {
     id: 1,

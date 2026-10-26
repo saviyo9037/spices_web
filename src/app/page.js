@@ -1,35 +1,32 @@
 import HeroSection from "@/components/HeroSection";
 import CategorySection from "@/components/CategorySection";
-import BestsellersSection from "@/components/BestsellersSection";
 import StorySection from "@/components/StorySection";
-import TestimonialsSection from "@/components/TestimonialsSection";
+import FeaturedProducts from "@/components/FeaturedProducts";
+import FarmJourney from "@/components/FarmJourney";
+import VideoBanner from "@/components/VideoBanner";
+import RecipeGuide from "@/components/RecipeGuide";
+import Benefits from "@/components/Benefits";
+import BulkEnquiry from "@/components/BulkEnquiry";
 import NewsletterSection from "@/components/NewsletterSection";
 
 export const metadata = {
-  title: "Spices — Nature's Finest Spices for a Healthier Life",
+  title: "Idukki Spices — From the Hills of Idukki to Your Kitchen",
   description:
-    "Discover premium quality spices sourced from nature, carefully processed to preserve their natural aroma, flavor, and health benefits.",
+    "Discover authentic Kerala spices, carefully selected for their aroma, flavour and freshness.",
 };
 
 export default function HomePage() {
   return (
-    <main className="w-full overflow-hidden bg-[#faf7f2]">
-      {/* 1. Hero Section */}
+    <main className="w-full overflow-x-clip bg-night">
       <HeroSection />
-
-      {/* 2. Categories Section ("Explore Our Premium Spices 🌿") */}
       <CategorySection />
-
-      {/* 3. Featured Products Section ("Pure Spices Pure Wellness" + 5 Products) */}
-      <BestsellersSection />
-
-      {/* 4. Story Section ("From Nature to Your Table") */}
       <StorySection />
-
-      {/* 5. Testimonials Section ("What Our Customers Say") */}
-      <TestimonialsSection />
-
-      {/* 6. Newsletter Section ("Stay Updated") */}
+      <FeaturedProducts />
+      <FarmJourney />
+      <VideoBanner />
+      <RecipeGuide />
+      <Benefits />
+      <BulkEnquiry />
       <NewsletterSection />
     </main>
   );

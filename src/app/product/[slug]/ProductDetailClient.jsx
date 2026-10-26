@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  Star,
   Heart,
   ShoppingBag,
   Zap,
@@ -31,7 +30,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
     product.weights && product.weights.length > 0 ? product.weights[0] : null
   );
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState("overview"); // overview, details, culinary, reviews
+  const [activeTab, setActiveTab] = useState("overview"); // overview, culinary, specifications
   const [addedAnim, setAddedAnim] = useState(false);
 
   const isFavorited = isInWishlist(product.id);
@@ -151,30 +150,12 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 </p>
               </div>
 
-              {/* Rating & Reviews Bar */}
-              <div className="flex items-center gap-3">
-                <div className="flex items-center text-amber-500">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-4 h-4 ${
-                        i < Math.floor(product.rating)
-                          ? "fill-current"
-                          : "text-stone-300"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <span className="text-sm font-bold text-[#143627]">
-                  {product.rating}
-                </span>
-                <span className="text-xs text-[#87978f]">
-                  ({product.reviewsCount} customer reviews)
-                </span>
-                <span className="text-emerald-700 text-xs font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                  Verified Heritage Estate
-                </span>
-              </div>
+              {product.origin && (
+                <p className="flex items-center gap-1.5 text-sm text-[#5c6c64]">
+                  <MapPin className="w-4 h-4 text-[#c69238]" />
+                  {product.origin}
+                </p>
+              )}
 
               {/* Price Block */}
               <div className="p-4 rounded-2xl bg-[#faf7f2] border border-[#e6dfd5] flex items-baseline gap-3">
@@ -343,16 +324,6 @@ export default function ProductDetailClient({ product, relatedProducts }) {
             >
               Specifications &amp; Storage
             </button>
-            <button
-              onClick={() => setActiveTab("reviews")}
-              className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
-                activeTab === "reviews"
-                  ? "bg-[#143627] text-white shadow-sm"
-                  : "text-[#5c6c64] hover:bg-[#faf7f2]"
-              }`}
-            >
-              Customer Reviews ({product.reviewsCount})
-            </button>
           </div>
 
           {/* Tab 1: Overview */}
@@ -451,75 +422,10 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                     Store in a cool, dry place away from direct sunlight in an airtight glass or resealable pouch.
                   </span>
                 </div>
-                <div className="grid grid-cols-2 p-3.5 bg-[#faf7f2]">
-                  <span className="font-semibold text-[#5c6c64]">Chemicals / Preservatives</span>
-                  <span className="text-emerald-700 font-bold">Zero (100% Unadulterated)</span>
-                </div>
               </div>
             </div>
           )}
 
-          {/* Tab 4: Reviews */}
-          {activeTab === "reviews" && (
-            <div className="space-y-6 max-w-4xl">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-[#e6dfd5]">
-                <div>
-                  <h3 className="font-serif text-2xl font-bold text-[#143627]">
-                    Customer Reviews
-                  </h3>
-                  <div className="flex items-center gap-2 mt-1">
-                    <div className="flex text-amber-500">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-current" />
-                      ))}
-                    </div>
-                    <span className="text-sm font-bold text-[#143627]">
-                      {product.rating} out of 5 stars
-                    </span>
-                  </div>
-                </div>
-                <button className="px-5 py-2.5 rounded-full bg-[#143627] text-white text-xs font-bold uppercase tracking-wider">
-                  Write a Review
-                </button>
-              </div>
-
-              {/* Sample Reviews */}
-              <div className="space-y-4">
-                <div className="p-4 rounded-xl bg-[#faf7f2] border border-[#e6dfd5]">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-bold text-sm text-[#143627]">
-                      Dr. Priyadarshini R.
-                    </span>
-                    <span className="text-xs text-[#87978f]">1 week ago</span>
-                  </div>
-                  <div className="flex text-amber-500 mb-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                    ))}
-                  </div>
-                  <p className="text-xs text-[#5c6c64] leading-relaxed">
-                    Extraordinary aroma! The difference between store-bought and this single-origin batch is night and day. Will be subscribing regularly.
-                  </p>
-                </div>
-                <div className="p-4 rounded-xl bg-[#faf7f2] border border-[#e6dfd5]">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-bold text-sm text-[#143627]">
-                      Chef Vikram S.
-                    </span>
-                    <span className="text-xs text-[#87978f]">3 weeks ago</span>
-                  </div>
-                  <div className="flex text-amber-500 mb-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                    ))}
-                  </div>
-                  <p className="text-xs text-[#5c6c64] leading-relaxed">
-                    Clean, fragrant, and meticulously graded. Used it in our signature Sunday family biryani and everyone noticed the heightened fragrance.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Related Spices */}

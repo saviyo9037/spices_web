@@ -2,136 +2,94 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import {
-  ArrowRight,
-  Tag,
-  Package,
-  BookOpen,
-  Heart,
-  CheckCircle2,
-} from "lucide-react";
-import { useToast } from "@/context/ToastContext";
+import { ArrowRight, CheckCircle2, AlertCircle, Mail } from "lucide-react";
+import { submitNewsletter } from "@/lib/enquiry";
+import { CONTACT_EMAIL } from "@/lib/site";
+import Leaf from "./BotanicalLeaf";
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("idle");
-  const { addToast } = useToast();
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState("idle"); // idle | sending | sent | not-configured | failed
 
-  const handleSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !email.includes("@")) {
-      addToast("Please enter a valid email address.", "error");
+    if (!/^\S+@\S+\.\S+$/.test(email.trim())) {
+      setError("Please enter a valid email address.");
       return;
     }
-
-    setStatus("loading");
-    setTimeout(() => {
-      setStatus("success");
-      addToast("Thank you for subscribing to Spices updates!", "success");
-      setEmail("");
-    }, 600);
+    setError("");
+    setStatus("sending");
+    const res = await submitNewsletter({ email: email.trim() });
+    setStatus(res.ok ? "sent" : res.reason);
+    if (res.ok) setEmail("");
   };
 
+  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Please add me to the Idukki Spices newsletter")}&body=${encodeURIComponent(email ? `Email: ${email}` : "")}`;
+
   return (
-    <section className="relative py-12 sm:py-16 bg-[#143627] text-white overflow-hidden">
-      {/* Background Image: newsletter-background.jpg */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/images/newsletter-background.jpg"
-          alt="Spices Banner Background"
-          fill
-          sizes="100vw"
-          className="object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-[#143627]/90" />
-      </div>
+    <section className="relative isolate overflow-hidden bg-deep text-white py-14 sm:py-16">
+      <Image
+        src="/images/newsletter-background.jpg"
+        alt=""
+        fill
+        loading="lazy"
+        sizes="100vw"
+        className="-z-10 object-cover opacity-20"
+      />
+      <Leaf className="pointer-events-none absolute -right-8 -top-8 -z-10 h-56 w-56 text-gold/15 rotate-[150deg]" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
-          {/* Left/Center: Form matching reference */}
-          <div className="w-full lg:max-w-xl text-center lg:text-left">
-            <div className="flex items-center justify-center lg:justify-start gap-2 text-white mb-2">
-              <span className="text-[#dfa84a]">
-                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z" />
-                </svg>
-              </span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight">
-                Stay Updated
-              </h2>
-            </div>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 className="font-serif text-3xl sm:text-4xl font-bold">Get Updates &amp; Spice Stories</h2>
+        <p className="mx-auto mt-3 max-w-xl text-sm sm:text-base text-white/75">
+          New arrivals, offers and recipe ideas from the hills of Idukki, straight to your inbox.
+        </p>
 
-            <p className="text-xs sm:text-sm text-white/70 mb-6">
-              Get the latest offers, new arrivals and spice tips straight to your inbox.
+        <form onSubmit={onSubmit} noValidate className="mx-auto mt-7 flex max-w-lg flex-col gap-3 sm:flex-row">
+          <label htmlFor="nl-email" className="sr-only">Email address</label>
+          <input
+            id="nl-email"
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Your email address"
+            aria-invalid={Boolean(error)}
+            className="min-w-0 flex-1 rounded-full bg-white px-5 py-3.5 text-sm text-forest placeholder:text-forest/45 focus:outline-none focus:ring-2 focus:ring-gold"
+          />
+          <button
+            type="submit"
+            disabled={status === "sending"}
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-bold text-night transition-colors hover:bg-gold-light disabled:opacity-60"
+          >
+            {status === "sending" ? "Subscribing…" : "Subscribe"}
+            <ArrowRight className="h-4 w-4" />
+          </button>
+        </form>
+
+        <div aria-live="polite" className="mx-auto mt-4 max-w-lg text-sm">
+          {error && <p className="text-red-300" role="alert">{error}</p>}
+          {status === "sent" && (
+            <p className="inline-flex items-center gap-2 text-gold-light">
+              <CheckCircle2 className="h-4 w-4" /> Thank you, you are subscribed.
             </p>
-
-            {status === "success" ? (
-              <div className="inline-flex items-center gap-2 p-3 rounded-full bg-[#1c4b37] text-[#f0c274] text-xs font-semibold border border-[#1c4b37]">
-                <CheckCircle2 className="w-4 h-4" />
-                <span>You are subscribed! Welcome to Spices.</span>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="relative max-w-md mx-auto lg:mx-0">
-                <div className="relative flex items-center">
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email address"
-                    className="w-full pl-5 pr-32 py-3 rounded-full bg-white text-[#181818] placeholder-[#888888] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#dfa84a] shadow-md"
-                  />
-                  <button
-                    type="submit"
-                    disabled={status === "loading"}
-                    className="absolute right-1 px-5 py-2 rounded-full bg-[#dfa84a] hover:bg-[#c69238] text-[#143627] font-bold text-xs transition-all duration-200 flex items-center gap-1.5 shadow-sm"
-                  >
-                    <span>{status === "loading" ? "..." : "Subscribe"}</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
-
-          {/* Right: 4 circular feature icons with labels matching reference */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 shrink-0 text-center">
-            <div className="flex flex-col items-center">
-              <div className="w-11 h-11 rounded-full border border-white/20 flex items-center justify-center text-[#dfa84a] mb-2">
-                <Tag className="w-4 h-4" />
-              </div>
-              <span className="text-[11px] font-medium text-white/80">
-                Exclusive Offers
-              </span>
+          )}
+          {status === "not-configured" && (
+            <div className="rounded-2xl border border-gold/40 bg-night/50 p-4 text-left text-white/85">
+              <p className="flex items-start gap-2">
+                <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+                Online sign-up is not switched on yet, so your address has not been saved.
+              </p>
+              <a href={mailto} className="mt-2 inline-flex items-center gap-2 font-semibold text-gold hover:underline">
+                <Mail className="h-4 w-4" /> Email us to be added
+              </a>
             </div>
-
-            <div className="flex flex-col items-center">
-              <div className="w-11 h-11 rounded-full border border-white/20 flex items-center justify-center text-[#dfa84a] mb-2">
-                <Package className="w-4 h-4" />
-              </div>
-              <span className="text-[11px] font-medium text-white/80">
-                New Arrivals
-              </span>
-            </div>
-
-            <div className="flex flex-col items-center">
-              <div className="w-11 h-11 rounded-full border border-white/20 flex items-center justify-center text-[#dfa84a] mb-2">
-                <BookOpen className="w-4 h-4" />
-              </div>
-              <span className="text-[11px] font-medium text-white/80">
-                Recipe Tips
-              </span>
-            </div>
-
-            <div className="flex flex-col items-center">
-              <div className="w-11 h-11 rounded-full border border-white/20 flex items-center justify-center text-[#dfa84a] mb-2">
-                <Heart className="w-4 h-4" />
-              </div>
-              <span className="text-[11px] font-medium text-white/80">
-                Health Benefits
-              </span>
-            </div>
-          </div>
+          )}
+          {status === "failed" && (
+            <p className="inline-flex items-center gap-2 text-red-300">
+              <AlertCircle className="h-4 w-4" /> We could not save your address. Please try again.
+            </p>
+          )}
         </div>
       </div>
     </section>

@@ -1,61 +1,67 @@
-import { categories } from "@/data/categories";
-import CategoryCard from "./CategoryCard";
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Leaf } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { products } from "@/data/products";
+import Reveal from "./Reveal";
+
+// The six hero spices, taken from the real catalogue so names, photos and links stay in sync.
+const SPICES = [
+  { slug: "black-pepper", label: "Black Pepper" },
+  { slug: "cardamom", label: "Green Cardamom" },
+  { slug: "cinnamon-sticks", label: "Cinnamon" },
+  { slug: "cloves", label: "Cloves" },
+  { slug: "turmeric-powder", label: "Turmeric" },
+  { slug: "red-chilli-powder", label: "Red Chilli" },
+];
+
+const cards = SPICES.map((s) => ({ ...s, product: products.find((p) => p.slug === s.slug) })).filter((c) => c.product);
 
 export default function CategorySection() {
   return (
-    <section className="py-12 sm:py-16 bg-[#faf7f2] border-b border-[#e6dfd5]">
+    <section id="categories" className="bg-deep text-white py-16 sm:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+        <Reveal className="mb-10 flex items-end justify-between gap-4">
           <div>
-            <div className="eyebrow mb-1.5">
-              <Leaf className="w-3.5 h-3.5" />
-              <span>OUR CATEGORIES</span>
-            </div>
-            <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#181818] tracking-tight">
-              Explore Our Premium Spices 🌿
-            </h2>
-            <p className="text-xs sm:text-sm text-[#666666] mt-1">
-              Handpicked spices for authentic taste and a healthier lifestyle.
-            </p>
+            <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-gold">Category Explorer</p>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mt-3">Shop by Spice</h2>
           </div>
-
-          <div className="flex items-center gap-3 self-start sm:self-auto">
-            <Link
-              href="/categories"
-              className="text-xs font-bold text-[#181818] hover:text-[#b07d22] transition-colors flex items-center gap-1"
-            >
-              <span>View All Categories</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-
-            {/* Slider arrows matching reference */}
-            <div className="hidden md:flex items-center gap-1.5">
-              <button
-                aria-label="Previous categories"
-                className="w-8 h-8 rounded-full border border-[#e6dfd5] bg-white hover:bg-[#f3eee4] flex items-center justify-center text-[#555555] transition-colors"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-              </button>
-              <button
-                aria-label="Next categories"
-                className="w-8 h-8 rounded-full border border-[#e6dfd5] bg-white hover:bg-[#f3eee4] flex items-center justify-center text-[#555555] transition-colors"
-              >
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* 6 Category Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
-          {categories.map((cat) => (
-            <CategoryCard key={cat.id} category={cat} />
-          ))}
-        </div>
+          <Link
+            href="/spices"
+            className="group hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-gold hover:text-gold-light"
+          >
+            Open the Spice Finder
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </Reveal>
       </div>
+
+      <ul className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:px-6 md:mx-auto md:grid md:max-w-7xl md:grid-cols-3 md:overflow-visible lg:px-8 xl:grid-cols-6 sm:gap-4">
+        {cards.map(({ slug, label, product }) => (
+          <li key={slug} className="w-[68%] shrink-0 snap-start sm:w-[44%] md:w-auto">
+            <Link
+              href={`/product/${slug}`}
+              className="group relative block aspect-[3/4] overflow-hidden rounded-2xl border border-white/10 bg-night"
+            >
+              <Image
+                src={product.image}
+                alt={`${label} from Idukki Spices`}
+                fill
+                loading="lazy"
+                sizes="(max-width: 640px) 68vw, (max-width: 768px) 44vw, (max-width: 1280px) 33vw, 16vw"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-night via-night/40 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-4">
+                <h3 className="font-serif text-xl font-bold">{label}</h3>
+                <p className="mt-1 text-[11px] leading-snug text-white/75 line-clamp-2">{product.shortDescription}</p>
+                <span className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-semibold text-gold transition-all group-hover:gap-2.5">
+                  Shop now <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

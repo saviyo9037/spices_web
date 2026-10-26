@@ -12,11 +12,12 @@ function ShopContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || "all";
   const initialTab = searchParams.get("tab") || "all";
+  const initialQuery = searchParams.get("q") || "";
 
   const { wishlistIds } = useWishlist();
 
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [sortBy, setSortBy] = useState("popular");
   const [onlyOrganic, setOnlyOrganic] = useState(false);
   const [viewMode, setViewMode] = useState("grid");

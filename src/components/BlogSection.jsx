@@ -5,7 +5,7 @@ import { blogPosts } from "@/data/blogPosts";
 
 export default function BlogSection() {
   return (
-    <section className="py-20 md:py-28 bg-[#faf7f2] border-b border-[#e6dfd5]">
+    <section className="py-20 md:py-28 bg-white border-t border-line">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
@@ -15,10 +15,10 @@ export default function BlogSection() {
               <span>The Spice Journal</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl font-black text-[#143627] tracking-tight">
-              Culinary Guides &amp; Heritage Recipes
+              Spice Stories &amp; Recipes
             </h2>
             <p className="text-sm sm:text-base text-[#5c6c64] max-w-xl mt-2">
-              Master the alchemy of Indian spices with our estate guides, toasting tutorials, and artisanal recipes.
+              Kerala recipes, storage tips and ingredient guides from the Idukki Spices kitchen.
             </p>
           </div>
 

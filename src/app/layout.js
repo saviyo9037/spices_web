@@ -23,7 +23,7 @@ const scriptFont = Caveat({
 });
 
 export const metadata = {
-  title: "Spices — Nature's Finest Spices for a Healthier Life",
+  title: { default: "Idukki Spices — Nature's Best Spices", template: "%s | Idukki Spices" },
   description:
     "Discover premium quality spices sourced from nature, carefully processed to preserve their natural aroma, flavor, and health benefits.",
   keywords: [
