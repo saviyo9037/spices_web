@@ -37,6 +37,8 @@ const isValidCategory = (v) => STRIP.some((c) => c.id === v) || FORM_IDS.include
 const categoryLabel = (v) => STRIP.find((c) => c.id === v)?.label || FORM_LABEL[v] || v;
 const USES = USE_TAGS.map((u) => ({ ...u, count: products.filter((p) => productUses(p).includes(u.id)).length })).filter((u) => u.count > 0);
 const SIZES = allSizes();
+// Collections come from the badges already set on the products.
+const BADGES = [...new Set(products.map((p) => p.badge).filter(Boolean))];
 const MAX_PRICE = Math.ceil(Math.max(...products.map((p) => p.price)) / 10) * 10;
 
 const SORTS = [
@@ -80,6 +82,18 @@ function FilterPanel({ f, set, toggleIn, wishlistCount }) {
           ))}
         </div>
       </Section>
+
+      {BADGES.length > 0 && (
+        <Section title="Collection">
+          <div className="flex flex-wrap gap-2">
+            {BADGES.map((b) => (
+              <button key={b} type="button" aria-pressed={f.badges.includes(b)} onClick={() => toggleIn("badges", b)} className={chip(f.badges.includes(b))}>
+                {b}
+              </button>
+            ))}
+          </div>
+        </Section>
+      )}
 
       <Section title="Type">
         <div className="flex flex-wrap gap-2">
@@ -157,6 +171,7 @@ function ShopContent() {
     category: isValidCategory(params.get("category")) ? params.get("category") : "all",
     uses: [],
     sizes: [],
+    badges: [],
     maxPrice: MAX_PRICE,
     wishlist: params.get("tab") === "wishlist",
     sort: "featured",
@@ -166,7 +181,7 @@ function ShopContent() {
   const set = (patch) => setF((v) => ({ ...v, ...patch }));
   const toggleIn = (key, val) =>
     setF((v) => ({ ...v, [key]: v[key].includes(val) ? v[key].filter((x) => x !== val) : [...v[key], val] }));
-  const reset = () => setF((v) => ({ q: "", category: "all", uses: [], sizes: [], maxPrice: MAX_PRICE, wishlist: false, sort: v.sort }));
+  const reset = () => setF((v) => ({ q: "", category: "all", uses: [], sizes: [], badges: [], maxPrice: MAX_PRICE, wishlist: false, sort: v.sort }));
 
   const shown = useMemo(() => {
     const q = f.q.trim().toLowerCase();
@@ -175,6 +190,7 @@ function ShopContent() {
       if (f.wishlist && !wishlistIds.includes(p.id)) return false;
       if (p.price > f.maxPrice) return false;
       if (f.uses.length && !f.uses.some((u) => productUses(p).includes(u))) return false;
+      if (f.badges.length && !f.badges.includes(p.badge)) return false;
       if (f.sizes.length && !f.sizes.some((s) => productSizes(p).includes(s))) return false;
       if (q) {
         const hay = [p.name, p.subtitle, p.shortDescription, p.origin, ...(p.culinaryUses || [])].join(" ").toLowerCase();
@@ -194,6 +210,7 @@ function ShopContent() {
   if (f.category !== "all") active.push({ key: "cat", label: categoryLabel(f.category), clear: () => set({ category: "all" }) });
   f.uses.forEach((u) => active.push({ key: `u-${u}`, label: USES.find((x) => x.id === u)?.label, clear: () => toggleIn("uses", u) }));
   f.sizes.forEach((s) => active.push({ key: `s-${s}`, label: s, clear: () => toggleIn("sizes", s) }));
+  f.badges.forEach((b) => active.push({ key: `b-${b}`, label: b, clear: () => toggleIn("badges", b) }));
   if (f.maxPrice < MAX_PRICE) active.push({ key: "price", label: `Up to ₹${f.maxPrice}`, clear: () => set({ maxPrice: MAX_PRICE }) });
   if (f.wishlist) active.push({ key: "wl", label: "Wishlist", clear: () => set({ wishlist: false }) });
 
@@ -316,16 +333,18 @@ function ShopContent() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1400px] px-4 pb-10 pt-8 sm:px-6 sm:pb-14 sm:pt-10 lg:grid lg:grid-cols-[264px_1fr] lg:gap-8 lg:px-8">
+      <div className="mx-auto max-w-[1400px] px-4 pb-10 pt-8 sm:px-6 sm:pb-14 sm:pt-10 lg:grid lg:grid-cols-[248px_1fr] lg:gap-7 lg:px-8">
         <aside className="hidden lg:block">
-          <div className="sticky top-24 rounded-2xl border border-line bg-white p-6 shadow-sm">
-            <div className="mb-5 flex items-center justify-between">
+          <div className="sticky top-[168px] flex max-h-[calc(100vh-188px)] flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-lg shadow-forest/5">
+            <div className="flex items-center justify-between border-b border-line px-6 py-4">
               <h2 className="font-serif text-xl font-bold text-forest">Filters</h2>
-              {active.length > 0 && (
-                <button type="button" onClick={reset} className="text-xs font-semibold text-gold-ink hover:underline">Clear all</button>
+              {active.length > 0 ? (
+                <button type="button" onClick={reset} className="text-xs font-semibold text-gold-ink hover:underline">Clear all ({active.length})</button>
+              ) : (
+                <span className="text-xs text-forest/45">No filters applied</span>
               )}
             </div>
-            {panel}
+            <div className="filter-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 py-5">{panel}</div>
           </div>
         </aside>
 
@@ -366,7 +385,7 @@ function ShopContent() {
           ) : (
             <div className="shop-grid gap-3 sm:gap-5">
               {shown.map((p) => (
-                <ProductCard key={p.id} product={p} />
+                <ProductCard key={p.id} product={p} compact />
               ))}
             </div>
           )}

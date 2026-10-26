@@ -8,7 +8,7 @@ import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { defaultWeight } from "@/lib/catalog";
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, compact = false }) {
   const { addToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
 
@@ -36,7 +36,7 @@ export default function ProductCard({ product }) {
 
   return (
     <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-xs transition-all duration-300 hover:shadow-lg">
-      <div className="relative aspect-square w-full overflow-hidden bg-paper">
+      <div className={`relative ${compact ? "aspect-[5/4]" : "aspect-square"} w-full overflow-hidden bg-paper`}>
         <Link href={`/product/${product.slug}`} className="absolute inset-0 block" aria-label={`View ${product.name}`}>
           <Image
             src={product.image}
@@ -65,9 +65,9 @@ export default function ProductCard({ product }) {
         </button>
       </div>
 
-      <div className="flex flex-1 flex-col p-3.5 sm:p-4">
+      <div className={`flex flex-1 flex-col ${compact ? "p-3" : "p-3.5 sm:p-4"}`}>
         <Link href={`/product/${product.slug}`}>
-          <h3 className="font-serif text-base font-bold leading-snug text-forest transition-colors group-hover:text-gold-ink line-clamp-2">
+          <h3 className={`font-serif ${compact ? "text-[15px]" : "text-base"} font-bold leading-snug text-forest transition-colors group-hover:text-gold-ink line-clamp-2`}>
             {product.name}
           </h3>
         </Link>
