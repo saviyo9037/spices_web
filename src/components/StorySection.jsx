@@ -1,34 +1,61 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Leaf as LeafIcon } from "lucide-react";
+import { ArrowRight, Leaf as LeafIcon, Users, Sprout, MapPin } from "lucide-react";
 import Reveal from "./Reveal";
 import Leaf from "./BotanicalLeaf";
 
+const highlights = [
+  { icon: Users, title: "Local Farmers", text: "Directly sourced" },
+  { icon: Sprout, title: "Pure & Natural", text: "No artificial additives" },
+  { icon: MapPin, title: "From Idukki", text: "Rich in flavour" },
+];
+
 export default function StorySection() {
   return (
-    <section id="story" className="relative bg-paper text-forest py-14 sm:py-20 overflow-hidden">
+    <section id="story" className="relative isolate overflow-hidden bg-[#F8F3E8] text-[#0B3328] py-14 sm:py-20">
+      <Image
+        src="/images/idukki-landscape.webp"
+        alt=""
+        fill
+        loading="lazy"
+        sizes="100vw"
+        className="-z-10 object-cover object-[75%_40%]"
+      />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#F8F3E8]/95 via-[#F8F3E8]/80 to-[#F8F3E8]/10 lg:bg-gradient-to-r lg:from-[#F8F3E8] lg:via-[#F8F3E8]/85 lg:via-40% lg:to-transparent" />
       <Leaf className="pointer-events-none absolute -left-8 bottom-0 h-56 w-56 text-forest/[0.07] rotate-12" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
         <Reveal className="lg:col-span-5">
-          <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.28em] uppercase text-gold-ink">
+          <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.28em] uppercase text-[#C58A27]">
             <LeafIcon className="w-4 h-4" aria-hidden="true" /> Our Story
           </p>
           <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] mt-4">
             Rooted in the
             <br />
-            Hills of Idukki
+            Hills of <span className="text-[#C58A27]">Idukki</span>
           </h2>
-          <p className="mt-6 text-base leading-relaxed text-forest/75 max-w-md">
+          <p className="mt-6 text-base leading-relaxed text-[#6b6d65] max-w-md">
             Idukki Spices brings you spices from the high ranges of Kerala, sourced from trusted
             farmers and carefully processed to keep their natural aroma, flavour and goodness intact.
           </p>
           <Link
             href="/about"
-            className="group mt-8 inline-flex items-center gap-2.5 rounded-full bg-gold px-8 py-3.5 text-sm font-bold text-night transition-all duration-300 hover:bg-gold-light hover:-translate-y-0.5 active:scale-95"
+            className="group mt-8 inline-flex items-center gap-2.5 rounded-full bg-[#C58A27] px-8 py-3.5 text-sm font-bold text-[#0B3328] transition-all duration-300 hover:bg-[#d79a35] hover:-translate-y-0.5 active:scale-95"
           >
             Discover Our Story
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
+
+          <ul className="mt-10 grid grid-cols-1 gap-5 border-t border-[#0B3328]/15 pt-6 sm:grid-cols-3">
+            {highlights.map(({ icon: Icon, title, text }) => (
+              <li key={title} className="flex items-center gap-3">
+                <Icon className="h-7 w-7 shrink-0 text-[#C58A27]" strokeWidth={1.4} aria-hidden="true" />
+                <div>
+                  <p className="text-sm font-bold">{title}</p>
+                  <p className="text-xs text-[#6b6d65]">{text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </Reveal>
 
         <Reveal delay={120} className="lg:col-span-7">
