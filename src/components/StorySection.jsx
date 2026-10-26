@@ -12,7 +12,7 @@ const highlights = [
 
 export default function StorySection() {
   return (
-    <section id="story" className="relative isolate overflow-hidden bg-[#F8F3E8] text-[#0B3328] py-14 sm:py-20">
+    <section id="story" className="relative isolate overflow-hidden bg-[#F8F3E8] text-[#0B3328] py-16 sm:py-24">
       <Image
         src="/images/idukki-landscape.webp"
         alt=""
@@ -21,7 +21,7 @@ export default function StorySection() {
         sizes="100vw"
         className="-z-10 object-cover object-[75%_40%]"
       />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#F8F3E8]/95 via-[#F8F3E8]/80 to-[#F8F3E8]/10 lg:bg-gradient-to-r lg:from-[#F8F3E8] lg:via-[#F8F3E8]/85 lg:via-40% lg:to-transparent" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#F8F3E8]/95 via-[#F8F3E8]/80 to-[#F8F3E8]/10 lg:bg-gradient-to-r lg:from-[#F8F3E8] lg:via-[#F8F3E8]/80 lg:via-35% lg:to-transparent lg:to-65%" />
       <Leaf className="pointer-events-none absolute -left-8 bottom-0 h-56 w-56 text-forest/[0.07] rotate-12" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
         <Reveal className="lg:col-span-5">
@@ -45,7 +45,7 @@ export default function StorySection() {
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
 
-          <ul className="mt-10 grid grid-cols-1 gap-5 border-t border-[#0B3328]/15 pt-6 sm:grid-cols-3">
+          <ul className="mt-10 grid grid-cols-1 gap-5 border-t border-[#0B3328]/15 pt-6 sm:flex sm:flex-wrap sm:gap-x-8">
             {highlights.map(({ icon: Icon, title, text }) => (
               <li key={title} className="flex items-center gap-3">
                 <Icon className="h-7 w-7 shrink-0 text-[#C58A27]" strokeWidth={1.4} aria-hidden="true" />
@@ -59,10 +59,10 @@ export default function StorySection() {
         </Reveal>
 
         <Reveal delay={120} className="lg:col-span-7">
-          <div className="relative h-[380px] sm:h-[500px]">
+          <div className="relative h-[380px] sm:h-[520px] lg:h-[560px]">
             <div className="absolute inset-y-0 left-0 w-[72%] overflow-hidden rounded-3xl shadow-xl">
               <Image
-                src="/images/story-farm.jpg"
+                src="/images/story-hills-sunrise.jpg"
                 alt="Misty spice plantation in the hills of Idukki"
                 fill
                 loading="lazy"
@@ -79,7 +79,7 @@ export default function StorySection() {
 
             <div className="absolute right-0 top-0 h-[46%] w-[44%] rotate-3 overflow-hidden rounded-2xl border-4 border-white shadow-xl">
               <Image
-                src="/images/story-pepper-harvest.jpg"
+                src="/images/story-green-peppercorn.jpg"
                 alt="Hands holding freshly harvested green pepper"
                 fill
                 loading="lazy"
@@ -89,7 +89,7 @@ export default function StorySection() {
             </div>
             <div className="absolute right-[6%] bottom-0 h-[46%] w-[44%] -rotate-3 overflow-hidden rounded-2xl border-4 border-white shadow-xl">
               <Image
-                src="/images/product-cardamom.jpg"
+                src="/images/story-cardamom-bowl.jpg"
                 alt="Green cardamom pods"
                 fill
                 loading="lazy"
