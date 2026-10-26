@@ -57,7 +57,7 @@ export default function BulkEnquiry() {
 
   return (
     <section id="bulk-order" className="bg-deep text-white py-16 sm:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-10 lg:grid-cols-12 items-start">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-10 lg:grid-cols-12 items-center">
         <Reveal className="lg:col-span-5">
           <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-gold">Bulk Orders</p>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mt-3">Need larger quantities?</h2>

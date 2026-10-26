@@ -6,7 +6,7 @@ import Leaf from "./BotanicalLeaf";
 
 export default function StorySection() {
   return (
-    <section id="story" className="relative bg-paper text-forest py-16 sm:py-24 overflow-hidden">
+    <section id="story" className="relative bg-paper text-forest py-14 sm:py-20 overflow-hidden">
       <Leaf className="pointer-events-none absolute -left-8 bottom-0 h-56 w-56 text-forest/[0.07] rotate-12" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
         <Reveal className="lg:col-span-5">

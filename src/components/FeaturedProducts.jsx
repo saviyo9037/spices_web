@@ -34,7 +34,7 @@ export default function FeaturedProducts() {
   }, [active]);
 
   return (
-    <section id="featured" className="bg-paper text-forest py-16 sm:py-24">
+    <section id="featured" className="bg-paper text-forest pt-6 pb-16 sm:pt-8 sm:pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>

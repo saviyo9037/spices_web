@@ -18,7 +18,7 @@ const cards = SPICES.map((s) => ({ ...s, product: products.find((p) => p.slug ==
 
 export default function CategorySection() {
   return (
-    <section id="categories" className="bg-deep text-white py-16 sm:py-24">
+    <section id="categories" className="bg-deep text-white py-14 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal className="mb-10 flex items-end justify-between gap-4">
           <div>
@@ -50,7 +50,7 @@ export default function CategorySection() {
                 sizes="(max-width: 640px) 68vw, (max-width: 768px) 44vw, (max-width: 1280px) 33vw, 16vw"
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-night via-night/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-night via-night/55 to-night/5" />
               <div className="absolute inset-x-0 bottom-0 p-4">
                 <h3 className="font-serif text-xl font-bold">{label}</h3>
                 <p className="mt-1 text-[11px] leading-snug text-white/75 line-clamp-2">{product.shortDescription}</p>
