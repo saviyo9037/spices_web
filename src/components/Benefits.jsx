@@ -36,22 +36,8 @@ const benefits = [
 
 export default function Benefits() {
   return (
-    <section className="relative isolate overflow-hidden bg-white text-[#0B3328] py-16 sm:py-24">
-      {/* Background: Soft mist-covered Idukki hills smoothly blended into crisp white */}
-      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-        {/* <Image
-          // src="/images/shopping/07-hills-landscape-background.jpg"
-          alt="Misty spice hills and tea gardens of Idukki"
-          fill
-          priority={false}
-          sizes="100vw"
-          className="object-cover object-center opacity-20 mix-blend-multiply"
-        /> */}
-        {/* Gradients to ensure seamless white background and crisp readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-white/85 to-white" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section className="bg-white text-[#0B3328] py-16 sm:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <Reveal className="mb-12 text-center max-w-2xl mx-auto">
           <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-[#B87919]">

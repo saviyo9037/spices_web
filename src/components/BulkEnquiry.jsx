@@ -30,7 +30,7 @@ function validate(v) {
 }
 
 const field =
-  "w-full rounded-xl border bg-white px-4 py-3 text-sm text-forest placeholder:text-forest/40 focus:border-gold focus:outline-none";
+  "w-full rounded-xl border bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/50 backdrop-blur-sm focus:border-gold focus:bg-white/15 focus:outline-none [&>option]:text-forest";
 
 export default function BulkEnquiry() {
   const [values, setValues] = useState(initial);
@@ -63,7 +63,7 @@ export default function BulkEnquiry() {
     if (res.ok) setValues(initial);
   };
 
-  const err = (k) => (errors[k] ? <p className="mt-1 text-xs text-red-700" role="alert">{errors[k]}</p> : null);
+  const err = (k) => (errors[k] ? <p className="mt-1 text-xs text-red-300" role="alert">{errors[k]}</p> : null);
 
   return (
     <section id="bulk-order" className="relative isolate overflow-hidden bg-night text-white py-16 sm:py-24 lg:min-h-[720px] lg:flex lg:items-center">
@@ -98,28 +98,29 @@ export default function BulkEnquiry() {
         </Reveal>
 
         <Reveal delay={100} className="lg:col-span-7">
-          <form onSubmit={onSubmit} noValidate className="rounded-3xl bg-[#FBF8F0] p-6 sm:p-8 text-forest shadow-2xl shadow-black/40">
-            <h3 className="font-serif text-2xl font-bold">Bulk Order Enquiry</h3>
-            <p className="mt-1 mb-5 text-sm text-forest/70">Fill in your details and we’ll get back to you shortly.</p>
+          <form onSubmit={onSubmit} noValidate className="relative overflow-hidden rounded-3xl border border-white/25 bg-gradient-to-br from-white/20 via-white/10 to-white/5 p-6 sm:p-8 text-white shadow-2xl shadow-black/40 backdrop-blur-xl ring-1 ring-inset ring-white/10">
+            <span aria-hidden="true" className="pointer-events-none absolute -top-24 -left-16 h-56 w-[140%] -rotate-12 bg-white/10 blur-2xl" />
+            <h3 className="relative font-serif text-2xl font-bold">Bulk Order Enquiry</h3>
+            <p className="mt-1 mb-5 text-sm text-white/75">Fill in your details and we’ll get back to you shortly.</p>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label htmlFor="be-name" className="mb-1.5 block text-sm font-medium">Name</label>
-                <input id="be-name" autoComplete="name" value={values.name} onChange={set("name")} aria-invalid={Boolean(errors.name)} className={`${field} ${errors.name ? "border-red-600" : "border-line"}`} />
+                <input id="be-name" autoComplete="name" value={values.name} onChange={set("name")} aria-invalid={Boolean(errors.name)} className={`${field} ${errors.name ? "border-red-400" : "border-white/25"}`} />
                 {err("name")}
               </div>
               <div>
                 <label htmlFor="be-phone" className="mb-1.5 block text-sm font-medium">Phone</label>
-                <input id="be-phone" type="tel" autoComplete="tel" value={values.phone} onChange={set("phone")} aria-invalid={Boolean(errors.phone)} className={`${field} ${errors.phone ? "border-red-600" : "border-line"}`} />
+                <input id="be-phone" type="tel" autoComplete="tel" value={values.phone} onChange={set("phone")} aria-invalid={Boolean(errors.phone)} className={`${field} ${errors.phone ? "border-red-400" : "border-white/25"}`} />
                 {err("phone")}
               </div>
               <div className="sm:col-span-2">
                 <label htmlFor="be-email" className="mb-1.5 block text-sm font-medium">Email</label>
-                <input id="be-email" type="email" autoComplete="email" value={values.email} onChange={set("email")} aria-invalid={Boolean(errors.email)} className={`${field} ${errors.email ? "border-red-600" : "border-line"}`} />
+                <input id="be-email" type="email" autoComplete="email" value={values.email} onChange={set("email")} aria-invalid={Boolean(errors.email)} className={`${field} ${errors.email ? "border-red-400" : "border-white/25"}`} />
                 {err("email")}
               </div>
               <div>
                 <label htmlFor="be-product" className="mb-1.5 block text-sm font-medium">Product</label>
-                <select id="be-product" value={values.product} onChange={set("product")} aria-invalid={Boolean(errors.product)} className={`${field} ${errors.product ? "border-red-600" : "border-line"}`}>
+                <select id="be-product" value={values.product} onChange={set("product")} aria-invalid={Boolean(errors.product)} className={`${field} ${errors.product ? "border-red-400" : "border-white/25"}`}>
                   <option value="">Choose a product</option>
                   {products.map((p) => (
                     <option key={p.id} value={p.name}>{p.name}</option>
@@ -131,8 +132,8 @@ export default function BulkEnquiry() {
               <div>
                 <label htmlFor="be-qty" className="mb-1.5 block text-sm font-medium">Quantity</label>
                 <div className="flex gap-2">
-                  <input id="be-qty" type="number" min="1" inputMode="numeric" value={values.quantity} onChange={set("quantity")} aria-invalid={Boolean(errors.quantity)} className={`${field} ${errors.quantity ? "border-red-600" : "border-line"}`} />
-                  <select aria-label="Unit" value={values.unit} onChange={set("unit")} className={`${field} w-24 border-line`}>
+                  <input id="be-qty" type="number" min="1" inputMode="numeric" value={values.quantity} onChange={set("quantity")} aria-invalid={Boolean(errors.quantity)} className={`${field} ${errors.quantity ? "border-red-400" : "border-white/25"}`} />
+                  <select aria-label="Unit" value={values.unit} onChange={set("unit")} className={`${field} w-24 border-white/25`}>
                     <option>kg</option>
                     <option>g</option>
                   </select>
@@ -140,8 +141,8 @@ export default function BulkEnquiry() {
                 {err("quantity")}
               </div>
               <div className="sm:col-span-2">
-                <label htmlFor="be-msg" className="mb-1.5 block text-sm font-medium">Message <span className="text-forest/50">(optional)</span></label>
-                <textarea id="be-msg" rows={3} value={values.message} onChange={set("message")} className={`${field} border-line`} />
+                <label htmlFor="be-msg" className="mb-1.5 block text-sm font-medium">Message <span className="text-white/55">(optional)</span></label>
+                <textarea id="be-msg" rows={3} value={values.message} onChange={set("message")} className={`${field} border-white/25`} />
               </div>
             </div>
 
@@ -156,23 +157,23 @@ export default function BulkEnquiry() {
 
             <div aria-live="polite" className="mt-4 text-sm">
               {status === "sent" && (
-                <p className="flex items-start gap-2 text-forest">
-                  <CheckCircle2 className="mt-0.5 w-4 h-4 shrink-0 text-green-700" /> Thank you. Your enquiry has been received.
+                <p className="flex items-start gap-2 text-white">
+                  <CheckCircle2 className="mt-0.5 w-4 h-4 shrink-0 text-green-300" /> Thank you. Your enquiry has been received.
                 </p>
               )}
               {status === "not-configured" && (
-                <div className="rounded-xl border border-gold/50 bg-gold/10 p-4 text-forest">
+                <div className="rounded-xl border border-gold/50 bg-black/25 p-4 text-white">
                   <p className="flex items-start gap-2">
-                    <AlertCircle className="mt-0.5 w-4 h-4 shrink-0 text-gold-ink" />
+                    <AlertCircle className="mt-0.5 w-4 h-4 shrink-0 text-gold" />
                     Online enquiries are not switched on yet, so nothing has been sent. You can email your details instead.
                   </p>
-                  <a href={mailto()} className="mt-3 inline-flex items-center gap-2 font-semibold text-gold-ink hover:underline">
+                  <a href={mailto()} className="mt-3 inline-flex items-center gap-2 font-semibold text-gold hover:underline">
                     <Mail className="w-4 h-4" /> Email {CONTACT_EMAIL}
                   </a>
                 </div>
               )}
               {status === "failed" && (
-                <p className="flex items-start gap-2 text-red-700">
+                <p className="flex items-start gap-2 text-red-300">
                   <AlertCircle className="mt-0.5 w-4 h-4 shrink-0" /> We could not send your enquiry. Please try again, or email{" "}
                   <a href={mailto()} className="font-semibold underline">{CONTACT_EMAIL}</a>.
                 </p>

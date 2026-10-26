@@ -1,4 +1,4 @@
-import { Playfair_Display, Plus_Jakarta_Sans, Caveat } from "next/font/google";
+import { Playfair_Display, Inter, Caveat } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -7,10 +7,11 @@ import Providers from "@/components/Providers";
 const serifFont = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-serif",
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
-const sansFont = Plus_Jakarta_Sans({
+const sansFont = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
