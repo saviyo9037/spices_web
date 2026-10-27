@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function SpicesPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-paper pt-40 text-center font-serif text-lg text-forest">Loading spices…</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-white pt-40 text-center font-serif text-lg text-forest">Loading spices…</div>}>
       <SpiceFinder />
     </Suspense>
   );

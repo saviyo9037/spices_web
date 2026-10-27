@@ -95,7 +95,7 @@ export default function ProductCard({ product, compact = false }) {
           </div>
         )}
 
-        <div className="mt-3 flex items-baseline gap-1.5">
+        <div className="mt-auto flex items-baseline gap-1.5 pt-3">
           <span className="text-lg font-black text-forest">₹{price}</span>
           {originalPrice && originalPrice > price && (
             <span className="text-xs text-[#999999] line-through">₹{originalPrice}</span>
@@ -105,7 +105,7 @@ export default function ProductCard({ product, compact = false }) {
         <button
           type="button"
           onClick={handleAddToCart}
-          className={`mt-auto flex w-full items-center justify-center gap-1.5 rounded-lg px-3 py-2.5 text-xs font-bold transition-all duration-200 active:scale-95 ${
+          className={`flex w-full items-center justify-center gap-1.5 rounded-lg px-3 py-2.5 text-xs font-bold transition-all duration-200 active:scale-95 ${
             addedAnim ? "bg-gold text-night" : "bg-forest text-white hover:bg-deep"
           } mt-4`}
         >

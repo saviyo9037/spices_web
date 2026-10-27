@@ -1,201 +1,154 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Sparkles, Leaf, ShieldCheck, HeartHandshake, Award, ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronRight, Users, Sprout, MapPin, ListChecks } from "lucide-react";
+import { products } from "@/data/products";
+import { allSizes } from "@/lib/catalog";
+import FarmJourney from "@/components/FarmJourney";
 
 export const metadata = {
-  title: "Our Story & Heritage — Sourced From Kerala's Spice Coast | Spices",
+  title: "About Idukki Spices",
   description:
-    "Learn about our heritage roots in the Western Ghats, our direct farmer partnerships, sustainable sun-drying traditions, and zero-adulteration commitment.",
+    "Idukki Spices brings you spices from the high ranges of Kerala, sourced from trusted farmers and carefully processed to keep their natural aroma, flavour and goodness intact.",
 };
+
+// Every figure here is counted from the catalogue, not written by hand.
+const stats = [
+  { value: products.length, label: "spices in our range" },
+  { value: new Set(products.map((p) => p.category)).size, label: "product categories" },
+  { value: allSizes().length, label: "pack sizes" },
+  { value: "India", label: "wide delivery" },
+];
+
+const values = [
+  { icon: Users, title: "Local farmers", text: "Directly sourced." },
+  { icon: Sprout, title: "Pure & natural", text: "No artificial additives." },
+  { icon: MapPin, title: "From Idukki", text: "Rich in flavour." },
+  { icon: ListChecks, title: "Clear information", text: "Origin, ingredients and shelf life on every product page." },
+];
 
 export default function AboutPage() {
   return (
-    <div className="bg-[#faf7f2] min-h-screen pb-20">
-      {/* Hero Header */}
-      <div className="relative py-20 lg:py-28 bg-[#0f2c1f] text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-luminosity">
-          <Image
-            src="/images/hero-banner.jpg"
-            alt="Spice Plantation Panorama"
-            fill
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0f2c1f] via-[#0f2c1f]/90 to-transparent" />
-
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1b4332]/90 border border-[#dfa84a]/40 text-[#dfa84a] text-xs font-semibold tracking-wider uppercase mb-6 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Centuries of Spice Mastery</span>
-          </div>
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight mb-6">
-            Born in Kerala. Crafted by Nature.
+    <div className="bg-white text-forest">
+      <section className="relative isolate overflow-hidden bg-night text-white">
+        <Image src="/images/idukki-landscape.webp" alt="" fill priority sizes="100vw" className="-z-10 object-cover object-[70%_45%]" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-night/95 via-night/80 to-night/40" />
+        <div className="mx-auto max-w-7xl px-4 pb-28 pt-10 sm:px-6 sm:pb-32 sm:pt-14 lg:px-8">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/65">
+            <Link href="/" className="hover:text-gold">Home</Link>
+            <ChevronRight className="h-3 w-3" aria-hidden="true" />
+            <span className="text-white">About</span>
+          </nav>
+          <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.3em] text-gold">About Idukki Spices</p>
+          <h1 className="mt-3 max-w-3xl font-serif text-4xl font-bold leading-[1.1] sm:text-6xl">
+            Rooted in the hills <span className="text-gold">of Idukki</span>
           </h1>
-          <p className="text-base sm:text-lg text-white/85 leading-relaxed max-w-2xl mx-auto">
-            We started with an uncompromising vision: to bring the unadulterated aroma, natural essential oils, and heritage of single-estate Indian spices directly into your kitchen.
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
+            Spices from the high ranges of Kerala, brought to your kitchen with their natural aroma and flavour intact.
           </p>
         </div>
+      </section>
+
+      <div className="relative z-10 mx-auto -mt-14 max-w-7xl px-4 sm:px-6 lg:px-8">
+        <dl className="grid grid-cols-2 divide-x divide-y divide-line overflow-hidden rounded-2xl border border-line bg-white shadow-2xl shadow-forest/10 lg:grid-cols-4 lg:divide-y-0">
+          {stats.map((s) => (
+            <div key={s.label} className="px-5 py-6 text-center sm:py-8">
+              <dt className="font-serif text-3xl font-bold text-gold-ink sm:text-4xl">{s.value}</dt>
+              <dd className="mt-1 text-sm text-forest/65">{s.label}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
 
-      {/* Main Narrative with story-farm.jpg */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          <div className="lg:col-span-6 relative">
-            <div className="relative aspect-4/3 rounded-3xl overflow-hidden shadow-xl border border-[#e6dfd5]">
-              <Image
-                src="/images/story-farm.jpg"
-                alt="Kerala Spice Plantation Hillside"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover object-center"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 text-white">
-                <span className="text-xs uppercase font-bold text-[#dfa84a] tracking-wider block mb-1">
-                  Single Origin Provenance
+      <section className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-12 lg:gap-16 lg:px-8" aria-labelledby="our-story">
+        <div className="relative lg:col-span-6">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl shadow-forest/15">
+            <Image src="/images/story-hills-sunrise.jpg" alt="Sunrise over the misty hills and spice plantations of Idukki" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+          </div>
+          <div className="absolute -bottom-6 -right-2 hidden h-36 w-44 rotate-3 overflow-hidden rounded-2xl border-4 border-white shadow-xl sm:block lg:-right-6">
+            <Image src="/images/story-green-peppercorn.jpg" alt="Fresh green peppercorns held in a hand" fill sizes="176px" className="object-cover" />
+          </div>
+        </div>
+
+        <div className="lg:col-span-6">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gold-ink">Our story</p>
+          <h2 id="our-story" className="mt-3 font-serif text-3xl font-bold leading-tight sm:text-5xl">Rooted in the Hills of Idukki</h2>
+          <p className="mt-6 text-lg leading-relaxed text-forest/80">
+            Idukki Spices brings you spices from the high ranges of Kerala, sourced from trusted farmers and carefully
+            processed to keep their natural aroma, flavour and goodness intact.
+          </p>
+          <p className="mt-4 leading-relaxed text-forest/70">
+            The cool, misty hills of Idukki are known for spices such as pepper and cardamom. We bring a
+            selection of them to you as whole spices, ground spices and blends, in pack sizes that suit a home kitchen.
+          </p>
+          <p className="mt-4 leading-relaxed text-forest/70">
+            We keep things simple: tell you where each spice comes from, list what is in every pack, and make it easy to
+            choose the size you need.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href="/shop" className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-bold text-night transition-colors hover:bg-gold-light">
+              Shop our spices <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link href="/blog" className="inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-sm font-bold text-forest transition-colors hover:border-gold">
+              Read recipes &amp; guides
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-deep py-16 text-white sm:py-24" aria-labelledby="values">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gold">What we stand for</p>
+            <h2 id="values" className="mt-3 font-serif text-3xl font-bold sm:text-5xl">Simple, honest spices</h2>
+          </div>
+          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {values.map(({ icon: Icon, title, text }) => (
+              <li key={title} className="rounded-2xl border border-white/10 bg-white/[0.06] p-7 backdrop-blur-sm transition-colors hover:border-gold/50 hover:bg-white/10">
+                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gold text-night">
+                  <Icon className="h-6 w-6" strokeWidth={1.5} aria-hidden="true" />
                 </span>
-                <p className="font-serif text-lg font-bold">
-                  Cardamom Hills &amp; Wayanad Mountain Estates
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-6 space-y-6">
-            <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#c69238]">
-              <Leaf className="w-3.5 h-3.5" />
-              <span>Sustainable Agriculture</span>
-            </div>
-            <h2 className="font-serif text-3xl sm:text-4xl font-black text-[#143627] leading-tight">
-              Where Rainforest Mist Meets Volcanic Soil
-            </h2>
-            <p className="text-sm sm:text-base text-[#5c6c64] leading-relaxed">
-              India&apos;s Malabar Coast has enchanted travelers and traders for millennia. The combination of intense monsoon deluges, high-altitude shade canopy, and nutrient-dense humus creates the ideal microclimate for peppercorns, cardamom, ginger, and turmeric.
-            </p>
-            <p className="text-sm sm:text-base text-[#5c6c64] leading-relaxed">
-              Unlike industrial spice processing that blends low-grade harvests from across countries to lower costs, we only package single-estate harvests from certified multi-generation family farms.
-            </p>
-          </div>
+                <h3 className="mt-5 font-serif text-xl font-bold">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/75">{text}</p>
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
+      </section>
 
-      {/* Second Story Split with story-pepper-harvest.jpg */}
-      <div className="bg-white border-y border-[#e6dfd5] py-16 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            <div className="lg:col-span-6 order-2 lg:order-1 space-y-6">
-              <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#c69238]">
-                <HeartHandshake className="w-3.5 h-3.5" />
-                <span>The Human Touch</span>
-              </div>
-              <h2 className="font-serif text-3xl sm:text-4xl font-black text-[#143627] leading-tight">
-                Hand-Harvested with Reverence and Respect
-              </h2>
-              <p className="text-sm sm:text-base text-[#5c6c64] leading-relaxed">
-                Every Tellicherry peppercorn vine is climbed manually using traditional bamboo ladders. Green cardamom pods are picked selectively one by one only when their seeds turn jet-black with concentrated essential oils.
-              </p>
-              <p className="text-sm sm:text-base text-[#5c6c64] leading-relaxed">
-                By bypassing predatory brokers and paying 25% above standard market prices, we empower over 450 farmer families with stable living incomes, healthcare support, and organic farming inputs.
-              </p>
-            </div>
+      <FarmJourney />
 
-            <div className="lg:col-span-6 order-1 lg:order-2 relative">
-              <div className="relative aspect-4/3 rounded-3xl overflow-hidden shadow-xl border border-[#e6dfd5]">
-                <Image
-                  src="/images/story-pepper-harvest.jpg"
-                  alt="Pepper Harvesting & Sorting in Kerala"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6 text-white">
-                  <span className="text-xs uppercase font-bold text-[#dfa84a] tracking-wider block mb-1">
-                    Artisanal Sorting
-                  </span>
-                  <p className="font-serif text-lg font-bold">
-                    Grade-Graded for Aroma and Size
-                  </p>
-                </div>
-              </div>
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8" aria-label="Photo gallery">
+        <div className="grid gap-4 sm:grid-cols-3">
+          {[
+            ["/images/story-green-peppercorn.jpg", "Hands holding fresh green peppercorns on the vine"],
+            ["/images/story-cardamom-bowl.jpg", "Green cardamom pods in a wooden bowl"],
+            ["/images/story-farm.jpg", "Spice plantation on the hills"],
+          ].map(([src, alt]) => (
+            <div key={src} className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <Image src={src} alt={alt} fill loading="lazy" sizes="(max-width: 640px) 100vw, 33vw" className="object-cover transition-transform duration-700 hover:scale-105" />
             </div>
-          </div>
+          ))}
         </div>
-      </div>
+      </section>
 
-      {/* Core Values Strip */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="font-serif text-3xl sm:text-4xl font-black text-[#143627]">
-            Our Four Guiding Commitments
+      <section className="relative isolate overflow-hidden bg-night py-16 text-white sm:py-20">
+        <Image src="/images/clove-bulk-background.webp" alt="" fill loading="lazy" sizes="100vw" className="-z-10 object-cover object-[12%_85%]" />
+        <div className="absolute inset-0 -z-10 bg-night/75" />
+        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
+          <h2 className="font-serif text-3xl font-bold sm:text-5xl">
+            Bring Idukki <span className="text-gold">to your kitchen</span>
           </h2>
-          <p className="text-sm text-[#5c6c64] mt-2">
-            The values that shape every batch we harvest, mill, and deliver.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="p-6 rounded-2xl bg-white border border-[#e6dfd5] shadow-xs">
-            <div className="w-12 h-12 rounded-xl bg-[#143627] text-[#dfa84a] flex items-center justify-center mb-4">
-              <Leaf className="w-6 h-6" />
-            </div>
-            <h3 className="font-serif text-lg font-bold text-[#143627] mb-2">
-              Purity First
-            </h3>
-            <p className="text-xs text-[#5c6c64] leading-relaxed">
-              Never dyed, never chemically fumigated, and 100% free of starch fillers or anti-caking additives.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-white border border-[#e6dfd5] shadow-xs">
-            <div className="w-12 h-12 rounded-xl bg-[#143627] text-[#dfa84a] flex items-center justify-center mb-4">
-              <HeartHandshake className="w-6 h-6" />
-            </div>
-            <h3 className="font-serif text-lg font-bold text-[#143627] mb-2">
-              Farmer Dignity
-            </h3>
-            <p className="text-xs text-[#5c6c64] leading-relaxed">
-              Ethical trade partnerships that invest back in local educational infrastructure and regenerative agriculture.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-white border border-[#e6dfd5] shadow-xs">
-            <div className="w-12 h-12 rounded-xl bg-[#143627] text-[#dfa84a] flex items-center justify-center mb-4">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <h3 className="font-serif text-lg font-bold text-[#143627] mb-2">
-              Cold Processing
-            </h3>
-            <p className="text-xs text-[#5c6c64] leading-relaxed">
-              Gentle milling speeds that protect volatile terpenes from thermal damage, locking in pure fragrance.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-white border border-[#e6dfd5] shadow-xs">
-            <div className="w-12 h-12 rounded-xl bg-[#143627] text-[#dfa84a] flex items-center justify-center mb-4">
-              <Award className="w-6 h-6" />
-            </div>
-            <h3 className="font-serif text-lg font-bold text-[#143627] mb-2">
-              Peak Freshness
-            </h3>
-            <p className="text-xs text-[#5c6c64] leading-relaxed">
-              Dispatched in nitrogen-flushed barrier bags straight from the harvest season to your kitchen doorstep.
-            </p>
+          <p className="mx-auto mt-4 max-w-xl text-white/80">Browse the range, or get in touch if you have a question about an order or a spice.</p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link href="/shop" className="inline-flex items-center gap-2 rounded-full bg-gold px-8 py-3.5 text-sm font-bold text-night transition-colors hover:bg-gold-light">
+              Explore the shop <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link href="/contact" className="inline-flex items-center rounded-full border border-white/40 px-8 py-3.5 text-sm font-bold text-white transition-colors hover:border-gold hover:text-gold">
+              Contact us
+            </Link>
           </div>
         </div>
-
-        {/* Call to action */}
-        <div className="mt-16 text-center">
-          <Link
-            href="/shop"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#143627] hover:bg-[#1c4b37] text-white font-bold text-sm tracking-wide uppercase transition-all shadow-md"
-          >
-            <span>Explore The Collection</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
+      </section>
     </div>
   );
 }

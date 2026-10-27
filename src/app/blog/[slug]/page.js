@@ -2,7 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { blogPosts, getBlogPostBySlug } from "@/data/blogPosts";
-import { Calendar, Clock, ArrowLeft, User, Sparkles, Share2 } from "lucide-react";
+import { products } from "@/data/products";
+import ReadingProgress from "@/components/ReadingProgress";
+import { Clock, ChevronRight, ArrowRight, ListTree, ShoppingBag } from "lucide-react";
 
 export function generateStaticParams() {
   return blogPosts.map((post) => ({
@@ -15,10 +17,29 @@ export async function generateMetadata({ params }) {
   const post = getBlogPostBySlug(slug);
   if (!post) return { title: "Article Not Found" };
   return {
-    title: `${post.title} | Spices Journal`,
+    title: post.title,
     description: post.excerpt,
   };
 }
+
+const slugify = (t) =>
+  t
+    .toLowerCase()
+    .replace(/<[^>]+>/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+// Words in the article that point at a product we actually sell.
+const MENTIONS = [
+  { re: /pepper/i, slug: "black-pepper" },
+  { re: /cardamom/i, slug: "cardamom" },
+  { re: /turmeric/i, slug: "turmeric-powder" },
+  { re: /cinnamon/i, slug: "cinnamon-sticks" },
+  { re: /clove/i, slug: "cloves" },
+  { re: /nutmeg|\bmace\b/i, slug: "nutmeg" },
+  { re: /chilli|chili/i, slug: "red-chilli-powder" },
+  { re: /garam masala|masala/i, slug: "spice-blends" },
+];
 
 export default async function BlogPostPage({ params }) {
   const { slug } = await params;
@@ -28,129 +49,150 @@ export default async function BlogPostPage({ params }) {
     notFound();
   }
 
+  // Give every h2 an id so the contents list can link to it.
+  const toc = [];
+  const html = post.content.replace(/<h2>([\s\S]*?)<\/h2>/g, (_, inner) => {
+    const id = slugify(inner);
+    toc.push({ id, title: inner.replace(/<[^>]+>/g, "").trim() });
+    return `<h2 id="${id}">${inner}</h2>`;
+  });
+
+  const text = post.content.replace(/<[^>]+>/g, " ");
+  const mentioned = MENTIONS.filter((m) => m.re.test(text))
+    .map((m) => products.find((p) => p.slug === m.slug))
+    .filter((p, i, arr) => p && arr.indexOf(p) === i);
+
   const otherPosts = blogPosts.filter((p) => p.id !== post.id);
 
   return (
-    <article className="bg-[#faf7f2] min-h-screen py-10 sm:py-16">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back Link */}
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-[#5c6c64] hover:text-[#143627] mb-8"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Back to All Articles</span>
-        </Link>
+    <article className="bg-white text-forest">
+      <ReadingProgress targetId="article-body" />
 
-        {/* Article Header */}
-        <header className="mb-10 text-center sm:text-left">
-          <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#c69238] mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>{post.category}</span>
+      <header className="relative isolate overflow-hidden bg-night text-white">
+        <Image src={post.image} alt="" fill priority sizes="100vw" className="-z-10 object-cover object-center" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-night via-night/80 to-night/50" />
+        <div className="mx-auto max-w-6xl px-4 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-14 lg:px-8">
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 text-xs text-white/65">
+            <Link href="/" className="hover:text-gold">Home</Link>
+            <ChevronRight className="h-3 w-3" aria-hidden="true" />
+            <Link href="/blog" className="hover:text-gold">Recipes</Link>
+            <ChevronRight className="h-3 w-3" aria-hidden="true" />
+            <span className="text-white">{post.category}</span>
+          </nav>
+          <div className="mt-10 flex flex-wrap items-center gap-3 text-sm">
+            <span className="rounded-full bg-gold px-3.5 py-1 text-[11px] font-bold uppercase tracking-wide text-night">{post.category}</span>
+            <span className="flex items-center gap-1.5 text-white/80">
+              <Clock className="h-4 w-4" aria-hidden="true" /> {post.readTime}
+            </span>
           </div>
-          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-black text-[#143627] leading-tight mb-6">
-            {post.title}
-          </h1>
+          <h1 className="mt-4 max-w-4xl font-serif text-3xl font-bold leading-[1.15] sm:text-5xl lg:text-6xl">{post.title}</h1>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">{post.excerpt}</p>
+        </div>
+      </header>
 
-          <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-y border-[#e6dfd5] text-xs text-[#5c6c64]">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#143627] text-[#dfa84a] flex items-center justify-center font-bold">
-                <User className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="font-bold text-[#143627] block text-sm">
-                  {post.author}
-                </span>
-                <span className="text-[11px] text-[#87978f]">
-                  {post.authorRole}
-                </span>
-              </div>
-            </div>
+      <div className="mx-auto grid max-w-6xl gap-12 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[minmax(0,1fr)_290px] lg:gap-14 lg:px-8">
+        <div>
+          {toc.length > 1 && (
+            <nav aria-label="In this article" className="mb-10 rounded-2xl border border-line bg-paper/60 p-5 lg:hidden">
+              <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em]">
+                <ListTree className="h-4 w-4 text-gold-ink" aria-hidden="true" /> In this article
+              </p>
+              <ol className="mt-3 space-y-2 text-sm">
+                {toc.map((t, i) => (
+                  <li key={t.id}>
+                    <a href={`#${t.id}`} className="text-forest/80 hover:text-gold-ink">
+                      {i + 1}. {t.title}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )}
 
-            <div className="flex items-center gap-4 text-[#87978f]">
-              <span className="flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5" />
-                {post.date}
-              </span>
-              <span>&bull;</span>
-              <span className="flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5" />
-                {post.readTime}
-              </span>
+          <div id="article-body" className="article-body" dangerouslySetInnerHTML={{ __html: html }} />
+
+          <div className="mt-14 flex flex-col items-start justify-between gap-4 rounded-2xl bg-deep p-6 text-white sm:flex-row sm:items-center sm:p-8">
+            <div>
+              <p className="font-serif text-2xl font-bold">Cook with the spices from this guide</p>
+              <p className="mt-1 text-sm text-white/75">Browse whole spices, powders and blends from Idukki.</p>
             </div>
+            <Link
+              href="/shop"
+              className="inline-flex shrink-0 items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-bold text-night transition-colors hover:bg-gold-light"
+            >
+              Shop spices <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
-        </header>
-
-        {/* Article Hero Image */}
-        <div className="relative aspect-16/9 w-full rounded-3xl overflow-hidden bg-white border border-[#e6dfd5] shadow-lg mb-12">
-          <Image
-            src={post.image}
-            alt={post.title}
-            fill
-            priority
-            sizes="(max-width: 1024px) 100vw, 896px"
-            className="object-cover object-center"
-          />
         </div>
 
-        {/* Article Body Content */}
-        <div
-          className="prose prose-stone prose-lg max-w-none text-[#16201b] leading-relaxed space-y-6 [&>h2]:font-serif [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-[#143627] [&>h2]:pt-6 [&>p.lead]:text-lg [&>p.lead]:font-medium [&>p.lead]:text-[#5c6c64] [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+        <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
+          {toc.length > 1 && (
+            <nav aria-label="In this article" className="hidden rounded-2xl border border-line bg-white p-5 shadow-sm lg:block">
+              <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em]">
+                <ListTree className="h-4 w-4 text-gold-ink" aria-hidden="true" /> In this article
+              </p>
+              <ol className="mt-4 space-y-2.5 border-l-2 border-line pl-4 text-sm">
+                {toc.map((t) => (
+                  <li key={t.id}>
+                    <a href={`#${t.id}`} className="block leading-snug text-forest/75 transition-colors hover:text-gold-ink">
+                      {t.title}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )}
 
-        {/* Article Share / Footer */}
-        <div className="mt-14 pt-6 border-t border-[#e6dfd5] flex items-center justify-between">
-          <div className="text-xs text-[#5c6c64]">
-            Tagged under: <span className="font-semibold text-[#143627]">{post.category}</span>
-          </div>
-          <Link
-            href="/shop"
-            className="px-5 py-2.5 rounded-full bg-[#143627] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#1c4b37] transition-colors"
-          >
-            Shop Featured Spices &rarr;
-          </Link>
-        </div>
+          {mentioned.length > 0 && (
+            <div className="rounded-2xl border border-line bg-white p-5 shadow-sm">
+              <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em]">
+                <ShoppingBag className="h-4 w-4 text-gold-ink" aria-hidden="true" /> Spices in this article
+              </p>
+              <ul className="mt-4 space-y-3">
+                {mentioned.map((p) => (
+                  <li key={p.id}>
+                    <Link href={`/product/${p.slug}`} className="group flex items-center gap-3 rounded-xl p-1.5 transition-colors hover:bg-paper/70">
+                      <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-paper">
+                        <Image src={p.image} alt="" fill sizes="56px" className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="line-clamp-2 text-sm font-semibold leading-snug group-hover:text-gold-ink">{p.name}</span>
+                        <span className="text-xs text-forest/60">From ₹{Math.min(...(p.weights || [{ price: p.price }]).map((w) => w.price))}</span>
+                      </span>
+                      <ChevronRight className="h-4 w-4 text-forest/35 group-hover:text-gold-ink" aria-hidden="true" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </aside>
+      </div>
 
-        {/* Other Articles Recommendation */}
-        {otherPosts.length > 0 && (
-          <div className="mt-20 pt-10 border-t border-[#e6dfd5]">
-            <h3 className="font-serif text-2xl font-bold text-[#143627] mb-6">
-              More from The Spice Journal
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {otherPosts.length > 0 && (
+        <section className="border-t border-line bg-paper/50 py-14 sm:py-16" aria-labelledby="more-journal">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <h2 id="more-journal" className="font-serif text-3xl font-bold">More from the journal</h2>
+            <div className="mt-6 grid gap-5 sm:grid-cols-2">
               {otherPosts.map((p) => (
-                <Link
-                  key={p.id}
-                  href={`/blog/${p.slug}`}
-                  className="p-5 rounded-2xl bg-white border border-[#e6dfd5] hover:border-[#dfa84a] shadow-xs transition-all group flex gap-4 items-center"
-                >
-                  <div className="relative w-24 h-24 rounded-xl overflow-hidden bg-[#faf7f2] shrink-0">
-                    <Image
-                      src={p.image}
-                      alt={p.title}
-                      fill
-                      sizes="96px"
-                      className="object-cover group-hover:scale-105 transition-transform"
-                    />
-                  </div>
-                  <div>
-                    <span className="text-[10px] uppercase font-bold text-[#c69238] block mb-1">
-                      {p.category}
-                    </span>
-                    <h4 className="font-serif text-sm font-bold text-[#143627] group-hover:text-[#c69238] line-clamp-2 transition-colors">
-                      {p.title}
-                    </h4>
-                    <span className="text-[11px] text-[#87978f] mt-1 block">
-                      {p.readTime}
-                    </span>
-                  </div>
+                <Link key={p.id} href={`/blog/${p.slug}`} className="group flex items-center gap-4 rounded-2xl border border-line bg-white p-4 transition-shadow hover:shadow-lg">
+                  <span className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-paper">
+                    <Image src={p.image} alt="" fill sizes="96px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                  </span>
+                  <span>
+                    <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-gold-ink">{p.category}</span>
+                    <span className="mt-1 block font-serif text-base font-bold leading-snug group-hover:text-gold-ink">{p.title}</span>
+                    <span className="mt-1 block text-xs text-forest/55">{p.readTime}</span>
+                  </span>
                 </Link>
               ))}
             </div>
+            <Link href="/blog" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-gold-ink hover:underline">
+              &larr; Back to all recipes &amp; guides
+            </Link>
           </div>
-        )}
-      </div>
+        </section>
+      )}
     </article>
   );
 }

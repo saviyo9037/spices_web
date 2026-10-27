@@ -16,3 +16,9 @@ export const SOCIAL_LINKS = [
   { name: "Facebook", href: process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK || "" },
   { name: "YouTube", href: process.env.NEXT_PUBLIC_SOCIAL_YOUTUBE || "" },
 ];
+
+// Optional contact details. They are shown on the Contact page only when set in the environment,
+// so no phone number, address or opening hours are ever invented.
+export const CONTACT_PHONE = process.env.NEXT_PUBLIC_CONTACT_PHONE || "";
+export const CONTACT_ADDRESS = process.env.NEXT_PUBLIC_CONTACT_ADDRESS || "";
+export const CONTACT_HOURS = process.env.NEXT_PUBLIC_CONTACT_HOURS || "";
