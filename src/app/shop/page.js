@@ -229,7 +229,7 @@ function ShopContent() {
   const panel = <FilterPanel f={f} set={set} toggleIn={toggleIn} wishlistCount={wishlistIds.length} />;
 
   return (
-    <div className="min-h-screen bg-[#F4ECDA] [background-image:radial-gradient(900px_420px_at_92%_0%,rgba(217,160,47,0.16),transparent_70%),radial-gradient(800px_500px_at_0%_45%,rgba(16,59,45,0.09),transparent_70%),radial-gradient(900px_500px_at_100%_85%,rgba(16,59,45,0.08),transparent_70%)]">
+    <div className="min-h-screen bg-white">
       <section className="relative isolate overflow-hidden bg-night text-white">
         <Image src="/images/idukki-landscape.webp" alt="" fill priority sizes="100vw" className="-z-10 object-cover object-[70%_45%]" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-night/95 via-night/80 to-night/40" />
@@ -264,8 +264,8 @@ function ShopContent() {
       </section>
 
       <div className="bg-deep">
-        <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
-          <div role="group" aria-label="Browse by spice" className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 pb-14 pt-6 sm:mx-0 sm:gap-3 sm:px-0">
+        <div className="mx-auto max-w-[1840px] px-4 sm:px-6 lg:px-5 xl:px-6">
+          <div role="group" aria-label="Browse by spice" className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 pb-14 pt-6 sm:mx-0 sm:gap-3 sm:px-0 lg:pb-6">
             {STRIP.map((c) => {
               const on = f.category === c.id;
               return (
@@ -294,9 +294,9 @@ function ShopContent() {
         </div>
       </div>
 
-      <div className="relative z-30 mx-auto -mt-8 max-w-[1400px] px-4 sm:px-6 lg:px-8 md:sticky md:top-[76px]">
+      <div className="relative z-30 mx-auto -mt-8 max-w-[1840px] px-4 sm:px-6 md:sticky md:top-[76px] lg:hidden">
         <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-line bg-white p-2.5 shadow-xl shadow-forest/10 sm:flex-nowrap sm:p-3">
-          <div className="relative min-w-0 flex-1 basis-full sm:basis-auto">
+          <div className="relative min-w-0 flex-1 basis-full sm:basis-auto lg:hidden">
             <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gold-ink" aria-hidden="true" />
             <input
               type="search"
@@ -307,7 +307,7 @@ function ShopContent() {
               className="w-full rounded-xl bg-paper/70 py-3.5 pl-12 pr-4 text-base text-forest placeholder:text-forest/45 focus:bg-white focus:outline-none focus:ring-2 focus:ring-gold/60"
             />
           </div>
-          <p className="hidden shrink-0 border-l border-line px-4 text-sm text-forest/70 md:block" aria-live="polite">
+          <p className="hidden shrink-0 border-l border-line px-4 text-sm text-forest/70 md:block lg:flex-1 lg:border-l-0 lg:pl-3 lg:text-base" aria-live="polite">
             <strong className="text-forest">{shown.length}</strong> of {products.length} spices
           </p>
           <button
@@ -333,9 +333,9 @@ function ShopContent() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1400px] px-4 pb-10 pt-8 sm:px-6 sm:pb-14 sm:pt-10 lg:grid lg:grid-cols-[248px_1fr] lg:gap-7 lg:px-8">
+      <div className="mx-auto max-w-[1840px] px-4 pb-10 pt-8 sm:px-6 sm:pb-14 sm:pt-10 lg:grid lg:grid-cols-[256px_1fr] lg:gap-6 lg:px-5 xl:px-6">
         <aside className="hidden lg:block">
-          <div className="sticky top-[168px] flex max-h-[calc(100vh-188px)] flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-lg shadow-forest/5">
+          <div className="sticky top-[92px] flex max-h-[calc(100vh-112px)] flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-lg shadow-forest/5">
             <div className="flex items-center justify-between border-b border-line px-6 py-4">
               <h2 className="font-serif text-xl font-bold text-forest">Filters</h2>
               {active.length > 0 ? (
@@ -344,11 +344,42 @@ function ShopContent() {
                 <span className="text-xs text-forest/45">No filters applied</span>
               )}
             </div>
+            <div className="border-b border-line px-6 py-4">
+              <div className="relative">
+                <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gold-ink" aria-hidden="true" />
+                <input
+                  type="search"
+                  aria-label="Search spices"
+                  value={f.q}
+                  onChange={(e) => set({ q: e.target.value })}
+                  placeholder="Search spices..."
+                  className="w-full rounded-xl border border-line bg-paper/70 py-3 pl-10 pr-3 text-sm text-forest placeholder:text-forest/45 focus:border-gold focus:bg-white focus:outline-none focus:ring-2 focus:ring-gold/40"
+                />
+              </div>
+              <label className="mt-3 block">
+                <span className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.2em] text-forest/60">Sort by</span>
+                <select
+                  value={f.sort}
+                  onChange={(e) => set({ sort: e.target.value })}
+                  className="w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm font-semibold text-forest focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/40"
+                >
+                  {SORTS.map((x) => (
+                    <option key={x.id} value={x.id}>{x.label}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
             <div className="filter-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 py-5">{panel}</div>
           </div>
         </aside>
 
         <div>
+          <div className="mb-5 hidden items-center lg:flex">
+            <p className="text-sm text-forest/70" aria-live="polite">
+              <strong className="text-forest">{shown.length}</strong> of {products.length} spices
+            </p>
+          </div>
+
           {active.length > 0 && (
             <div className="mb-5 flex flex-wrap items-center gap-2">
               {active.map((a) => (
