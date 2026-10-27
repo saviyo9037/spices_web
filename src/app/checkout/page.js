@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -71,7 +71,7 @@ export default function CheckoutPage() {
 
   if (step === "confirmed") {
     return (
-      <div className="bg-[#faf7f2] min-h-[80vh] flex items-center justify-center py-16 px-4">
+      <div className="bg-white min-h-[80dvh] flex items-center justify-center py-16 px-4">
         <div className="bg-white rounded-3xl p-8 sm:p-12 border border-[#e6dfd5] shadow-xl max-w-lg w-full text-center space-y-6 animate-in zoom-in-95 duration-300">
           <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto shadow-sm">
             <CheckCircle2 className="w-10 h-10" />
@@ -90,7 +90,7 @@ export default function CheckoutPage() {
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-[#faf7f2] border border-[#e6dfd5] text-left text-xs space-y-2">
+          <div className="p-4 rounded-2xl bg-white border border-[#e6dfd5] text-left text-xs space-y-2">
             <div className="flex justify-between">
               <span className="text-[#87978f]">Order ID:</span>
               <strong className="text-[#143627] font-mono">{orderId}</strong>
@@ -115,7 +115,7 @@ export default function CheckoutPage() {
             </div>
             <div className="flex justify-between pt-2 border-t border-[#e6dfd5] font-bold text-sm text-[#143627]">
               <span>Amount Paid:</span>
-              <span>₹{grandTotal}</span>
+              <span>â‚¹{grandTotal}</span>
             </div>
           </div>
 
@@ -139,7 +139,7 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="bg-[#faf7f2] min-h-[70vh] flex items-center justify-center py-16 px-4">
+      <div className="bg-white min-h-[70dvh] flex items-center justify-center py-16 px-4">
         <div className="bg-white rounded-3xl p-10 text-center border border-[#e6dfd5] max-w-md w-full shadow-xs">
           <ShoppingBag className="w-12 h-12 text-[#87978f] mx-auto mb-3" />
           <h2 className="font-serif text-xl font-bold text-[#143627] mb-2">
@@ -160,7 +160,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="bg-[#faf7f2] min-h-screen py-10 sm:py-16">
+    <div className="bg-white min-h-screen py-10 sm:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-10">
           <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#c69238] mb-1">
@@ -202,7 +202,7 @@ export default function CheckoutPage() {
                           firstName: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#faf7f2] border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
                     />
                   </div>
 
@@ -220,7 +220,7 @@ export default function CheckoutPage() {
                           lastName: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#faf7f2] border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
                     />
                   </div>
 
@@ -238,7 +238,7 @@ export default function CheckoutPage() {
                           email: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#faf7f2] border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
                     />
                   </div>
 
@@ -256,7 +256,7 @@ export default function CheckoutPage() {
                           phone: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#faf7f2] border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
                     />
                   </div>
 
@@ -274,7 +274,7 @@ export default function CheckoutPage() {
                           address: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#faf7f2] border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
                     />
                   </div>
 
@@ -292,7 +292,7 @@ export default function CheckoutPage() {
                           city: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#faf7f2] border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
                     />
                   </div>
 
@@ -311,7 +311,7 @@ export default function CheckoutPage() {
                             state: e.target.value,
                           })
                         }
-                        className="w-full px-3 py-2.5 rounded-xl bg-[#faf7f2] border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
+                        className="w-full px-3 py-2.5 rounded-xl bg-white border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
                       />
                       <input
                         type="text"
@@ -323,7 +323,7 @@ export default function CheckoutPage() {
                             pincode: e.target.value,
                           })
                         }
-                        className="w-full px-3 py-2.5 rounded-xl bg-[#faf7f2] border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
+                        className="w-full px-3 py-2.5 rounded-xl bg-white border border-[#e6dfd5] text-sm text-[#143627] focus:outline-none focus:border-[#143627]"
                       />
                     </div>
                   </div>
@@ -346,8 +346,8 @@ export default function CheckoutPage() {
                   <label
                     className={`flex items-center gap-3.5 p-4 rounded-2xl border cursor-pointer transition-all ${
                       paymentMethod === "upi"
-                        ? "border-[#143627] bg-[#faf7f2] shadow-xs"
-                        : "border-[#e6dfd5] hover:bg-[#faf7f2]"
+                        ? "border-[#143627] bg-white shadow-xs"
+                        : "border-[#e6dfd5] hover:bg-white"
                     }`}
                   >
                     <input
@@ -375,8 +375,8 @@ export default function CheckoutPage() {
                   <label
                     className={`flex items-center gap-3.5 p-4 rounded-2xl border cursor-pointer transition-all ${
                       paymentMethod === "card"
-                        ? "border-[#143627] bg-[#faf7f2] shadow-xs"
-                        : "border-[#e6dfd5] hover:bg-[#faf7f2]"
+                        ? "border-[#143627] bg-white shadow-xs"
+                        : "border-[#e6dfd5] hover:bg-white"
                     }`}
                   >
                     <input
@@ -404,8 +404,8 @@ export default function CheckoutPage() {
                   <label
                     className={`flex items-center gap-3.5 p-4 rounded-2xl border cursor-pointer transition-all ${
                       paymentMethod === "netbanking"
-                        ? "border-[#143627] bg-[#faf7f2] shadow-xs"
-                        : "border-[#e6dfd5] hover:bg-[#faf7f2]"
+                        ? "border-[#143627] bg-white shadow-xs"
+                        : "border-[#e6dfd5] hover:bg-white"
                     }`}
                   >
                     <input
@@ -433,8 +433,8 @@ export default function CheckoutPage() {
                   <label
                     className={`flex items-center gap-3.5 p-4 rounded-2xl border cursor-pointer transition-all ${
                       paymentMethod === "cod"
-                        ? "border-[#143627] bg-[#faf7f2] shadow-xs"
-                        : "border-[#e6dfd5] hover:bg-[#faf7f2]"
+                        ? "border-[#143627] bg-white shadow-xs"
+                        : "border-[#e6dfd5] hover:bg-white"
                     }`}
                   >
                     <input
@@ -475,7 +475,7 @@ export default function CheckoutPage() {
                       key={`${item.id}-${item.weight}`}
                       className="flex items-center gap-3 text-xs"
                     >
-                      <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-[#faf7f2] border border-[#e6dfd5] shrink-0">
+                      <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-white border border-[#e6dfd5] shrink-0">
                         <Image
                           src={item.image}
                           alt={item.name}
@@ -493,7 +493,7 @@ export default function CheckoutPage() {
                         </div>
                       </div>
                       <div className="font-bold text-[#143627]">
-                        ₹{item.price * item.quantity}
+                        â‚¹{item.price * item.quantity}
                       </div>
                     </div>
                   ))}
@@ -503,12 +503,12 @@ export default function CheckoutPage() {
                 <div className="pt-4 border-t border-[#f3eee4] space-y-2 text-xs text-[#5c6c64]">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span className="font-bold text-[#16201b]">₹{cartSubtotal}</span>
+                    <span className="font-bold text-[#16201b]">â‚¹{cartSubtotal}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Express Air Courier</span>
                     <span className="font-bold text-emerald-700">
-                      {shippingCost === 0 ? "FREE" : `₹${shippingCost}`}
+                      {shippingCost === 0 ? "FREE" : `â‚¹${shippingCost}`}
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -517,7 +517,7 @@ export default function CheckoutPage() {
                   </div>
                   <div className="pt-3 border-t border-[#f3eee4] flex justify-between text-base font-black text-[#143627]">
                     <span>Total Due</span>
-                    <span>₹{grandTotal}</span>
+                    <span>â‚¹{grandTotal}</span>
                   </div>
                 </div>
 
@@ -531,7 +531,7 @@ export default function CheckoutPage() {
                     <span>Processing Order...</span>
                   ) : (
                     <>
-                      <span>Place Spice Order &bull; ₹{grandTotal}</span>
+                      <span>Place Spice Order &bull; â‚¹{grandTotal}</span>
                       <ArrowRight className="w-4 h-4 text-[#dfa84a]" />
                     </>
                   )}

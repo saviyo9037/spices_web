@@ -279,7 +279,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
       )}
 
       {/* Phone: pinned buy bar */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 px-4 py-3 shadow-[0_-8px_24px_rgba(0,0,0,0.08)] backdrop-blur-md lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 px-4 pt-3 safe-bottom shadow-[0_-8px_24px_rgba(0,0,0,0.08)] backdrop-blur-md lg:hidden">
         <div className="mx-auto flex max-w-xl items-center gap-4">
           <div className="min-w-0 flex-1">
             <p className="truncate text-xs text-forest/60">{product.name} · {selectedWeight?.label}</p>

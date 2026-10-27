@@ -23,6 +23,13 @@ const scriptFont = Caveat({
   display: "swap",
 });
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#08271d",
+};
+
 export const metadata = {
   title: { default: "Idukki Spices — Nature's Best Spices", template: "%s | Idukki Spices" },
   description:
@@ -44,7 +51,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${serifFont.variable} ${sansFont.variable} ${scriptFont.variable} h-full scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col bg-[#faf7f2] text-[#1c1c1c] font-sans antialiased selection:bg-[#dfa84a] selection:text-[#143627]">
+      <body className="min-h-full flex flex-col bg-white text-[#1c1c1c] font-sans antialiased selection:bg-[#dfa84a] selection:text-[#143627]">
         <Providers>
           <Header />
           <div className="flex-1">{children}</div>

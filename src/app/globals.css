@@ -41,7 +41,7 @@ html {
 }
 
 body {
-  background-color: var(--bg-page);
+  background-color: #ffffff;
   color: var(--text-main);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
@@ -257,3 +257,15 @@ p {
 .cart-slide { animation: cart-slide-in 0.32s cubic-bezier(0.22, 1, 0.36, 1); }
 .cart-fade { animation: cart-fade-in 0.25s ease-out; }
 @media (prefers-reduced-motion: reduce) { .cart-slide, .cart-fade { animation: none; } }
+
+/* ---- Mobile polish (iOS Safari + Android Chrome) ---- */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+button, [role="button"], a, summary, select, label[for] { touch-action: manipulation; }
+img, video { max-width: 100%; }
+/* 16px form text stops iOS from zooming the page when a field is focused */
+@media (max-width: 1023px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea { font-size: 16px !important; }
+}
+/* keep fixed bars clear of the iPhone home indicator / Android gesture bar */
+.safe-bottom { padding-bottom: calc(0.75rem + env(safe-area-inset-bottom)); }
+.safe-bottom-lg { padding-bottom: calc(1.25rem + env(safe-area-inset-bottom)); }

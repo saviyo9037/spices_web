@@ -33,7 +33,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="bg-[#faf7f2] min-h-[85vh] flex items-center justify-center py-16 px-4">
+    <div className="bg-[#faf7f2] min-h-[85dvh] flex items-center justify-center py-16 px-4">
       <div className="bg-white rounded-3xl p-8 sm:p-12 border border-[#e6dfd5] shadow-xl max-w-md w-full">
         {/* Brand Header */}
         <div className="text-center mb-8">

@@ -495,7 +495,7 @@ function ShopContent() {
       {drawer && (
         <div role="dialog" aria-modal="true" aria-label="Filters" className="fixed inset-0 z-[100] lg:hidden">
           <button type="button" aria-label="Close filters" onClick={() => setDrawer(false)} className="absolute inset-0 bg-black/60 backdrop-blur-xs" />
-          <div className="absolute inset-x-0 bottom-0 flex max-h-[85vh] flex-col rounded-t-3xl bg-white shadow-2xl">
+          <div className="absolute inset-x-0 bottom-0 flex max-h-[85dvh] flex-col rounded-t-3xl bg-white shadow-2xl">
             <div className="flex items-center justify-between border-b border-line px-5 py-4">
               <div className="flex items-center gap-2">
                 <SlidersHorizontal className="h-4 w-4 text-gold-ink" />

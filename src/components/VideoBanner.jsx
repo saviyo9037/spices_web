@@ -123,7 +123,7 @@ export default function VideoBanner() {
             muted
             playsInline
             preload="none"
-            className="max-h-[85vh] w-full max-w-5xl rounded-2xl bg-black shadow-2xl"
+            className="max-h-[85dvh] w-full max-w-5xl rounded-2xl bg-black shadow-2xl"
           />
         </div>
       )}
