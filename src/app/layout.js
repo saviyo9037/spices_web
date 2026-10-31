@@ -1,17 +1,17 @@
-import { Playfair_Display, Inter, Caveat } from "next/font/google";
+import { Fraunces, Manrope, Caveat } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Providers from "@/components/Providers";
 
-const serifFont = Playfair_Display({
+const serifFont = Fraunces({
   subsets: ["latin"],
   variable: "--font-serif",
-  weight: ["500", "600", "700"],
+  axes: ["opsz"],
   display: "swap",
 });
 
-const sansFont = Inter({
+const sansFont = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
