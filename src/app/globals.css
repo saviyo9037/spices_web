@@ -282,3 +282,14 @@ img, video { max-width: 100%; }
 .marquee-track { animation: marquee 38s linear infinite; }
 .marquee-track:hover { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+
+/* Rotating circular stamp */
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.animate-spin-slow { animation: spin-slow 24s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .animate-spin-slow { animation: none; } }
+
+/* Gentle bobbing for floating chips */
+@keyframes story-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.story-float { animation: story-float 5s ease-in-out infinite; }
+.story-float-delay { animation-delay: 1.6s; }
+@media (prefers-reduced-motion: reduce) { .story-float { animation: none; } }
