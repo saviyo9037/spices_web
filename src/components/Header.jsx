@@ -20,6 +20,8 @@ import {
   BookOpen,
   Mail,
   ChevronRight,
+  MapPin,
+  Truck,
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -126,7 +128,28 @@ export default function Header() {
   if (isHome) {
     return (
       <>
-        <header className="fixed top-3 sm:top-5 inset-x-0 z-50 px-3 sm:px-6 header-fade pointer-events-none">
+        {/* Top Utility Announcement Bar */}
+        <div className="fixed top-0 inset-x-0 z-50 bg-[#072616] text-white text-[11px] sm:text-xs py-1.5 px-4 hidden md:block border-b border-white/10 shadow-xs pointer-events-auto">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-6 text-white/90">
+              <span className="flex items-center gap-1.5 font-medium">
+                <MapPin className="w-3.5 h-3.5 text-[#F5B900]" /> Idukki, Kerala
+              </span>
+              <span className="flex items-center gap-1.5 font-medium">
+                <Truck className="w-3.5 h-3.5 text-[#F5B900]" /> Pan India Delivery
+              </span>
+              <span className="flex items-center gap-1.5 font-medium">
+                <Leaf className="w-3.5 h-3.5 text-[#F5B900]" /> 100% Natural
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 text-white/90 font-medium">
+              <PhoneCall className="w-3.5 h-3.5 text-[#F5B900]" />
+              <span>Need Help? +91 98765 43210</span>
+            </div>
+          </div>
+        </div>
+
+        <header className="fixed top-2 md:top-10 inset-x-0 z-50 px-3 sm:px-6 header-fade pointer-events-none">
           <div className="pointer-events-auto max-w-[1080px] mx-auto rounded-full bg-[#FAF7EE] shadow-2xl shadow-black/30 border border-[#EDE7D9] py-1.5 px-2.5 sm:px-3 flex items-center justify-between gap-2">
             {/* Left Brand Badge with dark green fill, gold border & leaf icon */}
             <Link
@@ -198,35 +221,64 @@ export default function Header() {
                 </span>
               </button>
 
-              {/* Mobile Hamburger Toggle */}
+              {/* Mobile menu trigger */}
               <button
-                onClick={() => setMobileMenuOpen((o) => !o)}
-                aria-label="Toggle menu"
-                className="w-8 h-8 flex items-center justify-center rounded-full text-slate-700 hover:text-[#0B3320] lg:hidden cursor-pointer"
+                onClick={() => setMobileMenuOpen(true)}
+                aria-label="Open mobile navigation menu"
+                className="w-8 h-8 lg:hidden flex items-center justify-center rounded-full text-slate-700 hover:text-[#0B3320] hover:bg-slate-200/60 transition-colors cursor-pointer"
               >
-                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                <Menu className="w-4 h-4" />
               </button>
             </div>
           </div>
-
-          {/* Mobile Navigation Dropdown */}
-          {mobileMenuOpen && (
-            <div className="pointer-events-auto lg:hidden mt-2 max-w-[1080px] mx-auto rounded-3xl p-4 bg-[#FAF7EE]/98 backdrop-blur-2xl border border-[#EDE7D9] text-[#08271d] shadow-2xl space-y-2 animate-in slide-in-from-top-3 duration-200">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0B3320] hover:text-white transition-colors"
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </div>
-          )}
         </header>
 
-        {/* Global Search Modal */}
+        {/* Search Modal */}
         <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-50 lg:hidden">
+            <div
+              className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            <div className="fixed inset-y-0 right-0 w-full max-w-xs bg-[#FAF7EE] shadow-2xl p-6 flex flex-col justify-between overflow-y-auto">
+              <div>
+                <div className="flex items-center justify-between pb-6 border-b border-[#EDE7D9]">
+                  <div className="flex items-center gap-2">
+                    <Leaf className="w-5 h-5 text-[#143627]" />
+                    <span className="font-serif text-lg font-bold text-[#143627]">Idukki Spices</span>
+                  </div>
+                  <button
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-8 h-8 rounded-full bg-slate-200/60 flex items-center justify-center text-slate-600 hover:text-black"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <nav className="mt-6 flex flex-col gap-1.5">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="px-4 py-2.5 rounded-xl text-sm font-semibold text-[#143627] hover:bg-white/80 transition-colors flex items-center justify-between"
+                    >
+                      <span>{link.name}</span>
+                      <ChevronRight className="w-4 h-4 text-slate-400" />
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+
+              <div className="pt-6 border-t border-[#EDE7D9] text-xs text-slate-500 text-center">
+                From the misty hills of Idukki to your kitchen.
+              </div>
+            </div>
+          </div>
+        )}
       </>
     );
   }
@@ -239,6 +291,27 @@ export default function Header() {
 
   return (
     <>
+      {/* Top Utility Announcement Bar on standard pages too */}
+      <div className="w-full bg-[#072616] text-white text-[11px] sm:text-xs py-1.5 px-4 hidden md:block border-b border-white/10">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-6 text-white/90">
+            <span className="flex items-center gap-1.5 font-medium">
+              <MapPin className="w-3.5 h-3.5 text-[#F5B900]" /> Idukki, Kerala
+            </span>
+            <span className="flex items-center gap-1.5 font-medium">
+              <Truck className="w-3.5 h-3.5 text-[#F5B900]" /> Pan India Delivery
+            </span>
+            <span className="flex items-center gap-1.5 font-medium">
+              <Leaf className="w-3.5 h-3.5 text-[#F5B900]" /> 100% Natural
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 text-white/90 font-medium">
+            <PhoneCall className="w-3.5 h-3.5 text-[#F5B900]" />
+            <span>Need Help? +91 98765 43210</span>
+          </div>
+        </div>
+      </div>
+
       <header className={`${position} z-40 w-full transition-all duration-300 ${surface}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-6">
           <Link href="/" className="flex items-center gap-2 group shrink-0" aria-label="Idukki Spices">
@@ -278,65 +351,96 @@ export default function Header() {
             <button
               onClick={() => setSearchOpen(true)}
               aria-label="Search"
-              className="p-2 text-slate-700 hover:text-[#0B3322] hover:bg-slate-100 rounded-full transition-colors"
+              className="w-9 h-9 flex items-center justify-center rounded-full text-slate-700 hover:text-[#08271d] hover:bg-slate-100 transition-colors"
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-4 h-4" />
             </button>
             <Link
               href="/login"
-              aria-label="Account"
-              className="p-2 text-slate-700 hover:text-[#0B3322] hover:bg-slate-100 rounded-full transition-colors hidden sm:flex"
+              aria-label="My Account"
+              className="w-9 h-9 hidden sm:flex items-center justify-center rounded-full text-slate-700 hover:text-[#08271d] hover:bg-slate-100 transition-colors"
             >
-              <User className="w-5 h-5" />
+              <User className="w-4 h-4" />
             </Link>
             <Link
               href="/shop?tab=wishlist"
               aria-label="Wishlist"
-              className="p-2 text-slate-700 hover:text-[#0B3322] hover:bg-slate-100 rounded-full transition-colors"
+              className="w-9 h-9 flex items-center justify-center rounded-full text-slate-700 hover:text-[#08271d] hover:bg-slate-100 transition-colors relative"
             >
-              <Heart className="w-5 h-5" />
+              <Heart className="w-4 h-4" />
+              {wishlistCount > 0 && (
+                <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#70A82C]" />
+              )}
             </Link>
             <button
               onClick={openCart}
               aria-label="Shopping Cart"
-              className="p-2 text-slate-700 hover:text-[#0B3322] hover:bg-slate-100 rounded-full transition-colors relative"
+              className="w-9 h-9 flex items-center justify-center rounded-full text-slate-700 hover:text-[#08271d] hover:bg-slate-100 transition-colors relative"
             >
-              <ShoppingBag className="w-5 h-5" />
+              <ShoppingBag className="w-4 h-4" />
               {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] bg-[#E5A93C] text-[#062D1B] font-extrabold text-[10px] rounded-full flex items-center justify-center ring-2 ring-white shadow-xs">
+                <span className="absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] bg-[#E5A93C] text-[#062D1B] font-extrabold text-[10px] rounded-full flex items-center justify-center ring-2 ring-white">
                   {cartCount}
                 </span>
               )}
             </button>
             <button
-              onClick={() => setMobileMenuOpen((o) => !o)}
-              aria-label="Toggle menu"
-              className="p-2 text-slate-700 hover:text-[#0B3322] lg:hidden"
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open mobile navigation menu"
+              className="w-9 h-9 lg:hidden flex items-center justify-center rounded-full text-slate-700 hover:text-[#08271d] hover:bg-slate-100 transition-colors"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <Menu className="w-5 h-5" />
             </button>
           </div>
         </div>
-
-        {mobileMenuOpen && (
-          <div className="lg:hidden border-t px-4 pt-3 pb-6 space-y-3 bg-white/98 backdrop-blur-2xl border-slate-200 text-[#08271d] shadow-xl">
-            <nav aria-label="Mobile Navigation" className="space-y-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-[#08271d]"
-                >
-                  <span>{link.name}</span>
-                  <ChevronRight className="w-4 h-4 text-slate-300" />
-                </Link>
-              ))}
-            </nav>
-          </div>
-        )}
       </header>
 
+      {/* Search Modal */}
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          <div className="fixed inset-y-0 right-0 w-full max-w-xs bg-white shadow-2xl p-6 flex flex-col justify-between overflow-y-auto">
+            <div>
+              <div className="flex items-center justify-between pb-6 border-b border-slate-100">
+                <div className="flex items-center gap-2">
+                  <Leaf className="w-5 h-5 text-[#70A82C]" />
+                  <span className="font-serif text-lg font-bold text-[#08271d]">Idukki Spices</span>
+                </div>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-900"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <nav className="mt-6 flex flex-col gap-1">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-between"
+                  >
+                    <span>{link.name}</span>
+                    <ChevronRight className="w-4 h-4 text-slate-400" />
+                  </Link>
+                ))}
+              </nav>
+            </div>
+
+            <div className="pt-6 border-t border-slate-100 text-xs text-slate-400 text-center">
+              Direct from the spice farms of Kerala
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
