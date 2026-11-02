@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { products } from "@/data/products";
 import Reveal from "./Reveal";
+import SectionHead from "./SectionHead";
 
 // The six hero spices, taken from the real catalogue so names, photos and links stay in sync.
 const SPICES = [
@@ -18,49 +19,53 @@ const cards = SPICES.map((s) => ({ ...s, product: products.find((p) => p.slug ==
 
 export default function CategorySection() {
   return (
-    <section id="categories" className="bg-[#FAF7EF] text-[#092A20] py-14 sm:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal className="mb-8 sm:mb-10 flex items-end justify-between gap-4">
-          <div>
-            <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-[#B87919]">Category Explorer</p>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mt-3">Shop by Spice</h2>
-          </div>
-          <Link
-            href="/spices"
-            className="group inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-[#B87919] transition-colors hover:text-[#092A20]"
-          >
-            <span><span className="hidden sm:inline">Open the </span>Spice Finder</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-        </Reveal>
+    <section id="categories" className="bg-[#FAF7EF] py-16 text-[#092A20] sm:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-5 sm:mb-14">
+          <SectionHead eyebrow="Category Explorer" title="Shop by" accent="Spice" text="Six signature spices, each one traced back to the hills of Kerala." />
+          <Reveal>
+            <Link
+              href="/spices"
+              className="group inline-flex items-center gap-2 rounded-full border border-[#123B22]/25 px-5 py-2.5 text-sm font-bold text-[#123B22] transition-all hover:border-[#123B22] hover:bg-[#123B22] hover:text-white"
+            >
+              Open the Spice Finder
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </Reveal>
+        </div>
       </div>
 
-      <ul className="no-scrollbar flex snap-x snap-mandatory scroll-px-4 sm:scroll-px-6 gap-3 overflow-x-auto px-4 pb-2 sm:px-6 md:mx-auto md:grid md:max-w-7xl md:grid-cols-3 md:overflow-visible lg:px-8 xl:grid-cols-6 sm:gap-4 md:gap-5">
-        {cards.map(({ slug, label, text, pos, product }) => (
-          <li key={slug} className="w-[72%] shrink-0 snap-start sm:w-[44%] md:w-auto">
-            <Link
-              href={`/product/${slug}`}
-              className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[#E8E0D2] bg-white"
-            >
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#E8E0D2]">
+      <ul className="no-scrollbar flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto px-4 pb-4 sm:scroll-px-6 sm:px-6 md:mx-auto md:grid md:max-w-7xl md:grid-cols-3 md:gap-5 md:overflow-visible lg:px-8 xl:grid-cols-6">
+        {cards.map(({ slug, label, text, pos, product }, i) => (
+          <li key={slug} className={`w-[68%] shrink-0 snap-start sm:w-[40%] md:w-auto ${i % 2 === 1 ? "xl:mt-10" : ""}`}>
+            <Reveal delay={i * 70} className="h-full">
+              <Link
+                href={`/product/${slug}`}
+                className="group relative block aspect-[3/4.3] overflow-hidden rounded-[1.6rem] bg-[#123B22] shadow-[0_18px_40px_-22px_rgba(9,37,21,0.6)] ring-1 ring-black/5 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_28px_50px_-20px_rgba(9,37,21,0.7)]"
+              >
                 <Image
                   src={product.image}
                   alt={`${label} from Idukki Spices`}
                   fill
                   loading="lazy"
-                  sizes="(max-width: 640px) 72vw, (max-width: 768px) 44vw, (max-width: 1280px) 33vw, 16vw"
+                  sizes="(max-width: 640px) 68vw, (max-width: 768px) 40vw, (max-width: 1280px) 33vw, 16vw"
                   style={{ objectPosition: pos }}
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-110"
                 />
-              </div>
-              <div className="flex flex-1 flex-col border-t border-[#E8E0D2] p-4">
-                <h3 className="font-serif text-xl font-bold leading-tight">{label}</h3>
-                <p className="mt-2 text-[13px] leading-relaxed text-[#555650]">{text}</p>
-                <span className="mt-auto pt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#B87919] transition-all group-hover:gap-2.5 group-hover:text-[#092A20]">
-                  Shop now <ArrowRight className="w-3.5 h-3.5" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#062D1B] via-[#062D1B]/35 to-transparent" />
+                <span className="absolute left-4 top-4 font-script text-2xl font-bold text-[#F5B900]/90">0{i + 1}</span>
+                <span className="absolute right-4 top-4 grid h-9 w-9 -translate-y-1 place-items-center rounded-full bg-[#F5B900] text-[#062D1B] opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
-              </div>
-            </Link>
+                <div className="absolute inset-x-0 bottom-0 p-5">
+                  <h3 className="font-serif text-xl font-semibold leading-tight text-white">{label}</h3>
+                  <p className="mt-2 max-h-0 overflow-hidden text-[13px] leading-relaxed text-white/80 opacity-0 transition-all duration-500 group-hover:max-h-24 group-hover:opacity-100 max-md:max-h-24 max-md:opacity-100">
+                    {text}
+                  </p>
+                  <span className="mt-3 block h-[3px] w-10 rounded-full bg-[#70A82C] transition-all duration-500 group-hover:w-20 group-hover:bg-[#F5B900]" />
+                </div>
+              </Link>
+            </Reveal>
           </li>
         ))}
       </ul>

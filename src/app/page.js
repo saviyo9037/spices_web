@@ -1,4 +1,6 @@
 import HeroSection from "@/components/HeroSection";
+import IntroSection from "@/components/IntroSection";
+import SpiceMarquee from "@/components/SpiceMarquee";
 import CategorySection from "@/components/CategorySection";
 import StorySection from "@/components/StorySection";
 import FeaturedProducts from "@/components/FeaturedProducts";
@@ -19,6 +21,8 @@ export default function HomePage() {
   return (
     <main className="w-full overflow-x-clip bg-night">
       <HeroSection />
+      <IntroSection />
+      <SpiceMarquee />
       <CategorySection />
       <StorySection />
       <FeaturedProducts />
