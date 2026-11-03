@@ -2,23 +2,42 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Leaf } from "lucide-react";
+import { ArrowRight, Leaf, Sparkles } from "lucide-react";
 import { products } from "@/data/products";
 import { FORMS } from "@/lib/catalog";
 import ProductCard from "./ProductCard";
 
-// Only filters that match real catalogue data are offered.
 function buildFilters() {
-  const filters = [{ id: "all", label: "All Spices", test: () => true }];
-  if (products.some((p) => p.badge === "Bestseller")) {
-    filters.push({ id: "best", label: "Bestsellers", test: (p) => p.badge === "Bestseller" });
+  const filters = [
+    {
+      id: "all",
+      label: "All Spices",
+      test: () => true,
+      count: products.length,
+    },
+  ];
+  const bestsellers = products.filter((p) => p.badge === "Bestseller");
+  if (bestsellers.length > 0) {
+    filters.push({
+      id: "best",
+      label: "Bestsellers",
+      test: (p) => p.badge === "Bestseller",
+      count: bestsellers.length,
+    });
   }
   FORMS.forEach((f) => {
-    if (products.some((p) => p.category === f.id)) {
+    const matches = products.filter((p) => p.category === f.id);
+    if (matches.length > 0) {
       filters.push({
         id: f.id,
-        label: f.id === "spice-blends" ? "Spice Blends" : f.id === "whole-spices" ? "Whole Spices" : "Ground Spices",
+        label:
+          f.id === "spice-blends"
+            ? "Spice Blends"
+            : f.id === "whole-spices"
+            ? "Whole Spices"
+            : "Ground Spices",
         test: (p) => p.category === f.id,
+        count: matches.length,
       });
     }
   });
@@ -41,7 +60,7 @@ export default function FeaturedProducts() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-10 sm:mb-12">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-8 sm:mb-12">
           <div>
             <div className="flex items-center gap-2 mb-2.5">
               <Leaf className="w-4 h-4 text-[#70A82C] fill-[#70A82C]" aria-hidden="true" />
@@ -73,11 +92,11 @@ export default function FeaturedProducts() {
           </Link>
         </div>
 
-        {/* Filter Pills */}
+        {/* Filter Pills (shadcn style segmented control) */}
         <div
           role="group"
           aria-label="Filter spices"
-          className="mb-8 sm:mb-10 flex gap-2.5 overflow-x-auto pb-2 no-scrollbar"
+          className="mb-8 sm:mb-10 flex gap-2 overflow-x-auto pb-2 no-scrollbar"
         >
           {FILTERS.map((f) => {
             const isActive = active === f.id;
@@ -87,13 +106,20 @@ export default function FeaturedProducts() {
                 type="button"
                 onClick={() => setActive(f.id)}
                 aria-pressed={isActive}
-                className={`shrink-0 rounded-full px-5 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                className={`inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
                   isActive
-                    ? "bg-[#0B3320] text-white shadow-sm ring-1 ring-[#0B3320]"
-                    : "bg-slate-50 border border-slate-200/90 text-slate-700 hover:border-[#0B3320]/40 hover:bg-slate-100 hover:text-[#0B3320]"
+                    ? "bg-[#103B2D] text-white shadow-sm ring-1 ring-[#103B2D]"
+                    : "bg-white border border-stone-200 text-stone-600 hover:border-stone-300 hover:bg-stone-50 hover:text-stone-900"
                 }`}
               >
-                {f.label}
+                <span>{f.label}</span>
+                <span
+                  className={`rounded-full px-1.5 py-0.2 text-[10px] font-bold ${
+                    isActive ? "bg-white/20 text-white" : "bg-stone-100 text-stone-500"
+                  }`}
+                >
+                  {f.count}
+                </span>
               </button>
             );
           })}
