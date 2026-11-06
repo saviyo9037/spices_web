@@ -40,7 +40,7 @@ export default function StorySection() {
     <section
       id="story"
       aria-labelledby="story-heading"
-      className="relative isolate overflow-x-clip bg-[#092515] pb-24 pt-20 text-white sm:pb-32 sm:pt-28"
+      className="relative isolate overflow-x-clip bg-[#092515] pb-20 pt-20 text-white sm:pb-28 sm:pt-28"
     >
       <TornEdge position="top" fill="#FAF7EF" seed={4} />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_85%_20%,rgba(112,168,44,0.20),transparent_70%),radial-gradient(ellipse_40%_40%_at_5%_95%,rgba(245,185,0,0.08),transparent_70%)]" />
@@ -92,7 +92,7 @@ export default function StorySection() {
             {sheets.map((s, i) => (
               <li
                 key={s.src}
-                className={`sticky ${i < sheets.length - 1 ? "mb-[34vh] lg:mb-[42vh]" : "mb-[32vh] lg:mb-[38vh]"}`}
+                className={`sticky ${i < sheets.length - 1 ? "mb-[5vh] lg:mb-[7vh]" : ""}`}
                 style={{
                   top: `calc(4.75rem + ${i * 8}px)`,
                   zIndex: i + 1,
