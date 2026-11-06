@@ -102,7 +102,7 @@ export default function FeaturedProducts() {
                 {f.label}
                 <span
                   className={`grid h-5 min-w-5 place-items-center rounded-full px-1 text-[10px] font-extrabold ${
-                    isActive ? "bg-[#F5B900] text-[#062D1B]" : "bg-[#123B22]/10 text-[#123B22]/70"
+                    isActive ? "bg-[#F5B900] text-[#062D1B]" : "bg-[#123B22]/10 text-[#123B22]/80"
                   }`}
                 >
                   {f.count}

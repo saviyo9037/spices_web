@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_ADDRESS, CONTACT_HOURS } from "@/lib/site";
 import { submitEnquiry } from "@/lib/enquiry";
+import PageHero from "@/components/PageHero";
 
 const SUBJECTS = ["Order enquiry", "Product question", "Bulk / wholesale", "Feedback"];
 
@@ -54,7 +55,7 @@ const FAQS = [
 ];
 
 const field =
-  "w-full rounded-xl border bg-white px-4 py-3 text-sm text-forest placeholder:text-forest/40 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30";
+  "w-full rounded-xl border bg-white px-4 py-3 text-sm text-forest placeholder:text-forest/80 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30";
 
 export default function ContactPage() {
   const [v, setV] = useState({ name: "", email: "", phone: "", subject: SUBJECTS[0], message: "" });
@@ -101,30 +102,25 @@ export default function ContactPage() {
 
   return (
     <div className="bg-white text-forest">
-      <section className="relative isolate overflow-hidden bg-night text-white">
-        <Image src="/images/peppercorn-spoon.webp" alt="" fill priority sizes="100vw" className="-z-10 object-cover object-[80%_50%]" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-night via-night/85 to-night/10" />
-        <div className="mx-auto max-w-7xl px-4 pb-32 pt-10 sm:px-6 sm:pb-36 sm:pt-14 lg:px-8">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/65">
-            <Link href="/" className="hover:text-gold">Home</Link>
-            <ChevronRight className="h-3 w-3" aria-hidden="true" />
-            <span className="text-white">Contact</span>
-          </nav>
-          <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.3em] text-gold">Contact us</p>
-          <h1 className="mt-3 max-w-2xl font-serif text-4xl font-bold leading-[1.1] sm:text-6xl">
-            We are happy <span className="text-gold">to help</span>
-          </h1>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
-            Questions about an order, a spice or a bulk requirement? Send us a message and we will get back to you.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#contact-form" className="rounded-full bg-gold px-7 py-3.5 text-sm font-bold text-night transition-colors hover:bg-gold-light">Send a message</a>
-            <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex items-center gap-2 rounded-full border border-white/40 px-7 py-3.5 text-sm font-bold transition-colors hover:border-gold hover:text-gold">
-              <Mail className="h-4 w-4" /> Email us
-            </a>
-          </div>
+      <PageHero
+        crumb="Contact"
+        eyebrow="Contact us"
+        title="We are happy"
+        accent="to help"
+        text="Questions about an order, a spice or a bulk requirement? Send us a message and we will get back to you."
+        image="/images/peppercorn-spoon.webp"
+        imageAlt="A spoon of peppercorns catching the light"
+        circleImage="/gallary/web-cardamom.jpg"
+        watermark="Hello"
+        className="pb-32 sm:pb-36"
+      >
+        <div className="flex flex-wrap gap-3">
+          <a href="#contact-form" className="rounded-full bg-gold px-7 py-3.5 text-sm font-bold text-night transition-colors hover:bg-gold-light">Send a message</a>
+          <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex items-center gap-2 rounded-full border border-white/40 px-7 py-3.5 text-sm font-bold transition-colors hover:border-gold hover:text-gold">
+            <Mail className="h-4 w-4" /> Email us
+          </a>
         </div>
-      </section>
+      </PageHero>
 
       <div className="relative z-10 mx-auto -mt-20 max-w-7xl px-4 sm:px-6 lg:px-8">
         <ul className="grid gap-3 sm:grid-cols-3">
@@ -140,7 +136,7 @@ export default function ContactPage() {
                 </span>
                 <span>
                   <span className="block font-serif text-lg font-bold group-hover:text-gold-ink">{title}</span>
-                  <span className="text-sm text-forest/65">{text}</span>
+                  <span className="text-sm text-forest/80">{text}</span>
                 </span>
               </a>
             </li>
@@ -244,7 +240,7 @@ export default function ContactPage() {
                   {err("email")}
                 </div>
                 <div className="sm:col-span-2">
-                  <label htmlFor="c-phone" className="mb-1.5 block text-sm font-semibold">Phone <span className="font-normal text-forest/50">(optional)</span></label>
+                  <label htmlFor="c-phone" className="mb-1.5 block text-sm font-semibold">Phone <span className="font-normal text-forest/80">(optional)</span></label>
                   <div className="relative">
                     <Phone className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gold-ink" aria-hidden="true" />
                     <input id="c-phone" type="tel" autoComplete="tel" placeholder="Phone number" value={v.phone} onChange={set("phone")} aria-invalid={Boolean(errors.phone)} className={`${cls("phone")} pl-11`} />
@@ -253,7 +249,7 @@ export default function ContactPage() {
                 </div>
                 <div className="sm:col-span-2">
                   <label htmlFor="c-message" className="mb-1.5 flex items-center justify-between text-sm font-semibold">
-                    Message <span className="text-xs font-normal text-forest/50">{v.message.length} characters</span>
+                    Message <span className="text-xs font-normal text-forest/80">{v.message.length} characters</span>
                   </label>
                   <textarea id="c-message" rows={5} value={v.message} onChange={set("message")} aria-invalid={Boolean(errors.message)} placeholder="How can we help? Include an order number if you have one." className={cls("message")} />
                   {err("message")}
@@ -261,7 +257,7 @@ export default function ContactPage() {
               </div>
 
               <div className="mt-7 flex flex-col-reverse items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-xs text-forest/55">We use your details only to reply to this message.</p>
+                <p className="text-xs text-forest/80">We use your details only to reply to this message.</p>
                 <button
                   type="submit"
                   disabled={status === "sending"}
@@ -307,11 +303,11 @@ export default function ContactPage() {
           <div className="lg:col-span-5">
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gold-ink">FAQ</p>
             <h2 id="faq" className="mt-3 font-serif text-3xl font-bold leading-tight sm:text-5xl">Common <span className="text-gold-ink">questions</span></h2>
-            <p className="mt-4 max-w-sm text-forest/70">Quick answers about our spices, pack sizes and delivery. Cannot find yours? Send us a message.</p>
+            <p className="mt-4 max-w-sm text-forest/80">Quick answers about our spices, pack sizes and delivery. Cannot find yours? Send us a message.</p>
             <div className="relative mt-8 hidden aspect-[4/3] overflow-hidden rounded-3xl shadow-xl shadow-forest/15 lg:block">
               <Image src="/images/story-cardamom-bowl.jpg" alt="Green cardamom pods in a wooden bowl" fill sizes="40vw" className="object-cover" />
             </div>
-            <p className="mt-6 text-sm text-forest/65">
+            <p className="mt-6 text-sm text-forest/80">
               More details in our{" "}
               <Link href="/policies/shipping-policy" className="font-semibold text-gold-ink hover:underline">Shipping Policy</Link> and{" "}
               <Link href="/policies/return-refund-policy" className="font-semibold text-gold-ink hover:underline">Return &amp; Refund Policy</Link>.
@@ -330,9 +326,9 @@ export default function ContactPage() {
                   >
                     <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${isOpen ? "bg-gold text-night" : "bg-paper-deep/70 text-forest"}`}>{i + 1}</span>
                     <span className="flex-1">{f.q}</span>
-                    <ChevronDown className={`h-5 w-5 shrink-0 text-forest/50 transition-transform ${isOpen ? "rotate-180 text-gold-ink" : ""}`} aria-hidden="true" />
+                    <ChevronDown className={`h-5 w-5 shrink-0 text-forest/80 transition-transform ${isOpen ? "rotate-180 text-gold-ink" : ""}`} aria-hidden="true" />
                   </button>
-                  {isOpen && <p className="pb-5 pl-[4.25rem] pr-5 leading-relaxed text-forest/70">{f.a}</p>}
+                  {isOpen && <p className="pb-5 pl-[4.25rem] pr-5 leading-relaxed text-forest/80">{f.a}</p>}
                 </div>
               );
             })}

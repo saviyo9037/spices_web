@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/context/ToastContext";
+import EmptyBasket from "@/components/EmptyBasket";
 
 export default function CartPage() {
   const {
@@ -80,23 +81,7 @@ export default function CartPage() {
         </div>
 
         {items.length === 0 ? (
-          <div className="bg-white rounded-3xl p-12 text-center border border-[#e6dfd5] max-w-lg mx-auto shadow-xs">
-            <div className="w-20 h-20 rounded-full bg-[#faf7f2] text-[#87978f] flex items-center justify-center mx-auto mb-4">
-              <ShoppingBag className="w-10 h-10" />
-            </div>
-            <h2 className="font-serif text-2xl font-bold text-[#143627] mb-2">
-              Your basket is empty
-            </h2>
-            <p className="text-sm text-[#5c6c64] mb-8">
-              Looks like you haven&apos;t added any estate spices yet. Explore our fresh harvest catalog!
-            </p>
-            <Link
-              href="/shop"
-              className="px-8 py-3.5 rounded-full bg-[#143627] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#1c4b37] transition-all inline-block shadow-md"
-            >
-              Start Shopping
-            </Link>
-          </div>
+          <EmptyBasket text="Looks like you haven't added any spices yet. Start with a bestseller below or build your own combo." />
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             {/* Items List (8 cols) */}

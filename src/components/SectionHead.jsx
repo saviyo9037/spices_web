@@ -25,7 +25,7 @@ export default function SectionHead({ eyebrow, title, accent, text, align = "lef
           <span className={`ml-2 font-script text-[1.25em] font-bold ${dark ? "text-[#F5B900]" : "text-[#B87919]"}`}>{accent}</span>
         )}
       </h2>
-      {text && <p className={`mt-4 text-base leading-relaxed ${dark ? "text-white/75" : "text-[#123B22]/70"}`}>{text}</p>}
+      {text && <p className={`mt-4 text-base leading-relaxed ${dark ? "text-white/75" : "text-[#123B22]/80"}`}>{text}</p>}
       {children}
     </Reveal>
   );

@@ -4,6 +4,7 @@ import { ArrowRight, ChevronRight, Users, Sprout, MapPin, ListChecks } from "luc
 import { products } from "@/data/products";
 import { allSizes } from "@/lib/catalog";
 import FarmJourney from "@/components/FarmJourney";
+import PageHero from "@/components/PageHero";
 
 export const metadata = {
   title: "About Idukki Spices",
@@ -29,31 +30,25 @@ const values = [
 export default function AboutPage() {
   return (
     <div className="bg-white text-forest">
-      <section className="relative isolate overflow-hidden bg-night text-white">
-        <Image src="/images/idukki-landscape.webp" alt="" fill priority sizes="100vw" className="-z-10 object-cover object-[70%_45%]" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-night/95 via-night/80 to-night/40" />
-        <div className="mx-auto max-w-7xl px-4 pb-28 pt-10 sm:px-6 sm:pb-32 sm:pt-14 lg:px-8">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/65">
-            <Link href="/" className="hover:text-gold">Home</Link>
-            <ChevronRight className="h-3 w-3" aria-hidden="true" />
-            <span className="text-white">About</span>
-          </nav>
-          <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.3em] text-gold">About Idukki Spices</p>
-          <h1 className="mt-3 max-w-3xl font-serif text-4xl font-bold leading-[1.1] sm:text-6xl">
-            Rooted in the hills <span className="text-gold">of Idukki</span>
-          </h1>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
-            Spices from the high ranges of Kerala, brought to your kitchen with their natural aroma and flavour intact.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        crumb="About"
+        eyebrow="About Idukki Spices"
+        title="Rooted in the hills"
+        accent="of Idukki"
+        text="Spices from the high ranges of Kerala, brought to your kitchen with their natural aroma and flavour intact."
+        image="/images/Golden Spice Valley at Sunset.png"
+        imageAlt="Golden spice valley at sunset in the hills of Idukki"
+        circleImage="/gallary/web-clove-buds.jpg"
+        watermark="Idukki"
+        className="pb-28 sm:pb-32"
+      />
 
       <div className="relative z-10 mx-auto -mt-14 max-w-7xl px-4 sm:px-6 lg:px-8">
         <dl className="grid grid-cols-2 divide-x divide-y divide-line overflow-hidden rounded-2xl border border-line bg-white shadow-2xl shadow-forest/10 lg:grid-cols-4 lg:divide-y-0">
           {stats.map((s) => (
             <div key={s.label} className="px-5 py-6 text-center sm:py-8">
               <dt className="font-serif text-3xl font-bold text-gold-ink sm:text-4xl">{s.value}</dt>
-              <dd className="mt-1 text-sm text-forest/65">{s.label}</dd>
+              <dd className="mt-1 text-sm text-forest/80">{s.label}</dd>
             </div>
           ))}
         </dl>
@@ -76,11 +71,11 @@ export default function AboutPage() {
             Idukki Spices brings you spices from the high ranges of Kerala, sourced from trusted farmers and carefully
             processed to keep their natural aroma, flavour and goodness intact.
           </p>
-          <p className="mt-4 leading-relaxed text-forest/70">
+          <p className="mt-4 leading-relaxed text-forest/80">
             The cool, misty hills of Idukki are known for spices such as pepper and cardamom. We bring a
             selection of them to you as whole spices, ground spices and blends, in pack sizes that suit a home kitchen.
           </p>
-          <p className="mt-4 leading-relaxed text-forest/70">
+          <p className="mt-4 leading-relaxed text-forest/80">
             We keep things simple: tell you where each spice comes from, list what is in every pack, and make it easy to
             choose the size you need.
           </p>

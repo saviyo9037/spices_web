@@ -1,20 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Heart, ShoppingBag, Zap, Truck, ListChecks, MapPin, Check, ChevronRight, Minus, Plus } from "lucide-react";
+import { Heart, ShoppingBag, Zap, Truck, ListChecks, MapPin, Check, ChevronRight, Minus, Plus, Maximize2, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { defaultWeight } from "@/lib/catalog";
 import ProductCard from "@/components/ProductCard";
-
-const TABS = [
-  { id: "overview", label: "Description" },
-  { id: "culinary", label: "Taste & uses" },
-  { id: "specs", label: "Details" },
-];
 
 export default function ProductDetailClient({ product, relatedProducts }) {
   const router = useRouter();
@@ -23,7 +17,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
 
   const [selectedWeight, setSelectedWeight] = useState(defaultWeight(product));
   const [quantity, setQuantity] = useState(1);
-  const [tab, setTab] = useState("overview");
+  const [zoom, setZoom] = useState(false);
   const [added, setAdded] = useState(false);
 
   const fav = isInWishlist(product.id);
@@ -48,6 +42,19 @@ export default function ProductDetailClient({ product, relatedProducts }) {
     { icon: Truck, label: "Delivery", value: "Across India" },
   ].filter(Boolean);
 
+  // Zoom modal: Escape closes, page scroll locked while open.
+  useEffect(() => {
+    if (!zoom) return undefined;
+    const onKey = (e) => e.key === "Escape" && setZoom(false);
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [zoom]);
+
   const specs = [
     ["Ingredients", product.ingredients],
     ["Origin", product.origin],
@@ -60,7 +67,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
   return (
     <div className="bg-white text-forest">
       <div className="border-b border-line bg-paper/50">
-        <nav aria-label="Breadcrumb" className="mx-auto flex max-w-7xl items-center gap-1.5 overflow-x-auto whitespace-nowrap px-4 py-3.5 text-xs text-forest/60 sm:px-6 lg:px-8">
+        <nav aria-label="Breadcrumb" className="mx-auto flex max-w-7xl items-center gap-1.5 overflow-x-auto whitespace-nowrap px-4 py-3.5 text-xs text-forest/80 sm:px-6 lg:px-8">
           <Link href="/" className="hover:text-gold-ink">Home</Link>
           <ChevronRight className="h-3 w-3 shrink-0" aria-hidden="true" />
           <Link href="/shop" className="hover:text-gold-ink">Shop</Link>
@@ -82,6 +89,14 @@ export default function ProductDetailClient({ product, relatedProducts }) {
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
+            <button
+              type="button"
+              onClick={() => setZoom(true)}
+              aria-label={`Zoom photo of ${product.name}`}
+              className="absolute bottom-4 right-4 flex h-11 items-center gap-2 rounded-full bg-white/95 px-4 text-xs font-bold text-forest shadow-lg transition-colors hover:bg-gold"
+            >
+              <Maximize2 className="h-4 w-4" aria-hidden="true" /> Zoom
+            </button>
             {product.badge && (
               <span className="absolute left-4 top-4 rounded-full bg-gold px-3.5 py-1 text-[11px] font-bold uppercase tracking-wide text-night shadow">
                 {product.badge}
@@ -94,7 +109,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
               aria-label={fav ? "Remove from wishlist" : "Add to wishlist"}
               className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/95 shadow-lg transition-colors hover:text-red-500"
             >
-              <Heart className={`h-5 w-5 ${fav ? "fill-red-500 text-red-500" : "text-forest/70"}`} />
+              <Heart className={`h-5 w-5 ${fav ? "fill-red-500 text-red-500" : "text-forest/80"}`} />
             </button>
           </div>
         </div>
@@ -102,17 +117,17 @@ export default function ProductDetailClient({ product, relatedProducts }) {
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-gold-ink">{product.categoryName}</p>
           <h1 className="mt-2 font-serif text-3xl font-bold leading-[1.1] sm:text-5xl">{product.name}</h1>
-          {(product.subtitle || product.tagline) && <p className="mt-2 text-lg text-forest/65">{product.subtitle || product.tagline}</p>}
+          {(product.subtitle || product.tagline) && <p className="mt-2 text-lg text-forest/80">{product.subtitle || product.tagline}</p>}
 
           <div className="mt-6 flex flex-wrap items-end gap-x-4 gap-y-1 border-y border-line py-5">
             <span className="text-4xl font-black">₹{price}</span>
             {discount > 0 && (
               <>
-                <span className="pb-1 text-lg text-forest/45 line-through">₹{original}</span>
+                <span className="pb-1 text-lg text-forest/80 line-through">₹{original}</span>
                 <span className="mb-1 rounded-full bg-gold/20 px-3 py-0.5 text-xs font-bold text-gold-ink">Save {discount}%</span>
               </>
             )}
-            <span className="ml-auto pb-1 text-xs text-forest/50">Inclusive of taxes</span>
+            <span className="ml-auto pb-1 text-xs text-forest/80">Inclusive of taxes</span>
           </div>
 
           <p className="mt-5 leading-relaxed text-forest/75">{product.shortDescription}</p>
@@ -121,7 +136,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
             <div className="mt-7">
               <div className="mb-3 flex items-center justify-between text-sm">
                 <span className="font-bold">Pack size</span>
-                <span className="text-forest/60">{selectedWeight?.label}</span>
+                <span className="text-forest/80">{selectedWeight?.label}</span>
               </div>
               <div role="group" aria-label="Pack size" className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
                 {product.weights.map((w) => {
@@ -137,7 +152,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                       }`}
                     >
                       <span className="block text-sm font-bold">{w.label}</span>
-                      <span className={`block text-xs ${on ? "text-gold" : "text-forest/60"}`}>₹{w.price}</span>
+                      <span className={`block text-xs ${on ? "text-gold" : "text-forest/80"}`}>₹{w.price}</span>
                     </button>
                   );
                 })}
@@ -147,11 +162,11 @@ export default function ProductDetailClient({ product, relatedProducts }) {
 
           <div className="mt-7 flex items-stretch gap-3">
             <div className="flex items-center rounded-xl border-2 border-line bg-white" role="group" aria-label="Quantity">
-              <button type="button" onClick={() => setQuantity((q) => Math.max(1, q - 1))} aria-label="Decrease quantity" className="flex h-12 w-11 items-center justify-center text-forest/70 hover:text-forest">
+              <button type="button" onClick={() => setQuantity((q) => Math.max(1, q - 1))} aria-label="Decrease quantity" className="flex h-12 w-11 items-center justify-center text-forest/80 hover:text-forest">
                 <Minus className="h-4 w-4" />
               </button>
               <span className="w-8 text-center font-bold" aria-live="polite">{quantity}</span>
-              <button type="button" onClick={() => setQuantity((q) => q + 1)} aria-label="Increase quantity" className="flex h-12 w-11 items-center justify-center text-forest/70 hover:text-forest">
+              <button type="button" onClick={() => setQuantity((q) => q + 1)} aria-label="Increase quantity" className="flex h-12 w-11 items-center justify-center text-forest/80 hover:text-forest">
                 <Plus className="h-4 w-4" />
               </button>
             </div>
@@ -179,7 +194,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
               <li key={label} className="flex items-start gap-3 rounded-2xl border border-line bg-paper/50 p-4">
                 <Icon className="mt-0.5 h-5 w-5 shrink-0 text-gold-ink" strokeWidth={1.5} aria-hidden="true" />
                 <span className="min-w-0">
-                  <span className="block text-[11px] font-bold uppercase tracking-[0.15em] text-forest/55">{label}</span>
+                  <span className="block text-[11px] font-bold uppercase tracking-[0.15em] text-forest/80">{label}</span>
                   <span className="text-sm font-semibold leading-snug">{value}</span>
                 </span>
               </li>
@@ -188,75 +203,50 @@ export default function ProductDetailClient({ product, relatedProducts }) {
         </div>
       </div>
 
-      <section className="border-t border-line bg-paper/40 py-12 sm:py-16" aria-label="Product details">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div role="tablist" aria-label="Product information" className="flex justify-center gap-2 overflow-x-auto">
-            {TABS.map((t) => (
-              <button
-                key={t.id}
-                role="tab"
-                aria-selected={tab === t.id}
-                onClick={() => setTab(t.id)}
-                className={`shrink-0 rounded-full px-6 py-2.5 text-sm font-bold transition-all ${
-                  tab === t.id ? "bg-forest text-white shadow-md" : "bg-white text-forest/70 ring-1 ring-line hover:text-forest"
-                }`}
-              >
-                {t.label}
-              </button>
-            ))}
+      <section className="border-t border-line bg-paper/40 py-14 sm:py-20" aria-label="Product details">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:gap-14 lg:px-8">
+          <div className="lg:col-span-7">
+            <h2 className="font-serif text-3xl font-bold sm:text-4xl">About {product.name}</h2>
+            <p className="mt-5 text-lg leading-relaxed text-forest/75">{product.fullDescription || product.shortDescription}</p>
+
+            {product.tastingNotes?.length > 0 && (
+              <div className="mt-10">
+                <h3 className="font-serif text-2xl font-bold">Tasting notes</h3>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {product.tastingNotes.map((n) => (
+                    <li key={n} className="rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-sm font-semibold">{n}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {product.culinaryUses?.length > 0 && (
+              <div className="mt-10">
+                <h3 className="font-serif text-2xl font-bold">How to use it</h3>
+                <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {product.culinaryUses.map((u) => (
+                    <li key={u} className="flex items-start gap-3 rounded-2xl border border-line bg-white p-4 text-sm">
+                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold text-night">
+                        <Check className="h-3 w-3" strokeWidth={3} />
+                      </span>
+                      {u}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
 
-          <div role="tabpanel" className="mt-8 rounded-3xl border border-line bg-white p-6 shadow-sm sm:p-10">
-            {tab === "overview" && (
-              <div>
-                <h2 className="font-serif text-2xl font-bold sm:text-3xl">About {product.name}</h2>
-                <p className="mt-4 text-lg leading-relaxed text-forest/75">{product.fullDescription || product.shortDescription}</p>
-              </div>
-            )}
-
-            {tab === "culinary" && (
-              <div className="space-y-8">
-                {product.tastingNotes?.length > 0 && (
-                  <div>
-                    <h2 className="font-serif text-2xl font-bold">Tasting notes</h2>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {product.tastingNotes.map((n) => (
-                        <span key={n} className="rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-sm font-semibold">{n}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {product.culinaryUses?.length > 0 && (
-                  <div>
-                    <h2 className="font-serif text-2xl font-bold">How to use it</h2>
-                    <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-                      {product.culinaryUses.map((u) => (
-                        <li key={u} className="flex items-start gap-3 rounded-xl border border-line bg-paper/50 p-4 text-sm">
-                          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold text-night">
-                            <Check className="h-3 w-3" strokeWidth={3} />
-                          </span>
-                          {u}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {tab === "specs" && (
-              <div>
-                <h2 className="font-serif text-2xl font-bold">Product details</h2>
-                <dl className="mt-5 divide-y divide-line overflow-hidden rounded-2xl border border-line">
-                  {specs.map(([k, v], i) => (
-                    <div key={k} className={`grid gap-1 px-5 py-4 sm:grid-cols-[180px_1fr] ${i % 2 ? "bg-white" : "bg-paper/50"}`}>
-                      <dt className="text-sm font-semibold text-forest/60">{k}</dt>
-                      <dd className="text-sm">{v}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            )}
+          <div className="lg:col-span-5">
+            <h2 className="font-serif text-3xl font-bold sm:text-4xl">Product details</h2>
+            <dl className="mt-5 divide-y divide-line overflow-hidden rounded-3xl border border-line bg-white">
+              {specs.map(([k, v]) => (
+                <div key={k} className="grid gap-1 px-5 py-4 sm:grid-cols-[130px_1fr]">
+                  <dt className="text-sm font-semibold text-forest/80">{k}</dt>
+                  <dd className="text-sm">{v}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
       </section>
@@ -278,11 +268,24 @@ export default function ProductDetailClient({ product, relatedProducts }) {
         </section>
       )}
 
+      {zoom && (
+        <div className="fixed inset-0 z-[110] flex flex-col bg-[#03100D]/95 backdrop-blur-md" role="dialog" aria-modal="true" aria-label={`${product.name} photo`} onClick={() => setZoom(false)}>
+          <div className="flex justify-end p-4">
+            <button type="button" onClick={() => setZoom(false)} aria-label="Close photo" autoFocus className="grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white transition hover:bg-gold hover:text-night focus:outline-none focus-visible:ring-4 focus-visible:ring-gold">
+              <X className="h-5 w-5" aria-hidden="true" />
+            </button>
+          </div>
+          <div className="relative min-h-0 flex-1" onClick={(e) => e.stopPropagation()}>
+            <Image src={product.image} alt={product.name} fill sizes="100vw" className="object-contain px-3 pb-6" />
+          </div>
+        </div>
+      )}
+
       {/* Phone: pinned buy bar */}
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 px-4 pt-3 safe-bottom shadow-[0_-8px_24px_rgba(0,0,0,0.08)] backdrop-blur-md lg:hidden">
         <div className="mx-auto flex max-w-xl items-center gap-4">
           <div className="min-w-0 flex-1">
-            <p className="truncate text-xs text-forest/60">{product.name} · {selectedWeight?.label}</p>
+            <p className="truncate text-xs text-forest/80">{product.name} · {selectedWeight?.label}</p>
             <p className="text-xl font-black leading-tight">₹{total}</p>
           </div>
           <button type="button" onClick={add} className={`inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold ${added ? "bg-gold text-night" : "bg-forest text-white"}`}>

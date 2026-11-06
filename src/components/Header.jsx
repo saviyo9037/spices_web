@@ -146,7 +146,7 @@ export default function Header() {
             </div>
             <div className="flex items-center gap-1.5 text-white/90 font-medium">
               <PhoneCall className="w-3.5 h-3.5 text-[#F5B900]" />
-              <span>Need Help? +91 98765 43210</span>
+              <Link href="/contact" className="hover:text-[#F5B900] hover:underline">Need help? Contact us</Link>
             </div>
           </div>
         </div>
@@ -309,7 +309,7 @@ export default function Header() {
           </div>
           <div className="flex items-center gap-1.5 text-white/90 font-medium">
             <PhoneCall className="w-3.5 h-3.5 text-[#F5B900]" />
-            <span>Need Help? +91 98765 43210</span>
+            <Link href="/contact" className="hover:text-[#F5B900] hover:underline">Need help? Contact us</Link>
           </div>
         </div>
       </div>

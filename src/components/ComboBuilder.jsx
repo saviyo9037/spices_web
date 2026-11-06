@@ -8,6 +8,7 @@ import { products } from "@/data/products";
 import { defaultWeight } from "@/lib/catalog";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/context/ToastContext";
+import PageHero from "@/components/PageHero";
 
 const STEPS = [
   { icon: MousePointerClick, title: "Pick your spices", text: "Tap the ones you cook with." },
@@ -60,7 +61,7 @@ export default function ComboBuilder() {
       {lines.length === 0 ? (
         <div className="mt-4 rounded-2xl border border-dashed border-line bg-paper/60 p-5 text-center">
           <ShoppingBag className="mx-auto h-6 w-6 text-forest/35" aria-hidden="true" />
-          <p className="mt-2 text-sm text-forest/65">Nothing selected yet. Tap <strong>Add</strong> on the spices you want.</p>
+          <p className="mt-2 text-sm text-forest/80">Nothing selected yet. Tap <strong>Add</strong> on the spices you want.</p>
         </div>
       ) : (
         <ul className="mt-4 space-y-3">
@@ -71,14 +72,14 @@ export default function ComboBuilder() {
               </span>
               <span className="min-w-0 flex-1 text-sm">
                 <span className="block truncate font-semibold">{l.product.name}</span>
-                <span className="text-xs text-forest/60">{l.weight?.label}</span>
+                <span className="text-xs text-forest/80">{l.weight?.label}</span>
               </span>
               <span className="text-sm font-bold">₹{l.price}</span>
               <button
                 type="button"
                 onClick={() => toggle(l.product)}
                 aria-label={`Remove ${l.product.name}`}
-                className="flex h-7 w-7 items-center justify-center rounded-full text-forest/50 hover:bg-paper hover:text-forest"
+                className="flex h-7 w-7 items-center justify-center rounded-full text-forest/80 hover:bg-paper hover:text-forest"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -87,15 +88,15 @@ export default function ComboBuilder() {
         </ul>
       )}
       <div className="mt-5 flex items-end justify-between border-t border-line pt-4">
-        <span className="text-sm text-forest/70">Total</span>
+        <span className="text-sm text-forest/80">Total</span>
         <span className="text-3xl font-black">₹{total}</span>
       </div>
-      <p className="mt-1 text-xs text-forest/55">You pay the listed price of each pack. No bundle pricing is applied.</p>
+      <p className="mt-1 text-xs text-forest/80">You pay the listed price of each pack. No bundle pricing is applied.</p>
       <button
         type="button"
         onClick={addAll}
         disabled={lines.length === 0}
-        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-bold text-night shadow-lg shadow-gold/20 transition-colors hover:bg-gold-light disabled:cursor-not-allowed disabled:bg-line disabled:text-forest/40 disabled:shadow-none"
+        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-bold text-night shadow-lg shadow-gold/20 transition-colors hover:bg-gold-light disabled:cursor-not-allowed disabled:bg-line disabled:text-forest/80 disabled:shadow-none"
       >
         <ShoppingBag className="h-4 w-4" />
         {lines.length > 0 ? `Add ${lines.length} ${lines.length === 1 ? "item" : "items"} to cart` : "Add to cart"}
@@ -110,24 +111,18 @@ export default function ComboBuilder() {
 
   return (
     <div className="bg-white text-forest">
-      <section className="relative isolate overflow-hidden bg-night text-white">
-        <Image src="/images/idukki-landscape.webp" alt="" fill priority sizes="100vw" className="-z-10 object-cover object-[70%_45%]" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-night/95 via-night/80 to-night/40" />
-        <div className="mx-auto max-w-7xl px-4 pb-28 pt-10 sm:px-6 sm:pb-32 sm:pt-14 lg:px-8">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/65">
-            <Link href="/" className="hover:text-gold">Home</Link>
-            <ChevronRight className="h-3 w-3" aria-hidden="true" />
-            <span className="text-white">Combos</span>
-          </nav>
-          <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.3em] text-gold">Spice Combos</p>
-          <h1 className="mt-3 max-w-2xl font-serif text-4xl font-bold leading-[1.1] sm:text-6xl">
-            Build your own <span className="text-gold">spice combo</span>
-          </h1>
-          <p className="mt-4 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
-            Pick the spices you cook with and a pack size for each, then add them to your cart together.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        crumb="Combos"
+        eyebrow="Spice Combos"
+        title="Build your own"
+        accent="spice combo"
+        text="Pick the spices you cook with and a pack size for each, then add them to your cart together."
+        image="/images/Rustic Bowl of Cloves in Nature.png"
+        imageAlt="A rustic bowl of cloves"
+        circleImage="/gallary/nutmeg.jpg"
+        watermark="Combo"
+        className="pb-28 sm:pb-32"
+      />
 
       <div className="relative z-10 mx-auto -mt-16 max-w-7xl px-4 sm:px-6 lg:px-8">
         <ol className="grid gap-3 rounded-2xl border border-line bg-white p-4 shadow-2xl shadow-forest/10 sm:grid-cols-3 sm:p-5">
@@ -139,7 +134,7 @@ export default function ComboBuilder() {
               </span>
               <span>
                 <span className="block text-sm font-bold">{title}</span>
-                <span className="text-xs text-forest/60">{text}</span>
+                <span className="text-xs text-forest/80">{text}</span>
               </span>
             </li>
           ))}
@@ -170,7 +165,7 @@ export default function ComboBuilder() {
 
                 <div className="flex flex-1 flex-col p-3.5">
                   <h2 className="font-serif text-[15px] font-bold leading-snug sm:text-base">{p.name}</h2>
-                  <p className="mt-0.5 text-[11px] text-forest/55">{p.categoryName}</p>
+                  <p className="mt-0.5 text-[11px] text-forest/80">{p.categoryName}</p>
 
                   <div role="group" aria-label={`Pack size for ${p.name}`} className="mt-3 flex flex-wrap gap-1.5">
                     {(p.weights || []).map((w) => (
@@ -226,7 +221,7 @@ export default function ComboBuilder() {
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 px-4 pt-3 safe-bottom shadow-[0_-8px_24px_rgba(0,0,0,0.08)] backdrop-blur-md lg:hidden">
         <div className="mx-auto flex max-w-xl items-center gap-4">
           <div className="min-w-0 flex-1">
-            <p className="text-xs text-forest/60">
+            <p className="text-xs text-forest/80">
               {lines.length === 0 ? "Pick your spices" : `${lines.length} ${lines.length === 1 ? "spice" : "spices"} selected`}
             </p>
             <p className="text-xl font-black leading-tight">₹{total}</p>
@@ -235,7 +230,7 @@ export default function ComboBuilder() {
             type="button"
             onClick={addAll}
             disabled={lines.length === 0}
-            className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-bold text-night disabled:cursor-not-allowed disabled:bg-line disabled:text-forest/40"
+            className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-bold text-night disabled:cursor-not-allowed disabled:bg-line disabled:text-forest/80"
           >
             <ShoppingBag className="h-4 w-4" />
             Add to cart

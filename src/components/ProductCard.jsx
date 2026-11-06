@@ -9,6 +9,7 @@ import {
   Flame,
   Heart,
   Leaf,
+  Eye,
   ShoppingBag,
   Sparkles,
   Star,
@@ -16,6 +17,7 @@ import {
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { defaultWeight } from "@/lib/catalog";
+import QuickViewModal from "./QuickViewModal";
 
 // Map badge text → visual config
 function getBadgeConfig(badge) {
@@ -29,7 +31,7 @@ function getBadgeConfig(badge) {
     return { label: badge, icon: Flame, bg: "#9A3412", text: "#FED7AA" };
   if (b.includes("harvest"))
     return { label: badge, icon: Sparkles, bg: "#7C2D12", text: "#FED7AA" };
-  return { label: badge, icon: Sparkles, bg: "#B45309", text: "#FEF3C7" };
+  return { label: badge, icon: Sparkles, bg: "#92400E", text: "#FEF3C7" };
 }
 
 export default function ProductCard({ product, compact = false }) {
@@ -39,6 +41,7 @@ export default function ProductCard({ product, compact = false }) {
   const weights = product.weights || [];
   const [selected, setSelected] = useState(defaultWeight(product));
   const [addedAnim, setAddedAnim] = useState(false);
+  const [quickOpen, setQuickOpen] = useState(false);
   const isFavorited = isInWishlist(product.id);
 
   const price = selected ? selected.price : product.price;
@@ -103,10 +106,23 @@ export default function ProductCard({ product, compact = false }) {
             aria-label={isFavorited ? "Remove from wishlist" : "Save to wishlist"}
             aria-pressed={isFavorited}
             className={`absolute right-1.5 top-1.5 z-10 grid h-10 w-10 cursor-pointer touch-manipulation place-items-center rounded-full backdrop-blur-md transition-all duration-200 active:scale-90 sm:right-2 sm:top-2 ${
-              isFavorited ? "bg-white text-rose-500 shadow-lg" : "bg-white/85 text-[#123B22]/70 shadow hover:bg-white hover:text-rose-500"
+              isFavorited ? "bg-white text-rose-500 shadow-lg" : "bg-white/85 text-[#123B22]/80 shadow hover:bg-white hover:text-rose-500"
             }`}
           >
             <Heart className={`h-[18px] w-[18px] transition-transform duration-200 ${isFavorited ? "scale-110 fill-rose-500" : "fill-transparent"}`} aria-hidden="true" />
+          </button>
+
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setQuickOpen(true);
+            }}
+            aria-label={`Quick view ${product.name}`}
+            className="absolute bottom-1.5 right-1.5 z-10 grid h-10 w-10 cursor-pointer touch-manipulation place-items-center rounded-full bg-white/90 text-[#123B22] shadow-md backdrop-blur-md transition-all duration-200 hover:bg-[#F5B900] active:scale-90 sm:bottom-2 sm:right-2 sm:translate-y-1 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 sm:focus-visible:translate-y-0 sm:focus-visible:opacity-100"
+          >
+            <Eye className="h-[18px] w-[18px]" aria-hidden="true" />
           </button>
 
           {discountPct > 0 && (
@@ -120,13 +136,13 @@ export default function ProductCard({ product, compact = false }) {
       {/* BODY */}
       <div className="flex flex-1 flex-col px-3 pb-3 pt-1.5 sm:px-4 sm:pb-4">
         <div className="flex items-center justify-between gap-2">
-          <span className="truncate text-[10px] font-bold uppercase tracking-[0.16em] text-[#5f9122]">
+          <span className="truncate text-[10px] font-bold uppercase tracking-[0.16em] text-[#3f6a12]">
             {product.categoryName || "Spice"}
           </span>
           <span className="inline-flex shrink-0 items-center gap-1 text-[11px] font-bold text-[#123B22]" aria-label={`Rated ${product.rating || 4.8} out of 5`}>
             <Star className="h-3 w-3 fill-[#F5B900] text-[#F5B900]" aria-hidden="true" />
             {product.rating || "4.8"}
-            <span className="hidden font-medium text-[#123B22]/45 min-[420px]:inline">({product.reviewsCount || 120})</span>
+            <span className="hidden font-medium text-[#123B22]/80 min-[420px]:inline">({product.reviewsCount || 120})</span>
           </span>
         </div>
 
@@ -138,7 +154,7 @@ export default function ProductCard({ product, compact = false }) {
             {product.name}
           </Link>
         </h3>
-        <p className="mt-0.5 line-clamp-1 text-[11px] font-medium text-[#123B22]/55 sm:text-xs">
+        <p className="mt-0.5 line-clamp-1 text-[11px] font-medium text-[#123B22]/80 sm:text-xs">
           {product.subtitle || product.tagline}
         </p>
 
@@ -160,7 +176,7 @@ export default function ProductCard({ product, compact = false }) {
                   className={`min-h-[34px] shrink-0 cursor-pointer touch-manipulation rounded-full border px-3 text-[11px] font-bold transition-all duration-150 sm:text-xs ${
                     isActive
                       ? "border-[#123B22] bg-[#123B22] text-white shadow-sm"
-                      : "border-[#123B22]/15 bg-white text-[#123B22]/70 hover:border-[#70A82C] hover:text-[#123B22]"
+                      : "border-[#123B22]/15 bg-white text-[#123B22]/80 hover:border-[#70A82C] hover:text-[#123B22]"
                   }`}
                 >
                   {w.label}
@@ -175,7 +191,7 @@ export default function ProductCard({ product, compact = false }) {
           <div className="mb-2.5 flex items-end justify-between gap-2">
             <div className="flex flex-wrap items-baseline gap-x-1.5">
               <span className="font-serif text-xl font-bold leading-none text-[#123B22] sm:text-2xl">₹{price}</span>
-              {hasDiscount && <span className="text-xs leading-none text-[#123B22]/40 line-through">₹{originalPrice}</span>}
+              {hasDiscount && <span className="text-xs leading-none text-[#123B22]/80 line-through">₹{originalPrice}</span>}
             </div>
             {hasDiscount && (
               <span className="hidden shrink-0 rounded-full bg-[#70A82C]/15 px-2 py-1 text-[10px] font-extrabold text-[#3f6a12] min-[400px]:inline">
@@ -208,6 +224,17 @@ export default function ProductCard({ product, compact = false }) {
           </button>
         </div>
       </div>
+
+      {quickOpen && (
+        <QuickViewModal
+          product={product}
+          selected={selected}
+          onSelect={setSelected}
+          onAdd={handleAddToCart}
+          added={addedAnim}
+          onClose={() => setQuickOpen(false)}
+        />
+      )}
     </article>
   );
 }

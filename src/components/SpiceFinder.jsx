@@ -8,6 +8,7 @@ import { Search, RotateCcw, ChevronRight, Sparkles, X, Check, UtensilsCrossed, P
 import { products } from "@/data/products";
 import { FORMS, USE_TAGS, allSizes, productUses, productSizes } from "@/lib/catalog";
 import ProductCard from "./ProductCard";
+import PageHero from "@/components/PageHero";
 
 function Chip({ active, onClick, children }) {
   return (
@@ -79,24 +80,18 @@ export default function SpiceFinder() {
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-forest">
       {/* Hero Header */}
-      <section className="relative isolate overflow-hidden bg-night text-white">
-        <Image src="/images/idukki-landscape.webp" alt="" fill priority sizes="100vw" className="-z-10 object-cover object-[70%_45%]" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-night/95 via-night/85 to-night/45" />
-        <div className="mx-auto max-w-7xl px-4 pb-24 pt-10 sm:px-6 sm:pb-28 sm:pt-14 lg:px-8">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/65">
-            <Link href="/" className="hover:text-gold transition-colors">Home</Link>
-            <ChevronRight className="h-3 w-3" aria-hidden="true" />
-            <span className="text-white">Spice Finder</span>
-          </nav>
-          <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.3em] text-gold">Interactive Catalogue</p>
-          <h1 className="mt-2.5 max-w-2xl font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.08]">
-            Find the Right Spice <span className="text-gold italic font-serif">for Your Kitchen</span>
-          </h1>
-          <p className="mt-3.5 max-w-xl text-sm sm:text-base leading-relaxed text-white/80">
-            Select your preferences below to discover hand-harvested Kerala spices tailored to your recipes, form, and pack requirements.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        crumb="Spice Finder"
+        eyebrow="Interactive Catalogue"
+        title="Find the Right Spice"
+        accent="for Your Kitchen"
+        text="Select your preferences below to discover hand-harvested Kerala spices tailored to your recipes, form, and pack requirements."
+        image="/images/Rustic Star Anise and Fresh Herbs.png"
+        imageAlt="Star anise and fresh herbs"
+        circleImage="/gallary/web-vanilla-pods.jpg"
+        watermark="Find"
+        className="pb-24 sm:pb-28"
+      />
 
       {/* Floating Interactive Finder Card */}
       <div className="relative z-10 mx-auto -mt-14 max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -232,7 +227,7 @@ export default function SpiceFinder() {
         <div className="mb-6 flex items-center justify-between">
           <div>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-forest">Recommended Spices</h2>
-            <p className="text-xs sm:text-sm text-forest/65 mt-0.5">Matched from our authentic Idukki harvest</p>
+            <p className="text-xs sm:text-sm text-forest/80 mt-0.5">Matched from our authentic Idukki harvest</p>
           </div>
           <Link
             href="/shop"
@@ -245,11 +240,11 @@ export default function SpiceFinder() {
 
         {matches.length === 0 ? (
           <div className="rounded-3xl border border-dashed border-line bg-white p-12 text-center shadow-xs">
-            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-paper-deep/60 text-forest/50">
+            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-paper-deep/60 text-forest/80">
               <Search className="h-6 w-6" aria-hidden="true" />
             </span>
             <h3 className="mt-5 font-serif text-2xl font-bold text-forest">No spices match all these selections</h3>
-            <p className="mx-auto mt-2 max-w-sm text-sm text-forest/70">
+            <p className="mx-auto mt-2 max-w-sm text-sm text-forest/80">
               Try removing one or two filters, or reset choices to view all available spices.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">

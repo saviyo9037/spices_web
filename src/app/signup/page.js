@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Lock, Mail, User, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
 import { useToast } from "@/context/ToastContext";
+import Image from "next/image";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -33,38 +34,35 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="bg-[#faf7f2] min-h-[85dvh] flex items-center justify-center py-16 px-4">
-      <div className="bg-white rounded-3xl p-8 sm:p-12 border border-[#e6dfd5] shadow-xl max-w-md w-full">
-        {/* Brand Header */}
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2 mb-4 group">
-            <div className="w-10 h-10 rounded-xl bg-[#143627] flex items-center justify-center text-[#dfa84a] font-serif font-black text-xl shadow-md">
-              S
-            </div>
-          </Link>
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#c69238] mb-1">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Join Our Heritage Club</span>
+    <div className="bg-[#FAF6EE] px-4 py-10 sm:py-16">
+      <div className="mx-auto grid max-w-5xl overflow-hidden rounded-[2rem] bg-white shadow-2xl shadow-[#062D1B]/15 ring-1 ring-[#123B22]/10 lg:grid-cols-5">
+        {/* Brand panel */}
+        <div className="relative isolate hidden overflow-hidden bg-[#062D1B] p-10 text-white lg:col-span-2 lg:flex lg:flex-col lg:justify-between">
+          <Image src="/gallary/web-clove-buds.jpg" alt="" fill sizes="400px" className="-z-10 object-cover opacity-35" />
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-b from-[#062D1B]/70 via-[#062D1B]/60 to-[#062D1B]" />
+          <Link href="/" className="font-serif text-2xl font-semibold">Idukki Spices</Link>
+          <div>
+            <h2 className="font-serif text-3xl font-semibold leading-tight">
+              Join the club,
+              <span className="mt-1 block font-script text-[1.3em] font-bold text-[#F5B900]">save on your first order</span>
+            </h2>
+            <ul className="mt-6 space-y-3 text-sm text-white/85">
+              <li className="flex items-start gap-2.5"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#F5B900]" aria-hidden="true" />15% welcome discount with coupon SPICE15</li>
+              <li className="flex items-start gap-2.5"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#F5B900]" aria-hidden="true" />Early access to reserve single-estate batches</li>
+              <li className="flex items-start gap-2.5"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#F5B900]" aria-hidden="true" />Faster checkout and saved favourites</li>
+            </ul>
           </div>
-          <h1 className="font-serif text-3xl font-black text-[#143627]">
-            Create an Account
-          </h1>
-          <p className="text-xs text-[#5c6c64] mt-1">
-            Enjoy 15% off your first harvest order, member tastings, and faster checkout.
-          </p>
         </div>
 
-        {/* Benefits Strip */}
-        <div className="mb-6 p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 space-y-1">
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-            <span>15% Welcome Discount (Coupon <strong>SPICE15</strong>)</span>
+        <div className="p-7 sm:p-12 lg:col-span-3">
+          <div className="mb-8">
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[#B87919]">
+              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+              <span>Heritage club</span>
+            </div>
+            <h1 className="mt-2 font-serif text-3xl font-semibold text-[#123B22] sm:text-4xl">Create an account</h1>
+            <p className="mt-2 text-sm text-[#123B22]/80">Enjoy 15% off your first order, member tastings and faster checkout.</p>
           </div>
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-            <span>Early Access to Reserve Single-Estate Batches</span>
-          </div>
-        </div>
 
         {/* Form */}
         <form onSubmit={handleSignup} className="space-y-4">
@@ -150,6 +148,7 @@ export default function SignupPage() {
           >
             Sign in here
           </Link>
+        </div>
         </div>
       </div>
     </div>

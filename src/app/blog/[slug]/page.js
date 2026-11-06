@@ -157,7 +157,7 @@ export default async function BlogPostPage({ params }) {
                       </span>
                       <span className="min-w-0 flex-1">
                         <span className="line-clamp-2 text-sm font-semibold leading-snug group-hover:text-gold-ink">{p.name}</span>
-                        <span className="text-xs text-forest/60">From ₹{Math.min(...(p.weights || [{ price: p.price }]).map((w) => w.price))}</span>
+                        <span className="text-xs text-forest/80">From ₹{Math.min(...(p.weights || [{ price: p.price }]).map((w) => w.price))}</span>
                       </span>
                       <ChevronRight className="h-4 w-4 text-forest/35 group-hover:text-gold-ink" aria-hidden="true" />
                     </Link>
@@ -182,7 +182,7 @@ export default async function BlogPostPage({ params }) {
                   <span>
                     <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-gold-ink">{p.category}</span>
                     <span className="mt-1 block font-serif text-base font-bold leading-snug group-hover:text-gold-ink">{p.title}</span>
-                    <span className="mt-1 block text-xs text-forest/55">{p.readTime}</span>
+                    <span className="mt-1 block text-xs text-forest/80">{p.readTime}</span>
                   </span>
                 </Link>
               ))}

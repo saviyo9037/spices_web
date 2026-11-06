@@ -9,6 +9,7 @@ import { products } from "@/data/products";
 import { FORMS, USE_TAGS, productUses, productSizes, allSizes } from "@/lib/catalog";
 import ProductCard from "@/components/ProductCard";
 import { useWishlist } from "@/context/WishlistContext";
+import PageHero from "@/components/PageHero";
 
 const FORM_LABEL = {
   "whole-spices": "Whole Spices",
@@ -61,7 +62,7 @@ function Section({ title, hint, children }) {
         <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-forest">{title}</span>
         <span className="flex items-center gap-2">
           {hint && <span className="text-xs font-semibold text-gold-ink">{hint}</span>}
-          <ChevronDown className={`h-4 w-4 text-forest/50 transition-transform duration-200 ${open ? "rotate-180" : ""}`} aria-hidden="true" />
+          <ChevronDown className={`h-4 w-4 text-forest/75 transition-transform duration-200 ${open ? "rotate-180" : ""}`} aria-hidden="true" />
         </span>
       </button>
       {open && <div className="mt-3.5">{children}</div>}
@@ -135,7 +136,7 @@ function FilterPanel({ f, set, toggleIn, wishlistCount }) {
           style={{ "--fill": fill }}
           className="range-gold w-full"
         />
-        <div className="mt-2 flex justify-between text-xs text-forest/60">
+        <div className="mt-2 flex justify-between text-xs text-forest/75">
           <span>₹0</span>
           <span>₹{MAX_PRICE}</span>
         </div>
@@ -149,9 +150,9 @@ function FilterPanel({ f, set, toggleIn, wishlistCount }) {
           onClick={() => set({ wishlist: !f.wishlist })}
           className="flex w-full items-center gap-3 rounded-xl border border-line bg-paper/40 p-3 text-left transition-colors hover:bg-paper"
         >
-          <Heart className={`h-4 w-4 ${f.wishlist ? "fill-gold-ink text-gold-ink" : "text-forest/60"}`} aria-hidden="true" />
+          <Heart className={`h-4 w-4 ${f.wishlist ? "fill-gold-ink text-gold-ink" : "text-forest/75"}`} aria-hidden="true" />
           <span className="flex-1 text-xs font-medium text-forest">
-            Wishlist only <span className="text-forest/50">({wishlistCount})</span>
+            Wishlist only <span className="text-forest/75">({wishlistCount})</span>
           </span>
           <span className={`relative h-5 w-9 shrink-0 rounded-full transition-colors ${f.wishlist ? "bg-forest" : "bg-line"}`}>
             <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-all ${f.wishlist ? "left-[18px]" : "left-0.5"}`} />
@@ -231,36 +232,32 @@ function ShopContent() {
   return (
     <div className="min-h-screen bg-white text-forest">
       {/* Hero Header */}
-      <section className="relative isolate overflow-hidden bg-night text-white">
-        <Image src="/images/idukki-landscape.webp" alt="" fill priority sizes="100vw" className="-z-10 object-cover object-[70%_45%]" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-night/95 via-night/85 to-night/45" />
-        <div className="mx-auto max-w-7xl px-4 pb-14 pt-10 sm:px-6 sm:pb-16 sm:pt-12 lg:px-8">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/65">
-            <Link href="/" className="hover:text-gold transition-colors">Home</Link>
-            <ChevronRight className="h-3 w-3" aria-hidden="true" />
-            <span className="text-white">Shop</span>
-          </nav>
-          <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.3em] text-gold">Idukki Single Origin</p>
-          <h1 className="mt-2.5 max-w-2xl font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.08]">
-            Pure Spices <span className="text-gold italic font-serif">from the Hills</span>
-          </h1>
-          <p className="mt-3.5 max-w-xl text-sm sm:text-base leading-relaxed text-white/80">
-            Hand-harvested from high-altitude Kerala plantations. Retaining 100% of their natural essential oils, aroma and culinary heat.
-          </p>
-          <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2.5 text-xs sm:text-sm text-white/90">
-            {[
-              [Leaf, "100% Single Origin"],
-              [MapPin, "Idukki & High Ranges"],
-              [Truck, "Pan-India Fresh Dispatch"],
-            ].map(([Icon, label]) => (
-              <li key={label} className="flex items-center gap-2">
-                <Icon className="h-4 w-4 text-gold" strokeWidth={1.5} aria-hidden="true" />
-                <span>{label}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <PageHero
+        crumb="Shop"
+        eyebrow="Idukki Single Origin"
+        title="Pure Spices"
+        accent="from the Hills"
+        text="Hand-harvested from high-altitude Kerala plantations. Retaining 100% of their natural essential oils, aroma and culinary heat."
+        image="/images/Idukki Spices_ Pepper and Aromatic Treasures.png"
+        imageAlt="Wooden bowls of pepper, cardamom and turmeric beneath a pepper vine"
+        circleImage="/gallary/web-black-pepper.jpg"
+        watermark="Shop"
+        edge={false}
+        className="pb-14 sm:pb-16"
+      >
+        <ul className="flex flex-wrap gap-x-6 gap-y-2.5 text-xs text-white/90 sm:text-sm">
+          {[
+            [Leaf, "100% Single Origin"],
+            [MapPin, "Idukki & High Ranges"],
+            [Truck, "Pan-India Fresh Dispatch"],
+          ].map(([Icon, label]) => (
+            <li key={label} className="flex items-center gap-2">
+              <Icon className="h-4 w-4 text-gold" strokeWidth={1.5} aria-hidden="true" />
+              <span>{label}</span>
+            </li>
+          ))}
+        </ul>
+      </PageHero>
 
       {/* Dark Forest Spice Strip */}
       <div className="bg-deep border-b border-gold/15 py-3.5 sm:py-4">
@@ -301,21 +298,21 @@ function ShopContent() {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             {/* Search Input */}
             <div className="relative flex-1 min-w-0">
-              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-forest/45" aria-hidden="true" />
+              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-forest/75" aria-hidden="true" />
               <input
                 type="search"
                 aria-label="Search spices"
                 value={f.q}
                 onChange={(e) => set({ q: e.target.value })}
                 placeholder="Search by spice name, origin, or culinary use..."
-                className="w-full rounded-xl border border-line bg-paper/50 py-2.5 pl-10 pr-9 text-sm text-forest placeholder:text-forest/45 focus:border-gold focus:bg-white focus:outline-none focus:ring-2 focus:ring-gold/30"
+                className="w-full rounded-xl border border-line bg-paper/50 py-2.5 pl-10 pr-9 text-sm text-forest placeholder:text-forest/75 focus:border-gold focus:bg-white focus:outline-none focus:ring-2 focus:ring-gold/30"
               />
               {f.q && (
                 <button
                   type="button"
                   onClick={() => set({ q: "" })}
                   aria-label="Clear search"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-forest/40 hover:text-forest"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-forest/75 hover:text-forest"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -323,8 +320,8 @@ function ShopContent() {
             </div>
 
             {/* Results count, mobile filter trigger, sort */}
-            <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
-              <span className="text-xs sm:text-sm font-medium text-forest/70 whitespace-nowrap">
+            <div className="flex max-w-full flex-wrap items-center justify-between gap-x-3 gap-y-2 sm:shrink-0 sm:justify-end">
+              <span className="text-xs sm:text-sm font-medium text-forest/80 whitespace-nowrap">
                 <strong className="text-forest font-bold">{shown.length}</strong> of {products.length} spices
               </span>
 
@@ -344,12 +341,12 @@ function ShopContent() {
               </button>
 
               {/* Sort Dropdown */}
-              <div className="flex items-center gap-1.5 text-xs sm:text-sm text-forest/70">
+              <div className="flex min-w-0 items-center gap-1.5 text-xs sm:text-sm text-forest/80">
                 <span className="hidden md:inline font-medium">Sort:</span>
                 <select
                   value={f.sort}
                   onChange={(e) => set({ sort: e.target.value })}
-                  className="rounded-xl border border-line bg-paper/50 px-3 py-2.5 text-xs sm:text-sm font-semibold text-forest focus:border-gold focus:bg-white focus:outline-none cursor-pointer"
+                  className="min-w-0 max-w-full rounded-xl border border-line bg-paper/50 px-3 py-2.5 text-xs sm:text-sm font-semibold text-forest focus:border-gold focus:bg-white focus:outline-none cursor-pointer"
                 >
                   {SORTS.map((x) => (
                     <option key={x.id} value={x.id}>{x.label}</option>
@@ -362,7 +359,7 @@ function ShopContent() {
           {/* Active Filter Chips */}
           {active.length > 0 && (
             <div className="mt-3.5 pt-3 border-t border-line/60 flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wider text-forest/50">Active:</span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-forest/75">Active:</span>
               {active.map((a) => (
                 <button
                   key={a.key}
@@ -411,11 +408,11 @@ function ShopContent() {
                     value={f.q}
                     onChange={(e) => set({ q: e.target.value })}
                     placeholder="Search spices..."
-                    className="w-full rounded-xl border border-line bg-paper/50 py-2.5 pl-10 pr-3 text-sm text-forest placeholder:text-forest/45 focus:border-gold focus:bg-white focus:outline-none focus:ring-2 focus:ring-gold/30"
+                    className="w-full rounded-xl border border-line bg-paper/50 py-2.5 pl-10 pr-3 text-sm text-forest placeholder:text-forest/75 focus:border-gold focus:bg-white focus:outline-none focus:ring-2 focus:ring-gold/30"
                   />
                 </div>
                 <label className="block">
-                  <span className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.2em] text-forest/60">Sort by</span>
+                  <span className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.2em] text-forest/75">Sort by</span>
                   <select
                     value={f.sort}
                     onChange={(e) => set({ sort: e.target.value })}
@@ -434,7 +431,7 @@ function ShopContent() {
           {/* Products Grid */}
           <div>
             <div className="mb-5 hidden flex-wrap items-center gap-2 lg:flex">
-              <p className="mr-2 text-sm text-forest/70" aria-live="polite">
+              <p className="mr-2 text-sm text-forest/80" aria-live="polite">
                 <strong className="text-forest">{shown.length}</strong> of {products.length} spices
               </p>
               {active.map((a) => (
@@ -452,11 +449,11 @@ function ShopContent() {
             </div>
             {shown.length === 0 ? (
               <div className="rounded-3xl border border-dashed border-line bg-white p-12 text-center shadow-xs">
-                <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-paper-deep/60 text-forest/50">
+                <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-paper-deep/60 text-forest/75">
                   <Search className="h-6 w-6" aria-hidden="true" />
                 </span>
                 <h2 className="mt-5 font-serif text-2xl font-bold text-forest">No spices match these criteria</h2>
-                <p className="mx-auto mt-2 max-w-sm text-sm text-forest/70">
+                <p className="mx-auto mt-2 max-w-sm text-sm text-forest/80">
                   {f.wishlist && wishlistIds.length === 0
                     ? "Your wishlist is empty. Tap the heart on any spice to save it."
                     : "Try adjusting your filters, selecting 'All Spices', or broadening your search terms."}

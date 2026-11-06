@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { blogPosts } from "@/data/blogPosts";
 import { Clock, ArrowRight, ChevronRight } from "lucide-react";
+import PageHero from "@/components/PageHero";
 
 export const metadata = {
   title: "Recipes & Spice Journal",
@@ -22,24 +23,18 @@ export default function BlogPage() {
 
   return (
     <div className="bg-white text-forest">
-      <section className="relative isolate overflow-hidden bg-night text-white">
-        <Image src="/images/journal/06-journal-books-spices.jpg" alt="" fill priority sizes="100vw" className="-z-10 object-cover object-center" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-night/95 via-night/80 to-night/40" />
-        <div className="mx-auto max-w-7xl px-4 pb-24 pt-10 sm:px-6 sm:pb-28 sm:pt-14 lg:px-8">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/65">
-            <Link href="/" className="hover:text-gold">Home</Link>
-            <ChevronRight className="h-3 w-3" aria-hidden="true" />
-            <span className="text-white">Recipes</span>
-          </nav>
-          <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.3em] text-gold">The Spice Journal</p>
-          <h1 className="mt-3 max-w-2xl font-serif text-4xl font-bold leading-[1.1] sm:text-6xl">
-            Recipes, guides <span className="text-gold">&amp; spice stories</span>
-          </h1>
-          <p className="mt-4 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
-            Learn how to store, toast and blend spices, and cook with the spices of Idukki.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        crumb="Recipes"
+        eyebrow="The Spice Journal"
+        title="Recipes, guides"
+        accent="& spice stories"
+        text="Learn how to store, toast and blend spices, and cook with the spices of Idukki."
+        image="/images/journal/06-journal-books-spices.jpg"
+        imageAlt="An open recipe book surrounded by spices"
+        circleImage="/gallary/web-bay-leaves.jpg"
+        watermark="Journal"
+        className="pb-24 sm:pb-28"
+      />
 
       <div className="relative z-10 mx-auto -mt-14 max-w-7xl px-4 sm:px-6 lg:px-8">
         {featured && (
@@ -53,8 +48,8 @@ export default function BlogPage() {
               <h2 className="mt-3 font-serif text-2xl font-bold leading-tight sm:text-4xl">
                 <Link href={`/blog/${featured.slug}`} className="hover:text-gold-ink">{featured.title}</Link>
               </h2>
-              <p className="mt-4 leading-relaxed text-forest/70">{featured.excerpt}</p>
-              <p className="mt-5 flex items-center gap-1.5 text-sm text-forest/60">
+              <p className="mt-4 leading-relaxed text-forest/80">{featured.excerpt}</p>
+              <p className="mt-5 flex items-center gap-1.5 text-sm text-forest/80">
                 <Clock className="h-4 w-4" aria-hidden="true" /> {featured.readTime}
               </p>
               <Link
@@ -82,9 +77,9 @@ export default function BlogPage() {
                   <h3 className="mt-2 font-serif text-xl font-bold leading-snug">
                     <Link href={`/blog/${post.slug}`} className="hover:text-gold-ink">{post.title}</Link>
                   </h3>
-                  <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-forest/70">{post.excerpt}</p>
+                  <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-forest/80">{post.excerpt}</p>
                   <div className="mt-auto flex items-center justify-between pt-5 text-sm">
-                    <span className="flex items-center gap-1.5 text-forest/55"><Clock className="h-4 w-4" aria-hidden="true" /> {post.readTime}</span>
+                    <span className="flex items-center gap-1.5 text-forest/80"><Clock className="h-4 w-4" aria-hidden="true" /> {post.readTime}</span>
                     <Link href={`/blog/${post.slug}`} className="inline-flex items-center gap-1.5 font-semibold text-gold-ink hover:text-forest">
                       Read more <ArrowRight className="h-4 w-4" />
                     </Link>
@@ -98,7 +93,7 @@ export default function BlogPage() {
 
       <section className="mx-auto max-w-7xl px-4 pb-16 pt-14 sm:px-6 sm:pb-24 lg:px-8" aria-labelledby="quick-guides">
         <h2 id="quick-guides" className="font-serif text-3xl font-bold">Quick guides</h2>
-        <p className="mt-2 text-forest/65">Shortcuts to help you pick and use the right spice.</p>
+        <p className="mt-2 text-forest/80">Shortcuts to help you pick and use the right spice.</p>
         <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {guides.map((g) => (
             <li key={g.title}>

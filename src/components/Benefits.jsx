@@ -36,7 +36,7 @@ export default function Benefits() {
                     <Icon className="h-6 w-6" strokeWidth={1.6} aria-hidden="true" />
                   </span>
                   <h3 className="relative mt-6 font-serif text-xl font-semibold leading-snug">{title}</h3>
-                  <p className="relative mt-2.5 text-sm leading-relaxed text-[#123B22]/70">{text}</p>
+                  <p className="relative mt-2.5 text-sm leading-relaxed text-[#123B22]/80">{text}</p>
                   <span aria-hidden="true" className="relative mt-6 block h-[3px] w-10 rounded-full bg-[#70A82C] transition-all duration-500 group-hover:w-full group-hover:bg-[#F5B900]" />
                 </div>
               </Reveal>
@@ -52,7 +52,7 @@ export default function Benefits() {
             Contact us
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
-          <p className="mt-3 text-xs text-[#123B22]/55 sm:text-sm">For shipping, returns and payment questions.</p>
+          <p className="mt-3 text-xs text-[#123B22]/80 sm:text-sm">For shipping, returns and payment questions.</p>
         </Reveal>
       </div>
     </section>

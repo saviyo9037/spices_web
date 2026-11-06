@@ -55,7 +55,7 @@ export default function NewsletterSection() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Your email address"
             aria-invalid={Boolean(error)}
-            className="min-w-0 flex-1 rounded-full bg-white px-5 py-3.5 text-sm text-forest placeholder:text-forest/45 focus:outline-none focus:ring-2 focus:ring-gold"
+            className="min-w-0 flex-1 rounded-full bg-white px-5 py-3.5 text-sm text-forest placeholder:text-forest/80 focus:outline-none focus:ring-2 focus:ring-gold"
           />
           <button
             type="submit"

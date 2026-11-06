@@ -1,10 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { categories, getCategoryBySlug } from "@/data/categories";
 import { getProductsByCategory, products } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
-import { ArrowLeft, Sparkles } from "lucide-react";
+import PageHero from "@/components/PageHero";
 
 export function generateStaticParams() {
   return categories.map((cat) => ({
@@ -37,39 +35,18 @@ export default async function CategoryDetailPage({ params }) {
   }
 
   return (
-    <div className="bg-[#faf7f2] min-h-screen pb-20">
-      {/* Category Hero Banner */}
-      <div className="relative h-72 sm:h-96 w-full bg-[#0f2c1f] overflow-hidden">
-        <Image
-          src={category.image}
-          alt={category.name}
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0f2c1f] via-[#0f2c1f]/70 to-transparent" />
-
-        <div className="relative z-10 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-10">
-          <Link
-            href="/categories"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-[#dfa84a] hover:underline mb-4"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>All Categories</span>
-          </Link>
-          <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#dfa84a] mb-2">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>{category.itemCount}</span>
-          </div>
-          <h1 className="font-serif text-3xl sm:text-5xl font-black text-white tracking-tight">
-            {category.name}
-          </h1>
-          <p className="text-sm sm:text-base text-white/85 max-w-2xl mt-2 leading-relaxed">
-            {category.description}
-          </p>
-        </div>
-      </div>
+    <div className="bg-white min-h-screen pb-20">
+      <PageHero
+        crumb={category.name}
+        eyebrow={category.itemCount}
+        title={category.name}
+        text={category.description}
+        image={category.image}
+        imageAlt={category.name}
+        circleImage="/gallary/web-black-pepper.jpg"
+        watermark="Spices"
+        className="pb-20 sm:pb-24"
+      />
 
       {/* Products in this Category */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
@@ -82,7 +59,7 @@ export default async function CategoryDetailPage({ params }) {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
           {categoryProducts.map((prod) => (
             <ProductCard key={prod.id} product={prod} />
           ))}

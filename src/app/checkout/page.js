@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/context/ToastContext";
+import EmptyBasket from "@/components/EmptyBasket";
 
 export default function CheckoutPage() {
   const { items, cartSubtotal, cartCount, clearCart } = useCart();
@@ -139,21 +140,9 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="bg-white min-h-[70dvh] flex items-center justify-center py-16 px-4">
-        <div className="bg-white rounded-3xl p-10 text-center border border-[#e6dfd5] max-w-md w-full shadow-xs">
-          <ShoppingBag className="w-12 h-12 text-[#87978f] mx-auto mb-3" />
-          <h2 className="font-serif text-xl font-bold text-[#143627] mb-2">
-            Your basket is empty
-          </h2>
-          <p className="text-xs text-[#5c6c64] mb-6">
-            Please add some spices to your basket before checking out.
-          </p>
-          <Link
-            href="/shop"
-            className="px-6 py-2.5 rounded-full bg-[#143627] text-white text-xs font-bold uppercase tracking-wider"
-          >
-            Explore Spices
-          </Link>
+      <div className="bg-white py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <EmptyBasket title="Nothing to check out yet" text="Add a spice to your basket first, then come back to complete your order." />
         </div>
       </div>
     );
