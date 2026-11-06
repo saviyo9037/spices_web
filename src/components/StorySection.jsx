@@ -87,14 +87,14 @@ export default function StorySection() {
             </div>
           </div>
 
-          {/* Photo sheets: each one sticks lower than the last and slides over the one before it */}
-          <ol className="relative mx-auto w-full max-w-[520px] lg:col-span-7 lg:max-w-none lg:pl-10">
+          {/* Photo sheets: each one sticks and stacks over the one before it at the top */}
+          <ol className="relative mx-auto w-full max-w-[520px] pb-12 sm:pb-20 lg:col-span-7 lg:max-w-none lg:pl-10 lg:pb-28">
             {sheets.map((s, i) => (
               <li
                 key={s.src}
-                className={`sticky ${i < sheets.length - 1 ? "mb-[34vh] lg:mb-[42vh]" : ""}`}
+                className={`sticky ${i < sheets.length - 1 ? "mb-[34vh] lg:mb-[42vh]" : "mb-[32vh] lg:mb-[38vh]"}`}
                 style={{
-                  top: `calc(5.75rem + ${i * 1.5}rem)`,
+                  top: `calc(4.75rem + ${i * 8}px)`,
                   zIndex: i + 1,
                 }}
               >
