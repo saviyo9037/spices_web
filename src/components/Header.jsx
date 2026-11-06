@@ -22,6 +22,7 @@ import {
   ChevronRight,
   MapPin,
   Truck,
+  Images,
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -32,6 +33,7 @@ const navLinks = [
   { name: "Shop", href: "/shop", icon: ShoppingBag },
   { name: "Spices", href: "/spices", icon: Sparkles },
   { name: "Combos", href: "/combos", icon: Layers },
+  { name: "Gallery", href: "/gallery", icon: Images },
   { name: "Recipes", href: "/blog", icon: BookOpen },
   { name: "About", href: "/about", icon: Leaf },
   { name: "Contact", href: "/contact", icon: Mail },

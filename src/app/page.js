@@ -3,6 +3,7 @@ import IntroSection from "@/components/IntroSection";
 import SpiceMarquee from "@/components/SpiceMarquee";
 import CategorySection from "@/components/CategorySection";
 import StorySection from "@/components/StorySection";
+import GallerySection from "@/components/GallerySection";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import FarmJourney from "@/components/FarmJourney";
 import VideoBanner from "@/components/VideoBanner";
@@ -25,6 +26,7 @@ export default function HomePage() {
       <SpiceMarquee />
       <CategorySection />
       <StorySection />
+      <GallerySection />
       <FeaturedProducts />
       <FarmJourney />
       <VideoBanner />
