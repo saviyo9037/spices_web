@@ -18,15 +18,25 @@ function buildPath(seed) {
 
 export default function TornEdge({ fill = "#FFFFFF", position = "bottom", seed = 0, className = "" }) {
   const pts = buildPath(seed);
-  const line = `L${pts.join(" L")}`;
-  // bottom: colour fills the lower part. top: colour fills the upper part (mirrored).
-  const d = position === "bottom" ? `M0,100 L0,46 ${line} L1440,100 Z` : `M0,0 L0,46 ${line} L1440,0 Z`;
-  const pos = position === "bottom" ? "-bottom-px" : "-top-px";
+  const firstY = pts[0].split(",")[1];
+  const lastY = pts[pts.length - 1].split(",")[1];
+
+  // Extend 20 units beyond viewBox boundaries (top -20 or bottom 120, and sides -10 to 1450)
+  // to prevent any sub-pixel antialiasing edge / grey seam artifacts when rasterized.
+  const d =
+    position === "bottom"
+      ? `M-10,120 L-10,${firstY} L${pts.join(" L")} L1450,${lastY} L1450,120 Z`
+      : `M-10,-20 L-10,${firstY} L${pts.join(" L")} L1450,${lastY} L1450,-20 Z`;
+
+  // -bottom-[2px] / -top-[2px] ensures a 2px overlap across section boundaries to eliminate hairline gaps
+  const pos = position === "bottom" ? "-bottom-[2px]" : "-top-[2px]";
+
   return (
     <svg
       aria-hidden="true"
       viewBox="0 0 1440 100"
       preserveAspectRatio="none"
+      shapeRendering="geometricPrecision"
       className={`pointer-events-none absolute left-0 z-[5] h-[40px] w-full sm:h-[60px] ${pos} ${className}`}
     >
       <path d={d} fill={fill} />

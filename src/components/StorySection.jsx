@@ -9,19 +9,19 @@ const facts = [
   { value: "100%", label: "natural sun curing" },
 ];
 
-// Three photo "sheets". As the page scrolls they stack one on top of the other: each sheet sticks a
+// Three photo "sheets" (nutmeg in hand, misty spice forest, coffee cherries). As the page scrolls they stack one on top of the other: each sheet sticks a
 // little lower than the last, slightly turned, so a corner of the one underneath stays visible.
 const sheets = [
   {
-    src: "/rootedhills/web-graamya.jpg",
-    alt: "A hand holding freshly picked pepper berries",
-    fit: "origin-right scale-[1.55] object-cover object-right",
+    src: "/rootedhills/web-nutmeg.jpg",
+    alt: "A hand holding a ripe nutmeg fruit split open to show the red mace",
+    fit: "object-cover object-[50%_35%]",
     turn: "-rotate-2 -translate-x-2 sm:-translate-x-4",
     peek: "01",
   },
   {
-    src: "/rootedhills/web-munnar.jpg",
-    alt: "Terraced hillsides and a winding road in Munnar, Idukki, at dusk",
+    src: "/rootedhills/web-estate.jpg",
+    alt: "Mist drifting through shaded trees above a spice plantation in the hills",
     fit: "object-cover object-center",
     turn: "rotate-[1.8deg] translate-x-2 sm:translate-x-4",
     peek: "02",
@@ -30,7 +30,7 @@ const sheets = [
     src: "/rootedhills/web-coffee.jpg",
     alt: "Ripe red coffee cherries beside roasted coffee beans",
     fit: "object-cover object-center",
-    turn: "-rotate-1 translate-x-0",
+    turn: "-rotate-2 -translate-x-2 sm:-translate-x-4",
     peek: "03",
   },
 ];
@@ -40,7 +40,7 @@ export default function StorySection() {
     <section
       id="story"
       aria-labelledby="story-heading"
-      className="relative isolate overflow-clip bg-[#092515] pb-24 pt-20 text-white sm:pb-32 sm:pt-28"
+      className="relative isolate overflow-x-clip bg-[#092515] pb-24 pt-20 text-white sm:pb-32 sm:pt-28"
     >
       <TornEdge position="top" fill="#FAF7EF" seed={4} />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_85%_20%,rgba(112,168,44,0.20),transparent_70%),radial-gradient(ellipse_40%_40%_at_5%_95%,rgba(245,185,0,0.08),transparent_70%)]" />
@@ -106,7 +106,6 @@ export default function StorySection() {
                       fill
                       loading="lazy"
                       decoding="async"
-                      quality={70}
                       sizes="(min-width: 1024px) 480px, (min-width: 640px) 440px, 80vw"
                       className={s.fit}
                     />

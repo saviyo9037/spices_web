@@ -17,7 +17,7 @@ export default function FarmJourney() {
   return (
     <section
       id="farm-to-kitchen"
-      className="relative overflow-hidden bg-[#092515] py-20 text-white sm:py-32"
+      className="relative overflow-x-clip bg-[#092515] py-20 text-white sm:py-32"
     >
       {/* Top Torn Edge transitioning from white FeaturedProducts section into this green section */}
       <TornEdge position="top" fill="#FFFFFF" seed={2} />

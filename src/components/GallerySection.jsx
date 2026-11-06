@@ -64,14 +64,8 @@ export default function GallerySection() {
     <section
       id="gallery"
       aria-labelledby="gallery-heading"
-      className="relative overflow-hidden bg-[#FAF7EF] py-16 text-[#123B22] sm:py-24 lg:py-28"
+      className="relative -mt-1 overflow-hidden bg-white py-16 text-[#123B22] sm:py-24 lg:py-28"
     >
-      {/* Background ambient lighting */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_20%_20%,rgba(112,168,44,0.08),transparent_70%),radial-gradient(ellipse_50%_50%_at_80%_80%,rgba(245,185,0,0.08),transparent_70%)]"
-      />
-
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-10 sm:mb-14">
@@ -81,7 +75,6 @@ export default function GallerySection() {
               <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.22em] text-[#143627]">
                 Nature Gallery &amp; Terroir
               </span>
-              <span className="w-10 h-px bg-[#143627]/30" />
             </div>
 
             <h2
@@ -285,9 +278,6 @@ export default function GallerySection() {
           </div>
         </div>
       )}
-
-      {/* Pure White Torn Edge at bottom of GallerySection that tears into FeaturedProducts (bg-white) */}
-      <TornEdge position="bottom" fill="#FFFFFF" seed={5} className="z-20 h-[56px] sm:h-[72px]" />
     </section>
   );
 }
