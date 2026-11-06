@@ -283,6 +283,10 @@ img, video { max-width: 100%; }
 .marquee-track:hover { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
 
+/* Product card — hide weight selector scrollbar but allow scrolling */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
 /* Rotating circular stamp */
 @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 .animate-spin-slow { animation: spin-slow 24s linear infinite; }

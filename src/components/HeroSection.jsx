@@ -59,17 +59,31 @@ export default function HeroSection() {
         className="pointer-events-none absolute top-28 left-4 h-24 w-24 rounded-full bg-[#F5B900]/20 blur-lg z-10"
       />
 
-      {/* Right side spice photo: full height, right-aligned, seamlessly blended on the left */}
+      {/* Mobile only: Condimente photo, spices anchored to the bottom, green wash keeps the text readable */}
+      <div data-photo aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 sm:hidden">
+        <Image
+          src="/images/Condimente.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          fetchPriority="high"
+          className="object-cover object-bottom"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#062D1B] via-[#062D1B]/80 via-50% to-[#062D1B]/5" />
+      </div>
+
+      {/* Tablet & desktop: right side spice photo, full height, seamlessly blended on the left */}
       <div
         data-photo
-        className="hero-photo absolute top-0 bottom-0 right-0 w-full sm:w-[72%] lg:w-[65%] xl:w-[68%] h-full z-0 pointer-events-none"
+        className="hero-photo pointer-events-none absolute top-0 bottom-0 right-0 z-0 hidden h-full w-full sm:block sm:w-[72%] lg:w-[65%] xl:w-[68%]"
       >
         <Image
           src="/images/Idukki Spices_ Pepper and Aromatic Treasures.png"
           alt="Hanging green peppercorns and leaves above wooden bowls of black pepper, cardamom and turmeric with cinnamon, cloves, star anise and red chillies"
           fill
-          priority
-          sizes="(min-width: 1024px) 68vw, 100vw"
+          loading="lazy"
+          fetchPriority="high"
+          sizes="(min-width: 1024px) 68vw, 72vw"
           className="object-cover object-[78%_center] lg:object-right"
         />
 

@@ -1,8 +1,20 @@
 "use client";
 
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Leaf, Mountain, ShieldCheck, Truck } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Grid,
+  Leaf,
+  Mountain,
+  ShieldCheck,
+  SlidersHorizontal,
+  Truck,
+} from "lucide-react";
 
 const SPICES = [
   {
@@ -55,19 +67,108 @@ const SPICES = [
   },
 ];
 
-export default function CategorySection() {
+function SpiceCard({ spice, isGrid = false }) {
+  const isGreen = spice.theme === "green";
   return (
-    <section id="categories" className="bg-[#FAF8F5] py-14 sm:py-20 text-[#143627]">
+    <Link
+      href={`/product/${spice.slug}`}
+      className={`group relative rounded-2xl sm:rounded-[26px] overflow-hidden p-3.5 sm:p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 active:scale-[0.98] ${
+        isGrid
+          ? "w-full min-h-[250px] sm:min-h-[290px]"
+          : "w-[165px] sm:w-[185px] md:w-full shrink-0 snap-start min-h-[255px] sm:min-h-[300px]"
+      } ${
+        isGreen
+          ? "bg-gradient-to-b from-[#144222] via-[#0E3218] to-[#082210] border border-[#225732]/50 shadow-[0_8px_24px_-6px_rgba(8,34,16,0.45)] hover:shadow-[0_16px_32px_-8px_rgba(8,34,16,0.6)]"
+          : "bg-gradient-to-b from-[#F59702] via-[#E88600] to-[#C96F00] border border-[#FFB84D]/40 shadow-[0_8px_24px_-6px_rgba(201,111,0,0.4)] hover:shadow-[0_16px_32px_-8px_rgba(201,111,0,0.55)]"
+      }`}
+    >
+      {/* Top Subtle Ambient Light */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 w-32 h-16 rounded-full bg-white/20 blur-xl"
+      />
+
+      {/* Top Badge (if any) or Spacing */}
+      <div className="h-5 sm:h-6 flex items-center">
+        {spice.badge ? (
+          <span className="inline-flex items-center gap-1 rounded-full bg-white/95 px-2 sm:px-2.5 py-0.5 text-[9.5px] sm:text-[10px] font-extrabold shadow-xs text-slate-800 backdrop-blur-xs">
+            <span>{spice.badge.icon}</span>
+            <span className={spice.badge.color}>{spice.badge.label}</span>
+          </span>
+        ) : null}
+      </div>
+
+      {/* Spice Bowl Artwork with Soft Backlight */}
+      <div className="relative w-full aspect-[4/3] my-1 sm:my-2 flex items-center justify-center">
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-0 m-auto w-24 h-24 sm:w-28 sm:h-28 rounded-full blur-md ${
+            isGreen ? "bg-[#70A82C]/20" : "bg-white/25"
+          }`}
+        />
+        <Image
+          src={spice.image}
+          alt={spice.name}
+          width={220}
+          height={160}
+          className="relative z-10 object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.35)] transition-transform duration-500 ease-out group-hover:scale-108"
+        />
+      </div>
+
+      {/* Text Content */}
+      <div className="pt-1 sm:pt-2 flex flex-col text-left">
+        <h3 className="font-serif text-[14px] sm:text-base lg:text-[17px] font-bold text-white tracking-tight leading-tight line-clamp-1">
+          {spice.name}
+        </h3>
+        <p className="mt-1 text-[10.5px] sm:text-[11px] lg:text-xs text-white/90 leading-snug line-clamp-2 font-normal">
+          {spice.description}
+        </p>
+
+        {/* Circular White Arrow Button */}
+        <div className="mt-3 sm:mt-4 flex justify-center w-full">
+          <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-[#143627] flex items-center justify-center shadow-md transition-all duration-300 group-hover:scale-110 group-hover:bg-[#FAF7EE] group-hover:shadow-lg">
+            <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5" />
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+export default function CategorySection() {
+  const scrollRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [mobileLayout, setMobileLayout] = useState("carousel"); // 'carousel' or 'grid'
+
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, clientWidth } = scrollRef.current;
+    const itemWidth = 175;
+    const index = Math.round(scrollLeft / itemWidth);
+    setActiveIndex(Math.min(SPICES.length - 1, Math.max(0, index)));
+  };
+
+  const scroll = (direction) => {
+    if (!scrollRef.current) return;
+    const step = 185;
+    scrollRef.current.scrollBy({
+      left: direction === "left" ? -step : step,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <section id="categories" className="bg-[#FAF8F5] py-12 sm:py-20 text-[#143627]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 pb-8 sm:pb-10">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 sm:pb-10">
           <div>
-            <div className="flex items-center gap-2 mb-2.5">
+            <div className="flex items-center gap-2 mb-2 sm:mb-2.5">
               <Leaf className="w-4 h-4 text-[#163A12] fill-[#163A12]" />
               <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.22em] text-[#163A12]">
                 Category Explorer
               </span>
-              <span className="w-12 h-px bg-[#163A12]/30" />
+              <span className="w-10 sm:w-12 h-px bg-[#163A12]/30" />
             </div>
 
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-[46px] font-bold text-[#143627] tracking-tight leading-[1.08]">
@@ -79,101 +180,141 @@ export default function CategorySection() {
             </p>
           </div>
 
-          <Link
-            href="/spices"
-            className="self-start sm:self-auto inline-flex items-center gap-2 rounded-full border border-[#143627]/70 bg-white px-5 sm:px-6 py-2.5 text-xs sm:text-sm font-semibold text-[#143627] shadow-2xs transition-all duration-300 hover:bg-[#143627] hover:text-white active:scale-95"
-          >
-            <span>Open the Spice Finder</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </Link>
+          <div className="flex items-center gap-2.5 self-start sm:self-auto flex-wrap">
+            {/* Mobile View Toggle (Carousel vs Grid) - only on mobile */}
+            <div className="md:hidden inline-flex items-center rounded-full bg-white p-0.5 border border-slate-200/80 shadow-2xs">
+              <button
+                type="button"
+                onClick={() => setMobileLayout("carousel")}
+                className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold transition-all ${
+                  mobileLayout === "carousel"
+                    ? "bg-[#143627] text-white shadow-2xs"
+                    : "text-slate-600 hover:text-slate-900"
+                }`}
+                aria-label="Carousel view"
+              >
+                <SlidersHorizontal className="w-3 h-3" />
+                <span>Swipe</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setMobileLayout("grid")}
+                className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold transition-all ${
+                  mobileLayout === "grid"
+                    ? "bg-[#143627] text-white shadow-2xs"
+                    : "text-slate-600 hover:text-slate-900"
+                }`}
+                aria-label="Grid view"
+              >
+                <Grid className="w-3 h-3" />
+                <span>Grid</span>
+              </button>
+            </div>
+
+            <Link
+              href="/spices"
+              className="inline-flex items-center gap-2 rounded-full border border-[#143627]/70 bg-white px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-[#143627] shadow-2xs transition-all duration-300 hover:bg-[#143627] hover:text-white active:scale-95"
+            >
+              <span>Open Spice Finder</span>
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
         </div>
 
-        {/* 6 Spice Cards Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4 lg:gap-4">
-          {SPICES.map((spice) => {
-            const isGreen = spice.theme === "green";
-            return (
-              <Link
-                key={spice.slug}
-                href={`/product/${spice.slug}`}
-                className={`group relative rounded-[28px] overflow-hidden p-4 sm:p-5 flex flex-col justify-between shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl active:scale-[0.98] ${
-                  isGreen
-                    ? "bg-[#183B14] hover:bg-[#153412]"
-                    : "bg-[#F59702] hover:bg-[#e68d00]"
-                }`}
+        {/* ── MOBILE CAROUSEL MODE (< md) ────────────────────────── */}
+        <div className={`md:hidden ${mobileLayout === "carousel" ? "block" : "hidden"}`}>
+          <div
+            ref={scrollRef}
+            onScroll={handleScroll}
+            className="flex gap-3 overflow-x-auto pb-4 pt-1 px-4 -mx-4 snap-x snap-mandatory scroll-smooth no-scrollbar"
+          >
+            {SPICES.map((spice) => (
+              <SpiceCard key={spice.slug} spice={spice} isGrid={false} />
+            ))}
+          </div>
+
+          {/* Carousel Navigation & Indicators */}
+          <div className="mt-3 flex items-center justify-between px-1">
+            {/* Dots */}
+            <div className="flex items-center gap-1.5" aria-hidden="true">
+              {SPICES.map((spice, idx) => (
+                <span
+                  key={spice.slug}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    idx === activeIndex
+                      ? "w-5 bg-[#143627]"
+                      : "w-1.5 bg-slate-300"
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Mobile Nav Arrows */}
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => scroll("left")}
+                aria-label="Previous spice"
+                className="w-8 h-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-700 active:scale-95 shadow-2xs"
               >
-                {/* Top Badge (if any) or Empty Spacer */}
-                <div className="h-6 flex items-start">
-                  {spice.badge ? (
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-0.5 text-[10px] font-extrabold shadow-xs text-slate-800 backdrop-blur-xs">
-                      <span>{spice.badge.icon}</span>
-                      <span className={spice.badge.color}>{spice.badge.label}</span>
-                    </span>
-                  ) : null}
-                </div>
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scroll("right")}
+                aria-label="Next spice"
+                className="w-8 h-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-700 active:scale-95 shadow-2xs"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
 
-                {/* Spice Bowl Artwork */}
-                <div className="relative w-full aspect-[4/3] my-1 sm:my-2 flex items-center justify-center">
-                  <Image
-                    src={spice.image}
-                    alt={spice.name}
-                    width={220}
-                    height={160}
-                    className="object-contain drop-shadow-md transition-transform duration-500 ease-out group-hover:scale-110"
-                  />
-                </div>
+        {/* ── MOBILE GRID MODE (< md) ───────────────────────────── */}
+        <div className={`md:hidden ${mobileLayout === "grid" ? "grid" : "hidden"} grid-cols-2 gap-3`}>
+          {SPICES.map((spice) => (
+            <SpiceCard key={spice.slug} spice={spice} isGrid={true} />
+          ))}
+        </div>
 
-                {/* Text Content */}
-                <div className="pt-2 flex flex-col text-left">
-                  <h3 className="font-serif text-base sm:text-lg lg:text-[18px] font-bold text-white tracking-tight leading-tight">
-                    {spice.name}
-                  </h3>
-                  <p className="mt-1.5 text-[11px] sm:text-xs text-white/90 leading-snug line-clamp-2 font-normal">
-                    {spice.description}
-                  </p>
-
-                  {/* Circular White Arrow Button */}
-                  <div className="mt-4 flex justify-center w-full">
-                    <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-[#143627] flex items-center justify-center shadow-md transition-all duration-300 group-hover:scale-110 group-hover:bg-[#FAF7EE] group-hover:shadow-lg">
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
+        {/* ── DESKTOP GRID (>= md): Full 6-card row ─────────────── */}
+        <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4 lg:gap-4">
+          {SPICES.map((spice) => (
+            <SpiceCard key={spice.slug} spice={spice} isGrid={false} />
+          ))}
         </div>
 
         {/* Bottom Trust / Feature Pill Bar */}
-        <div className="mt-12 sm:mt-16 w-full max-w-5xl mx-auto rounded-3xl sm:rounded-full bg-white border border-slate-200/90 shadow-sm py-4 px-5 sm:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-slate-200/80">
+        <div className="mt-10 sm:mt-16 w-full max-w-5xl mx-auto rounded-2xl sm:rounded-full bg-white border border-slate-200/90 shadow-sm py-4 px-4 sm:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-slate-200/80">
             {/* Item 1 */}
-            <div className="flex items-center gap-3 px-2 sm:px-4 py-1">
+            <div className="flex items-center gap-2.5 sm:gap-3 px-2 sm:px-4 py-1">
               <Leaf className="w-5 h-5 sm:w-6 sm:h-6 text-[#163A12] shrink-0" strokeWidth={1.8} />
               <div>
                 <div className="text-xs sm:text-sm font-bold text-[#143627] leading-tight">100% Natural</div>
                 <div className="text-[10px] sm:text-[11px] text-[#55695E] leading-tight mt-0.5">
-                  No Additives or Preservatives
+                  No Additives
                 </div>
               </div>
             </div>
 
             {/* Item 2 */}
-            <div className="flex items-center gap-3 px-2 sm:px-4 py-1 pt-3 md:pt-1">
+            <div className="flex items-center gap-2.5 sm:gap-3 px-2 sm:px-4 py-1 pt-3 md:pt-1">
               <Mountain className="w-5 h-5 sm:w-6 sm:h-6 text-[#163A12] shrink-0" strokeWidth={1.8} />
               <div>
-                <div className="text-xs sm:text-sm font-bold text-[#143627] leading-tight">Sourced from Idukki</div>
+                <div className="text-xs sm:text-sm font-bold text-[#143627] leading-tight">Sourced in Idukki</div>
                 <div className="text-[10px] sm:text-[11px] text-[#55695E] leading-tight mt-0.5">
-                  Kerala
+                  Single Origin, Kerala
                 </div>
               </div>
             </div>
 
             {/* Item 3 */}
-            <div className="flex items-center gap-3 px-2 sm:px-4 py-1 pt-3 md:pt-1">
+            <div className="flex items-center gap-2.5 sm:gap-3 px-2 sm:px-4 py-1 pt-3 md:pt-1">
               <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-[#163A12] shrink-0" strokeWidth={1.8} />
               <div>
-                <div className="text-xs sm:text-sm font-bold text-[#143627] leading-tight">Premium Quality</div>
+                <div className="text-xs sm:text-sm font-bold text-[#143627] leading-tight">Premium Grade</div>
                 <div className="text-[10px] sm:text-[11px] text-[#55695E] leading-tight mt-0.5">
                   Handpicked & Cleaned
                 </div>
@@ -181,12 +322,12 @@ export default function CategorySection() {
             </div>
 
             {/* Item 4 */}
-            <div className="flex items-center gap-3 px-2 sm:px-4 py-1 pt-3 md:pt-1">
+            <div className="flex items-center gap-2.5 sm:gap-3 px-2 sm:px-4 py-1 pt-3 md:pt-1">
               <Truck className="w-5 h-5 sm:w-6 sm:h-6 text-[#163A12] shrink-0" strokeWidth={1.8} />
               <div>
-                <div className="text-xs sm:text-sm font-bold text-[#143627] leading-tight">Pan India Delivery</div>
+                <div className="text-xs sm:text-sm font-bold text-[#143627] leading-tight">Pan-India Delivery</div>
                 <div className="text-[10px] sm:text-[11px] text-[#55695E] leading-tight mt-0.5">
-                  Safe & Reliable
+                  Fast & Safe Shipping
                 </div>
               </div>
             </div>

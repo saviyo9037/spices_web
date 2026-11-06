@@ -2,10 +2,11 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Leaf, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { products } from "@/data/products";
 import { FORMS } from "@/lib/catalog";
 import ProductCard from "./ProductCard";
+import SectionHead from "./SectionHead";
 
 function buildFilters() {
   const filters = [
@@ -56,47 +57,33 @@ export default function FeaturedProducts() {
     <section
       id="featured"
       aria-labelledby="featured-heading"
-      className="relative isolate overflow-hidden bg-white text-[#143627] pt-12 pb-20 sm:pt-16 sm:pb-28"
+      className="relative isolate overflow-hidden bg-white pb-20 pt-14 text-[#123B22] sm:pb-32 sm:pt-20"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-8 sm:mb-12">
-          <div>
-            <div className="flex items-center gap-2 mb-2.5">
-              <Leaf className="w-4 h-4 text-[#70A82C] fill-[#70A82C]" aria-hidden="true" />
-              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.22em] text-[#143627]">
-                Featured Selection
-              </span>
-              <span className="w-10 h-px bg-[#143627]/30" />
-            </div>
+      <div aria-hidden="true" className="pointer-events-none absolute -left-32 top-24 -z-10 h-80 w-80 rounded-full bg-[#70A82C]/10 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-32 bottom-40 -z-10 h-96 w-96 rounded-full bg-[#F5B900]/10 blur-3xl" />
 
-            <h2
-              id="featured-heading"
-              className="font-serif text-3xl sm:text-4xl lg:text-[46px] font-bold text-[#143627] tracking-tight leading-[1.08]"
-            >
-              Handpicked for{" "}
-              <span className="font-serif italic font-normal text-[#C58A27]">Your Kitchen</span>
-            </h2>
-
-            <p className="mt-2.5 text-xs sm:text-sm text-[#526659] max-w-xl font-medium">
-              Directly sourced from estate harvests in Idukki, packed to retain pure freshness and unadulterated aroma.
-            </p>
-          </div>
-
+      <div className="relative z-10 mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
+        <div className="mb-8 flex flex-col gap-5 px-1 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
+          <SectionHead
+            eyebrow="Featured Selection"
+            title="Handpicked for"
+            accent="Your Kitchen"
+            text="Directly sourced from estate harvests in Idukki, packed to retain pure freshness and unadulterated aroma."
+          />
           <Link
             href="/shop"
-            className="group inline-flex items-center gap-2 rounded-full border border-[#143627]/70 bg-white px-5 sm:px-6 py-2.5 text-xs sm:text-sm font-semibold text-[#143627] shadow-2xs transition-all duration-300 hover:bg-[#143627] hover:text-white self-start sm:self-auto active:scale-95"
+            className="group hidden shrink-0 items-center gap-2 rounded-full border border-[#123B22]/25 px-6 py-3 text-sm font-bold text-[#123B22] transition-all duration-300 hover:border-[#123B22] hover:bg-[#123B22] hover:text-white active:scale-95 sm:inline-flex"
           >
-            <span>View All Spices</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            View All Spices
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
           </Link>
         </div>
 
-        {/* Filter Pills (shadcn style segmented control) */}
+        {/* Filter chips: edge-to-edge scroller on phones, 44px touch targets */}
         <div
           role="group"
           aria-label="Filter spices"
-          className="mb-8 sm:mb-10 flex gap-2 overflow-x-auto pb-2 no-scrollbar"
+          className="no-scrollbar -mx-3 mb-6 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:mb-10 sm:flex-wrap sm:px-1"
         >
           {FILTERS.map((f) => {
             const isActive = active === f.id;
@@ -106,16 +93,16 @@ export default function FeaturedProducts() {
                 type="button"
                 onClick={() => setActive(f.id)}
                 aria-pressed={isActive}
-                className={`inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                className={`inline-flex min-h-[44px] shrink-0 cursor-pointer touch-manipulation items-center gap-2 rounded-full px-5 text-[13px] font-bold transition-all duration-300 active:scale-95 sm:text-sm ${
                   isActive
-                    ? "bg-[#103B2D] text-white shadow-sm ring-1 ring-[#103B2D]"
-                    : "bg-white border border-stone-200 text-stone-600 hover:border-stone-300 hover:bg-stone-50 hover:text-stone-900"
+                    ? "bg-[#123B22] text-white shadow-lg shadow-[#123B22]/25"
+                    : "border border-[#123B22]/15 bg-white text-[#123B22]/75 hover:border-[#70A82C] hover:text-[#123B22]"
                 }`}
               >
-                <span>{f.label}</span>
+                {f.label}
                 <span
-                  className={`rounded-full px-1.5 py-0.2 text-[10px] font-bold ${
-                    isActive ? "bg-white/20 text-white" : "bg-stone-100 text-stone-500"
+                  className={`grid h-5 min-w-5 place-items-center rounded-full px-1 text-[10px] font-extrabold ${
+                    isActive ? "bg-[#F5B900] text-[#062D1B]" : "bg-[#123B22]/10 text-[#123B22]/70"
                   }`}
                 >
                   {f.count}
@@ -125,11 +112,23 @@ export default function FeaturedProducts() {
           })}
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-6">
-          {shown.map((product) => (
-            <ProductCard key={product.id} product={product} />
+        {/* Products grid: 2-up on phones, 3 on tablets, 4 on desktop */}
+        <div key={active} className="grid grid-cols-2 gap-2.5 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+          {shown.map((product, i) => (
+            <div key={product.id} className="rise-in h-full" style={{ animationDelay: `${Math.min(i, 8) * 55}ms` }}>
+              <ProductCard product={product} />
+            </div>
           ))}
+        </div>
+
+        <div className="mt-10 sm:hidden">
+          <Link
+            href="/shop"
+            className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-[#F5B900] px-8 text-sm font-extrabold text-[#062D1B] shadow-lg shadow-[#F5B900]/25 transition-all active:scale-95"
+          >
+            View All Spices
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </section>
