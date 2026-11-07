@@ -106,10 +106,10 @@ export default function ProductCardAdvanced({ product }) {
             <DropdownMenu>
               <DropdownMenuTrigger
                 aria-label={`Pack size for ${product.name}: ${packLabel} selected`}
-                className="inline-flex h-9 shrink-0 cursor-pointer touch-manipulation items-center gap-1 rounded-full border border-[#123B22]/20 bg-white pl-3 pr-2 text-xs font-bold text-[#123B22] outline-none transition hover:border-[#123B22]/50 focus-visible:ring-2 focus-visible:ring-[#F5B900] data-[state=open]:border-[#123B22]"
+                className="group inline-flex h-9 shrink-0 cursor-pointer touch-manipulation items-center gap-1 text-sm font-bold text-[#123B22] outline-none transition hover:text-[#B07D22] focus-visible:underline focus-visible:decoration-[#F5B900] focus-visible:decoration-2 focus-visible:underline-offset-4 data-[state=open]:text-[#B07D22]"
               >
                 {packLabel}
-                <ChevronDown className="h-3.5 w-3.5 text-[#123B22]/70" aria-hidden="true" />
+                <ChevronDown className="h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" aria-hidden="true" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Pack size</DropdownMenuLabel>
