@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { products } from "@/data/products";
 import { FORMS } from "@/lib/catalog";
-import ProductCard from "./ProductCard";
+import ProductCardAdvanced from "./ProductCardAdvanced";
 import SectionHead from "./SectionHead";
 //...............
 function buildFilters() {
@@ -112,11 +112,11 @@ export default function FeaturedProducts() {
           })}
         </div>
 
-        {/* Products grid: 2-up on phones, 3 on tablets, 4 on desktop */}
-        <div key={active} className="grid grid-cols-2 gap-2.5 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+        {/* Products grid: 1 column on phones, 2 on tablets, 3-4 on desktop */}
+        <div key={active} className="grid grid-cols-2 gap-2.5 sm:gap-4 md:grid-cols-3 lg:gap-5 xl:grid-cols-4 xl:gap-6">
           {shown.map((product, i) => (
             <div key={product.id} className="rise-in h-full" style={{ animationDelay: `${Math.min(i, 8) * 55}ms` }}>
-              <ProductCard product={product} />
+              <ProductCardAdvanced product={product} />
             </div>
           ))}
         </div>
