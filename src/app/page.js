@@ -6,7 +6,6 @@ import StorySection from "@/components/StorySection";
 import GallerySection from "@/components/GallerySection";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import FarmJourney from "@/components/FarmJourney";
-import VideoBanner from "@/components/VideoBanner";
 import RecipeGuide from "@/components/RecipeGuide";
 import Benefits from "@/components/Benefits";
 import BulkEnquiry from "@/components/BulkEnquiry";
@@ -29,7 +28,6 @@ export default function HomePage() {
       <GallerySection />
       <FeaturedProducts />
       <FarmJourney />
-      <VideoBanner />
       <RecipeGuide />
       <Benefits />
       <BulkEnquiry />

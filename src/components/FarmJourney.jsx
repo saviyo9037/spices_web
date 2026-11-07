@@ -102,7 +102,7 @@ export default function FarmJourney() {
         </div>
       </div>
 
-      <TornEdge position="bottom" fill="#03100D" seed={5} className="z-20 h-[56px] sm:h-[72px]" />
+      <TornEdge position="bottom" fill="#08271d" seed={5} className="z-20 h-[56px] sm:h-[72px]" />
     </section>
   );
 }
