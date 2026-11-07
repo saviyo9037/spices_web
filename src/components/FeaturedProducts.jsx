@@ -7,7 +7,7 @@ import { products } from "@/data/products";
 import { FORMS } from "@/lib/catalog";
 import ProductCard from "./ProductCard";
 import SectionHead from "./SectionHead";
-
+//...............
 function buildFilters() {
   const filters = [
     {
