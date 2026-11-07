@@ -112,8 +112,8 @@ export default function FeaturedProducts() {
           })}
         </div>
 
-        {/* Products grid: 1 column on phones, 2 on tablets, 3-4 on desktop */}
-        <div key={active} className="grid grid-cols-2 gap-2.5 sm:gap-4 md:grid-cols-3 lg:gap-5 xl:grid-cols-4 xl:gap-6">
+        {/* Products grid: 2 per row on phones, 3 per row from tablets up */}
+        <div key={active} className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5 lg:gap-6">
           {shown.map((product, i) => (
             <div key={product.id} className="rise-in h-full" style={{ animationDelay: `${Math.min(i, 8) * 55}ms` }}>
               <ProductCardAdvanced product={product} />
