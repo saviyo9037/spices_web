@@ -8,11 +8,11 @@ import TornEdge from "./TornEdge";
 // General process stages. Specific methods are deliberately not claimed here; add them once the
 // business has confirmed them.
 const stages = [
-  { icon: Sprout, title: "Growing and harvesting", text: "Spices are grown and harvested in the hills of Idukki, Kerala.", image: "/images/story-farm.jpg", alt: "Spice plantation in the hills" },
-  { icon: ClipboardCheck, title: "Selection and sourcing", text: "Each lot is selected before it is accepted for our range.", image: "/images/story-pepper-harvest.jpg", alt: "Freshly harvested pepper" },
-  { icon: Cog, title: "Processing", text: "Whole spices are cleaned and, where the product calls for it, ground.", image: "/images/category-ground-spices.jpg", alt: "Ground spices" },
-  { icon: Package, title: "Packaging", text: "Packed in the pack sizes you see on each product page.", image: "/images/category-spice-blends.jpg", alt: "Packed spice blends" },
-  { icon: Truck, title: "Delivery", text: "Shipped to your door across India.", image: "/images/category-whole-spices.jpg", alt: "Whole spices ready to ship" },
+  { icon: Sprout, title: "Growing and harvesting", text: "Spices are grown and harvested in the hills of Idukki, Kerala.", image: "/images/journey/journey-01-growing-harvesting.jpg", alt: "Kerala cardamom and pepper plantation at golden hour in the misty Idukki hills" },
+  { icon: ClipboardCheck, title: "Selection and sourcing", text: "Each lot is selected before it is accepted for our range.", image: "/images/journey/journey-02-selection-sourcing.jpg", alt: "Weathered hands handpicking Tellicherry peppercorns in a wicker winnowing basket" },
+  { icon: Cog, title: "Processing", text: "Whole spices are cleaned and, where the product calls for it, ground.", image: "/images/journey/journey-03-processing.jpg", alt: "Kerala stone floor with wicker trays of sun-drying cardamom and spices" },
+  { icon: Package, title: "Packaging", text: "Packed in the pack sizes you see on each product page.", image: "/images/journey/journey-04-packaging.jpg", alt: "Kraft spice pouches and amber jars being filled on a teak table with brass scale" },
+  { icon: Truck, title: "Delivery", text: "Shipped to your door across India.", image: "/images/journey/journey-05-delivery.jpg", alt: "Jute-tied kraft paper spice parcels on a rustic cottage doorstep in morning light" },
 ];
 
 const N = stages.length;

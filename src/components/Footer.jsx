@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Mail, MapPin } from "lucide-react";
-import { categories } from "@/data/categories";
+import { stockedCategories } from "@/data/categories";
 import { CONTACT_EMAIL, SOCIAL_LINKS } from "@/lib/site";
 import { POLICIES } from "@/lib/policies";
 
@@ -81,7 +81,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <Column
               title="Shop Categories"
-              links={categories.map((c) => ({ name: c.name, href: `/category/${c.slug}` }))}
+              links={stockedCategories.map((c) => ({ name: c.name, href: `/category/${c.slug}` }))}
             />
           </div>
           <div className="lg:col-span-2">
@@ -105,7 +105,6 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-2 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row">
           <p>&copy; 2026 Idukki Spices. All rights reserved.</p>
-          <p>Spices from the hills of Idukki, Kerala.</p>
         </div>
       </div>
     </footer>

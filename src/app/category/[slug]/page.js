@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { categories, getCategoryBySlug } from "@/data/categories";
-import { getProductsByCategory, products } from "@/data/products";
+import Link from "next/link";
+import { getProductsByCategory } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
 import PageHero from "@/components/PageHero";
 
@@ -28,11 +29,7 @@ export default async function CategoryDetailPage({ params }) {
     notFound();
   }
 
-  // Find products matching category, or show related
-  let categoryProducts = getProductsByCategory(category.slug);
-  if (categoryProducts.length === 0) {
-    categoryProducts = products.slice(0, 3);
-  }
+  const categoryProducts = getProductsByCategory(category.slug);
 
   return (
     <div className="bg-white min-h-screen pb-20">
@@ -55,15 +52,25 @@ export default async function CategoryDetailPage({ params }) {
             Available in {category.name}
           </h2>
           <span className="text-xs text-[#5c6c64]">
-            Showing {categoryProducts.length} items
+            {categoryProducts.length} {categoryProducts.length === 1 ? "item" : "items"}
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-          {categoryProducts.map((prod) => (
-            <ProductCard key={prod.id} product={prod} />
-          ))}
-        </div>
+        {categoryProducts.length > 0 ? (
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+            {categoryProducts.map((prod) => (
+              <ProductCard key={prod.id} product={prod} />
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-3xl border border-[#123B22]/10 bg-[#FAF7EF] p-8 text-center sm:p-12">
+            <h3 className="font-serif text-2xl font-semibold text-[#123B22]">No products in {category.name} yet</h3>
+            <p className="mx-auto mt-2 max-w-md text-[#123B22]/80">Nothing is listed here at the moment. Browse the full range to see what is available.</p>
+            <Link href="/shop" className="mt-6 inline-flex min-h-[48px] items-center rounded-full bg-[#123B22] px-8 text-sm font-bold text-white transition hover:bg-[#1c5336]">
+              Shop all spices
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -9,28 +9,28 @@ const journalLinks = [
     title: "Choosing the right spice",
     text: "Filter by cooking use and pack size.",
     href: "/spices",
-    image: "/images/journal/03-spice-finder-spices.jpg",
+    image: "/images/journal/v2-spice-finder-spices.jpg",
     alt: "Assorted aromatic whole spices for filtering",
   },
   {
     title: "Whole spices vs powders",
     text: "Compare whole and ground spices.",
     href: "/spices?form=whole-spices",
-    image: "/images/journal/04-whole-vs-powder-spices.jpg",
+    image: "/images/journal/v2-whole-vs-powder-spices.jpg",
     alt: "Whole spice pods compared with fine powders",
   },
   {
     title: "Spice storage tips",
     text: "How to keep spices fresh longer.",
     href: "/blog/storing-and-cooking-whole-spices",
-    image: "/images/journal/05-spice-storage-still-life.jpg",
+    image: "/images/journal/v2-spice-storage-still-life.jpg",
     alt: "Airtight glass jars storing whole cardamom and cloves",
   },
   {
     title: "All recipes & guides",
     text: "Everything in the Idukki Spices journal.",
     href: "/blog",
-    image: "/images/journal/06-journal-books-spices.jpg",
+    image: "/images/journal/v2-journal-books-spices.jpg",
     alt: "Kerala spice recipe journal and culinary notebooks",
   },
 ];
@@ -74,12 +74,12 @@ export default function RecipeGuide() {
             >
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#F0EAE0]">
                 <Image
-                  src="/images/journal/01-spice-journal-still-life.jpg"
+                  src="/images/journal/v2-spice-journal-still-life.jpg"
                   alt="Whole spices, peppercorns and mortar on rustic kitchen surface"
                   fill
                   loading="lazy"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
               <div className="flex flex-1 flex-col p-5 sm:p-6">
@@ -107,12 +107,12 @@ export default function RecipeGuide() {
             >
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#F0EAE0]">
                 <Image
-                  src="/images/journal/02-heritage-masala-recipe.jpg"
+                  src="/images/journal/v2-heritage-masala-recipe.jpg"
                   alt="Kerala-style heritage masala dish with fresh herbs"
                   fill
                   loading="lazy"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
               <div className="flex flex-1 flex-col p-5 sm:p-6">
@@ -146,8 +146,8 @@ export default function RecipeGuide() {
                       alt={alt}
                       fill
                       loading="lazy"
-                      sizes="64px"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 640px) 64px, 80px"
+                      className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                   <div className="min-w-0 flex-1">

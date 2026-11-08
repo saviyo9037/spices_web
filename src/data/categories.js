@@ -1,10 +1,18 @@
+import { products } from "./products";
+
+// itemCount is worked out from the real catalogue, so it never claims more products than exist.
+function countLabel(slug) {
+  const n = products.filter((p) => p.category === slug).length;
+  return n === 0 ? "No products yet" : n === 1 ? "1 product" : `${n} products`;
+}
+
 export const categories = [
   {
     id: "cat-whole-spices",
     name: "Whole Spices",
     slug: "whole-spices",
     image: "/images/category-whole-spices.jpg",
-    itemCount: "12+ Products",
+    itemCount: "",
     description: "Sun-dried peppercorns, emerald cardamom, star anise, and whole seeds packed with intact essential oils for maximum aromatic burst.",
     tagline: "Uncrushed, potent, and bursting with vital oils",
   },
@@ -13,7 +21,7 @@ export const categories = [
     name: "Ground Spices",
     slug: "ground-spices",
     image: "/images/category-ground-spices.jpg",
-    itemCount: "15+ Products",
+    itemCount: "",
     description: "Cold-pulverized spice powders ground at gentle temperatures to protect volatile aromatics, natural color, and therapeutic properties.",
     tagline: "Fine-milled freshness without synthetic fillers",
   },
@@ -22,7 +30,7 @@ export const categories = [
     name: "Herbs & Seasonings",
     slug: "herbs-seasonings",
     image: "/images/category-herbs-seasonings.jpg",
-    itemCount: "10+ Products",
+    itemCount: "",
     description: "Hand-harvested dried curry leaves, bay leaves, kasuri methi, rosemary, and aromatic culinary seasonings.",
     tagline: "Fragrant dried botanicals from estate herb gardens",
   },
@@ -31,7 +39,7 @@ export const categories = [
     name: "Spice Blends",
     slug: "spice-blends",
     image: "/images/category-spice-blends.jpg",
-    itemCount: "8+ Products",
+    itemCount: "",
     description: "Time-tested generational spice concoctions, artisanally toasted and calibrated to bring depth and authenticity to every home feast.",
     tagline: "Artisan recipes crafted for culinary mastery",
   },
@@ -40,7 +48,7 @@ export const categories = [
     name: "Masalas",
     slug: "masalas",
     image: "/images/category-masalas.jpg",
-    itemCount: "8+ Products",
+    itemCount: "",
     description: "Regional royal masalas for curries, biryanis, sambars, and gravies, inspired by heritage royal kitchens of India.",
     tagline: "Signature spice mixes that recreate traditional flavours",
   },
@@ -49,11 +57,19 @@ export const categories = [
     name: "Dried Spices",
     slug: "dried-spices",
     image: "/images/category-dried-spices.jpg",
-    itemCount: "11+ Products",
+    itemCount: "",
     description: "Naturally sun-cured spices, dry ginger (sonth), mace, dried red chillies, and sun-preserved botanical treasures.",
     tagline: "Solar-dehydrated harvest preserving intense richness",
   },
 ];
+
+categories.forEach((c) => {
+  c.productCount = products.filter((p) => p.category === c.slug).length;
+  c.itemCount = countLabel(c.slug);
+});
+
+// Categories that have at least one product (used by the footer and navigation lists).
+export const stockedCategories = categories.filter((c) => c.productCount > 0);
 
 export function getCategoryBySlug(slug) {
   return categories.find((c) => c.slug === slug);
