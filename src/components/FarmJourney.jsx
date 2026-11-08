@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Sprout, ClipboardCheck, Cog, Package, Truck } from "lucide-react";
-import SectionHead from "./SectionHead";
 import TornEdge from "./TornEdge";
 
 // General process stages. Specific methods are deliberately not claimed here; add them once the
@@ -16,87 +15,126 @@ const stages = [
   { icon: Truck, title: "Delivery", text: "Shipped to your door across India.", image: "/images/category-whole-spices.jpg", alt: "Whole spices ready to ship" },
 ];
 
-// Phones: five stacked steps joined by a line, each with its own photo.
-// Desktop: a step list on the left; choosing a step (hover, click or keyboard) shows its photo large on the right.
+const N = stages.length;
+
+// The section is pinned to the screen while the visitor scrolls. Each stretch of scrolling shows exactly one
+// step: its photo fades in and its text replaces the previous one. The dots (and arrow keys on them) jump to a step.
 export default function FarmJourney() {
+  const sectionRef = useRef(null);
   const [active, setActive] = useState(0);
 
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const el = sectionRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const scrollable = rect.height - window.innerHeight;
+      if (scrollable <= 0) return;
+      const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
+      setActive(Math.min(N - 1, Math.floor(progress * N)));
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  const jumpTo = useCallback((i) => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const scrollable = el.offsetHeight - window.innerHeight;
+    window.scrollTo({ top: top + ((i + 0.5) / N) * scrollable, behavior: "smooth" });
+  }, []);
+
   return (
-    <section id="farm-to-kitchen" className="relative overflow-hidden bg-[#092515] py-20 text-white sm:py-28 lg:py-32">
+    <section ref={sectionRef} id="farm-to-kitchen" aria-labelledby="journey-heading" className="relative bg-[#092515] text-white" style={{ height: `${N * 75 + 25}vh` }}>
       <TornEdge position="top" fill="#FFFFFF" seed={2} />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_80%_30%,rgba(112,168,44,0.16),transparent_70%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_80%_30%,rgba(112,168,44,0.16),transparent_70%)]" />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHead
-          tone="dark"
-          eyebrow="Farm to kitchen"
-          title="The journey of"
-          accent="your spices"
-          text="From the hills of Idukki to your kitchen, in five steps."
-          className="mb-12 sm:mb-16"
-        />
+      {/* pinned stage: stays on screen while the section scrolls past */}
+      <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
+        <div className="mx-auto w-full max-w-7xl px-4 pb-6 pt-28 sm:px-6 sm:pt-32 lg:px-8">
+          <div className="grid items-center gap-5 lg:grid-cols-12 lg:gap-14">
+            {/* Text: the heading stays, one step at a time below it */}
+            <div className="lg:col-span-5">
+              <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#F5B900]">Farm to kitchen</p>
+              <h2 id="journey-heading" className="mt-2 font-serif text-3xl font-semibold leading-[1.05] tracking-tight sm:text-5xl">
+                The journey of
+                <span className="ml-2 font-script text-[1.25em] font-bold text-[#F5B900]">your spices</span>
+              </h2>
 
-        <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-16">
-          {/* Steps */}
-          <ol className="relative lg:col-span-5">
-            {/* the line that joins the step numbers */}
-            <span aria-hidden="true" className="absolute bottom-8 left-[21px] top-8 w-px bg-gradient-to-b from-[#F5B900]/70 via-[#F5B900]/30 to-[#F5B900]/10" />
-            {stages.map(({ icon: Icon, title, text, image, alt }, i) => {
-              const on = active === i;
-              return (
-                <li key={title} className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setActive(i)}
-                    onMouseEnter={() => setActive(i)}
-                    onFocus={() => setActive(i)}
-                    aria-pressed={on}
-                    className={`group flex w-full cursor-pointer touch-manipulation items-start gap-4 rounded-2xl p-3 text-left transition-colors duration-200 sm:p-4 ${
-                      on ? "lg:bg-white/[0.07]" : "lg:hover:bg-white/[0.04]"
+              <div className="relative mt-5 min-h-[10.5rem] sm:mt-8 sm:min-h-[12rem]" aria-live="polite">
+                {stages.map(({ icon: Icon, title, text }, i) => (
+                  <div
+                    key={title}
+                    aria-hidden={active === i ? undefined : true}
+                    className={`absolute inset-0 transition-all duration-500 ease-out motion-reduce:transition-none ${
+                      active === i ? "translate-y-0 opacity-100" : i < active ? "-translate-y-4 opacity-0" : "translate-y-4 opacity-0"
                     }`}
                   >
-                    <span
-                      className={`relative z-10 grid h-11 w-11 shrink-0 place-items-center rounded-full border-2 border-[#F5B900]/50 bg-[#092515] text-[#F5B900] transition-colors duration-200 ${
-                        on ? "lg:border-[#F5B900] lg:bg-[#F5B900] lg:text-[#062D1B]" : ""
-                      }`}
-                    >
-                      <Icon className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <span className="grid h-12 w-12 place-items-center rounded-full bg-[#F5B900] text-[#062D1B]">
+                        <Icon className="h-6 w-6" strokeWidth={1.7} aria-hidden="true" />
+                      </span>
+                      <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#F5B900]">
+                        Step {i + 1} of {N}
+                      </span>
+                    </div>
+                    <h3 className="mt-3 font-serif text-2xl font-semibold leading-snug sm:mt-4 sm:text-4xl">{title}</h3>
+                    <p className="mt-2 max-w-md text-base leading-relaxed text-white/80 sm:mt-3 sm:text-lg">{text}</p>
+                  </div>
+                ))}
+              </div>
 
-                    {/* phone: a small photo beside the text */}
-                    <span className="relative mt-0.5 block h-20 w-20 shrink-0 overflow-hidden rounded-xl ring-1 ring-white/15 lg:hidden">
-                      <Image src={image} alt={alt} fill loading="lazy" sizes="80px" className="object-cover" />
-                    </span>
-
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-xs font-bold uppercase tracking-[0.2em] text-[#F5B900]">Step {i + 1}</span>
-                      <span className="mt-0.5 block font-serif text-lg font-semibold leading-snug sm:text-xl">{title}</span>
-                      <span className="mt-1.5 block text-sm leading-relaxed text-white/75">{text}</span>
-                    </span>
+              {/* progress: one dot per step */}
+              <div className="mt-4 flex items-center gap-2 sm:mt-6" role="group" aria-label="Journey steps">
+                {stages.map((s, i) => (
+                  <button
+                    key={s.title}
+                    type="button"
+                    onClick={() => jumpTo(i)}
+                    aria-label={`Go to step ${i + 1}: ${s.title}`}
+                    aria-current={active === i ? "step" : undefined}
+                    className="grid h-8 min-w-8 cursor-pointer touch-manipulation place-items-center"
+                  >
+                    <span className={`block h-1.5 rounded-full transition-all duration-300 ${active === i ? "w-9 bg-[#F5B900]" : "w-3 bg-white/35"}`} />
                   </button>
-                </li>
-              );
-            })}
-          </ol>
+                ))}
+                <span className="ml-1 text-xs font-bold tabular-nums text-white/70">
+                  {active + 1}/{N}
+                </span>
+              </div>
+            </div>
 
-          {/* Large photo (desktop): the five photos are stacked and the chosen one fades in */}
-          <div className="relative hidden lg:col-span-7 lg:block">
-            <div className="relative aspect-[5/4.4] overflow-hidden rounded-[2rem] shadow-[0_24px_48px_-20px_rgba(0,0,0,0.8)] ring-1 ring-white/15">
-              {stages.map((s, i) => (
-                <Image
-                  key={s.image}
-                  src={s.image}
-                  alt={active === i ? s.alt : ""}
-                  aria-hidden={active === i ? undefined : true}
-                  fill
-                  loading="lazy"
-                  sizes="(min-width: 1280px) 640px, 55vw"
-                  className={`object-cover transition-opacity duration-500 ease-out ${active === i ? "opacity-100" : "opacity-0"}`}
-                />
-              ))}
-              <span aria-hidden="true" className="absolute bottom-5 left-5 grid h-14 w-14 place-items-center rounded-full bg-[#F5B900] font-serif text-2xl font-bold text-[#062D1B] shadow-lg">
-                {active + 1}
-              </span>
+            {/* Photo: the five photos are stacked; the active one fades in */}
+            <div className="lg:col-span-7">
+              <div className="relative aspect-[16/10] overflow-hidden rounded-[1.4rem] shadow-[0_24px_48px_-20px_rgba(0,0,0,0.8)] ring-1 ring-white/15 sm:rounded-[2rem] lg:aspect-[5/4.2]">
+                {stages.map((s, i) => (
+                  <Image
+                    key={s.image}
+                    src={s.image}
+                    alt={active === i ? s.alt : ""}
+                    aria-hidden={active === i ? undefined : true}
+                    fill
+                    loading="lazy"
+                    sizes="(min-width: 1280px) 640px, (min-width: 1024px) 55vw, 92vw"
+                    className={`object-cover transition-opacity duration-500 ease-out motion-reduce:transition-none ${active === i ? "opacity-100" : "opacity-0"}`}
+                  />
+                ))}
+                <span aria-hidden="true" className="absolute bottom-3 left-3 grid h-11 w-11 place-items-center rounded-full bg-[#F5B900] font-serif text-xl font-bold text-[#062D1B] shadow-lg sm:bottom-5 sm:left-5 sm:h-14 sm:w-14 sm:text-2xl">
+                  {active + 1}
+                </span>
+              </div>
             </div>
           </div>
         </div>
