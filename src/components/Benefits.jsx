@@ -1,7 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ListChecks, Ruler, Truck, MessageCircle, ArrowRight } from "lucide-react";
-import Reveal from "./Reveal";
-import SectionHead from "./SectionHead";
 
 const benefits = [
   { icon: ListChecks, title: "Clear product information", text: "Origin, ingredients and shelf life are listed on every product page." },
@@ -10,50 +9,59 @@ const benefits = [
   { icon: MessageCircle, title: "Help when you need it", text: "Questions about an order or a spice? Our contact page has the details." },
 ];
 
+// One rounded green panel: a photo with the heading and action on the left, the four reasons as a clean
+// numbered list on the right. On phones the photo panel sits on top and the list follows.
 export default function Benefits() {
   return (
-    <section className="relative overflow-hidden bg-white py-16 text-[#123B22] sm:py-24">
-      <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#70A82C]/10 blur-3xl" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHead
-          align="center"
-          eyebrow="Why Idukki Spices"
-          title="Shopping made"
-          accent="simple"
-          text="From our hills to your home — a smooth and trusted shopping experience."
-          className="mb-12 sm:mb-16"
-        />
+    <section aria-labelledby="benefits-heading" className="bg-white px-4 py-14 text-[#123B22] sm:px-6 sm:py-24 lg:px-8">
+      <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[1.75rem] bg-[#123B22] text-white shadow-[0_30px_60px_-30px_rgba(9,37,21,0.6)] sm:rounded-[2.25rem] lg:grid-cols-2">
+        {/* Left: photo, heading, action */}
+        <div className="relative isolate flex min-h-[22rem] flex-col justify-end overflow-hidden p-6 sm:min-h-[26rem] sm:p-10 lg:min-h-[34rem] lg:p-12">
+          <Image
+            src="/images/peppercorn-spoon.webp"
+            alt=""
+            fill
+            loading="lazy"
+            sizes="(min-width: 1024px) 640px, 100vw"
+            className="-z-10 object-cover object-[70%_50%]"
+          />
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-[#092515] via-[#092515]/65 to-[#092515]/25" />
 
-        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#F5B900]">Why Idukki Spices</p>
+          <h2 id="benefits-heading" className="mt-3 font-serif text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl">
+            Shopping made
+            <span className="ml-2 font-script text-[1.25em] font-bold text-[#F5B900]">simple</span>
+          </h2>
+          <p className="mt-4 max-w-md text-base leading-relaxed text-white/85 sm:text-lg">
+            From our hills to your home, a smooth and trusted shopping experience.
+          </p>
+          <div className="mt-7">
+            <Link
+              href="/contact"
+              className="group inline-flex min-h-[48px] items-center gap-2.5 rounded-full bg-[#F5B900] px-8 text-sm font-extrabold text-[#062D1B] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#ffcb2e] active:scale-95"
+            >
+              Contact us
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            </Link>
+            <p className="mt-3 text-xs text-white/75 sm:text-sm">For shipping, returns and payment questions.</p>
+          </div>
+        </div>
+
+        {/* Right: the four reasons */}
+        <ol className="flex flex-col justify-center divide-y divide-white/10 p-6 sm:p-10 lg:p-12">
           {benefits.map(({ icon: Icon, title, text }, i) => (
-            <li key={title} className="h-full">
-              <Reveal delay={i * 80} className="h-full">
-                <div className="group relative h-full overflow-hidden rounded-[1.6rem] border border-[#123B22]/10 bg-gradient-to-b from-[#F4F8EC] to-white p-7 transition-all duration-500 hover:-translate-y-2 hover:border-[#70A82C]/60 hover:shadow-[0_24px_44px_-24px_rgba(18,59,34,0.45)]">
-                  <span aria-hidden="true" className="absolute -right-2 -top-4 font-script text-[6.5rem] font-bold leading-none text-[#123B22]/[0.06] transition-colors duration-500 group-hover:text-[#F5B900]/30">
-                    {i + 1}
-                  </span>
-                  <span className="relative grid h-14 w-14 place-items-center rounded-2xl bg-[#123B22] text-[#F5B900] shadow-lg shadow-[#123B22]/25 transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-105">
-                    <Icon className="h-6 w-6" strokeWidth={1.6} aria-hidden="true" />
-                  </span>
-                  <h3 className="relative mt-6 font-serif text-xl font-semibold leading-snug">{title}</h3>
-                  <p className="relative mt-2.5 text-sm leading-relaxed text-[#123B22]/80">{text}</p>
-                  <span aria-hidden="true" className="relative mt-6 block h-[3px] w-10 rounded-full bg-[#70A82C] transition-all duration-500 group-hover:w-full group-hover:bg-[#F5B900]" />
-                </div>
-              </Reveal>
+            <li key={title} className="flex items-start gap-4 py-5 first:pt-0 last:pb-0 sm:gap-5 sm:py-6">
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-[#F5B900]/50 text-[#F5B900] sm:h-14 sm:w-14">
+                <Icon className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.6} aria-hidden="true" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-xs font-bold tabular-nums tracking-[0.2em] text-[#F5B900]">0{i + 1}</p>
+                <h3 className="mt-1 font-serif text-xl font-semibold leading-snug sm:text-2xl">{title}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-white/75 sm:text-base">{text}</p>
+              </div>
             </li>
           ))}
-        </ul>
-
-        <Reveal delay={280} className="mt-12 text-center">
-          <Link
-            href="/contact"
-            className="group inline-flex items-center gap-2.5 rounded-full bg-[#F5B900] px-8 py-3.5 text-sm font-extrabold text-[#062D1B] shadow-lg shadow-[#F5B900]/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#ffcb2e] active:scale-95"
-          >
-            Contact us
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-          <p className="mt-3 text-xs text-[#123B22]/80 sm:text-sm">For shipping, returns and payment questions.</p>
-        </Reveal>
+        </ol>
       </div>
     </section>
   );
