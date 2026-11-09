@@ -44,7 +44,7 @@ export const products = [
     badge: "Organic",
     badgeColor: "bg-[#256e43]",
     organic: true,
-    image: "/images/product-cardamom.jpg",
+    image: "/images/Green Cardamom Pods - 8 oz.jpg",
     weights: [
       { label: "50g", price: 170, originalPrice: 210 },
       { label: "100g", price: 320, originalPrice: 390 },
