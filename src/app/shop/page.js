@@ -8,8 +8,8 @@ import { Search, SlidersHorizontal, Heart, X, ChevronDown, ChevronRight, Leaf, M
 import { products } from "@/data/products";
 import { FORMS, USE_TAGS, productUses, productSizes, allSizes } from "@/lib/catalog";
 import ProductCard from "@/components/ProductCard";
+import MountainDivider from "@/components/MountainDivider";
 import { useWishlist } from "@/context/WishlistContext";
-import PageHero from "@/components/PageHero";
 
 const FORM_LABEL = {
   "whole-spices": "Whole Spices",
@@ -232,32 +232,54 @@ function ShopContent() {
   return (
     <div className="min-h-screen bg-white text-forest">
       {/* Hero Header */}
-      <PageHero
-        crumb="Shop"
-        eyebrow="Idukki Single Origin"
-        title="Pure Spices"
-        accent="from the Hills"
-        text="Hand-harvested from high-altitude Kerala plantations. Retaining 100% of their natural essential oils, aroma and culinary heat."
-        image="/images/Idukki Spices_ Pepper and Aromatic Treasures.png"
-        imageAlt="Wooden bowls of pepper, cardamom and turmeric beneath a pepper vine"
-        circleImage="/gallary/web-black-pepper.jpg"
-        watermark="Shop"
-        edge={false}
-        className="pb-14 sm:pb-16"
-      >
-        <ul className="flex flex-wrap gap-x-6 gap-y-2.5 text-xs text-white/90 sm:text-sm">
-          {[
-            [Leaf, "100% Single Origin"],
-            [MapPin, "Idukki & High Ranges"],
-            [Truck, "Pan-India Fresh Dispatch"],
-          ].map(([Icon, label]) => (
-            <li key={label} className="flex items-center gap-2">
-              <Icon className="h-4 w-4 text-gold" strokeWidth={1.5} aria-hidden="true" />
-              <span>{label}</span>
-            </li>
-          ))}
-        </ul>
-      </PageHero>
+      <section aria-labelledby="shop-heading" className="relative isolate overflow-hidden bg-[#062D1B] text-white">
+        <Image
+          src="/images/Cinematic Peppercorn Spice Splash.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="-z-10 object-cover object-[70%_50%]"
+        />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-[#062D1B] via-[#062D1B]/80 to-[#062D1B]/10 max-md:bg-gradient-to-b max-md:from-[#062D1B]/90 max-md:via-[#062D1B]/80 max-md:to-[#062D1B]" />
+
+        <div className="mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 sm:pb-14 sm:pt-12 lg:px-8">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/70">
+            <Link href="/" className="hover:text-gold">Home</Link>
+            <ChevronRight className="h-3 w-3" aria-hidden="true" />
+            <span className="text-white">Shop</span>
+          </nav>
+
+          <div className="mt-10 max-w-2xl sm:mt-16">
+            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#F5B900]">Idukki single origin</p>
+            <h1 id="shop-heading" className="mt-3 font-serif text-5xl font-semibold leading-[1.02] tracking-tight sm:text-7xl">
+              Pure spices
+              <span className="block font-script text-[1.2em] font-bold leading-[0.95] text-[#F5B900]">from the hills</span>
+            </h1>
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-white/85 sm:text-lg">
+              Hand-harvested from high-altitude Kerala plantations, keeping their natural oils, aroma and heat.
+            </p>
+          </div>
+
+          <ul className="mt-10 grid gap-3 sm:mt-14 sm:grid-cols-3">
+            {[
+              [Leaf, "100% single origin", "Every spice traced to one region"],
+              [MapPin, "Idukki and high ranges", "Grown in the Western Ghats"],
+              [Truck, "Pan-India fresh dispatch", "Packed and shipped to your door"],
+            ].map(([Icon, title, sub]) => (
+              <li key={title} className="flex items-center gap-4 rounded-2xl bg-white px-5 py-4 text-[#123B22] shadow-xl shadow-black/20">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#F5B900] text-[#062D1B]">
+                  <Icon className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
+                </span>
+                <span>
+                  <span className="block text-sm font-bold">{title}</span>
+                  <span className="block text-xs text-[#123B22]/75">{sub}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
       {/* Dark Forest Spice Strip */}
       <div className="bg-deep border-b border-gold/15 py-3.5 sm:py-4">
@@ -476,7 +498,7 @@ function ShopContent() {
             )}
 
             {/* Bottom bulk prompt */}
-            <div className="mt-12 rounded-2xl border border-line bg-white p-6 text-center shadow-xs">
+            <div className="mt-12 rounded-2xl border border-line bg-paper/60 p-6 text-center shadow-xs">
               <p className="text-sm text-forest/80">
                 Looking for restaurant or wholesale quantities?{" "}
                 <Link href="/#bulk-order" className="font-bold text-gold-ink hover:underline">
@@ -487,6 +509,17 @@ function ShopContent() {
           </div>
         </div>
       </div>
+
+      {/* Bottom Mountain Transition into Footer */}
+      <section className="relative isolate overflow-hidden bg-night py-12 text-white sm:py-16">
+        <MountainDivider position="top" fill="#FFFFFF" className="z-20 h-10 sm:h-14 lg:h-16" />
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 relative z-10">
+          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#F5B900]">Direct From Estate Harvests</p>
+          <p className="mt-2 font-serif text-xl sm:text-2xl text-white/90">
+            Naturally cured, graded for diameter and oil content, shipped straight from Idukki.
+          </p>
+        </div>
+      </section>
 
       {/* Mobile Drawer */}
       {drawer && (

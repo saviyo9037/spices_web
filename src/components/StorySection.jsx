@@ -2,11 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Leaf } from "lucide-react";
 import TornEdge from "./TornEdge";
+import Reveal from "./Reveal";
+import CountUp from "./CountUp";
 
 const facts = [
-  { value: "3,500 ft", label: "high in the Western Ghats" },
-  { value: "240+", label: "native farming families" },
-  { value: "100%", label: "natural sun curing" },
+  { value: 3500, suffix: " ft", label: "high in the Western Ghats" },
+  { value: 240, suffix: "+", label: "native farming families" },
+  { value: 100, suffix: "%", label: "natural sun curing" },
 ];
 
 // Three photo "sheets" (nutmeg in hand, misty spice forest, coffee cherries). As the page scrolls they stack one on top of the other: each sheet sticks a
@@ -49,28 +51,36 @@ export default function StorySection() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Copy: stays in view while the photo sheets stack up on the right */}
           <div className="lg:sticky lg:top-32 lg:col-span-5 lg:self-start">
-            <p className="flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.3em] text-[#F5B900]">
-              <Leaf className="h-4 w-4 text-[#70A82C]" aria-hidden="true" />
-              Our heritage and origin
-            </p>
-            <h2 id="story-heading" className="mt-5 font-serif text-4xl font-semibold leading-[1.04] tracking-tight sm:text-6xl">
-              Rooted in the
-              <span className="mt-1 block font-script text-[1.3em] font-bold leading-[0.95] text-[#F5B900]">Hills of Idukki</span>
-            </h2>
-            <p className="mt-7 text-base leading-relaxed text-white/85 sm:text-lg">
-              Our spices grow in the cool, misty Western Ghats, where volcanic soil and mountain rain give pepper,
-              cardamom and cloves their strong aroma. Local families grow them in the shade, pick them by hand and dry
-              them in the sun on bamboo mats.
-            </p>
+            <Reveal variant="left">
+              <p className="flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.3em] text-[#F5B900]">
+                <Leaf className="h-4 w-4 text-[#70A82C]" aria-hidden="true" />
+                Our heritage and origin
+              </p>
+              <h2 id="story-heading" className="mt-5 font-serif text-4xl font-semibold leading-[1.04] tracking-tight sm:text-6xl">
+                Rooted in the
+                <span className="mt-1 block font-script text-[1.3em] font-bold leading-[0.95] text-[#F5B900]">Hills of Idukki</span>
+              </h2>
+            </Reveal>
+            <Reveal variant="left" delay={120}>
+              <p className="mt-7 text-base leading-relaxed text-white/85 sm:text-lg">
+                Our spices grow in the cool, misty Western Ghats, where volcanic soil and mountain rain give pepper,
+                cardamom and cloves their strong aroma. Local families grow them in the shade, pick them by hand and dry
+                them in the sun on bamboo mats.
+              </p>
+            </Reveal>
 
-            <dl className="mt-9 grid grid-cols-3 divide-x divide-white/15 border-y border-white/15 py-5">
-              {facts.map(({ value, label }) => (
-                <div key={value} className="px-3 first:pl-0 sm:px-5">
-                  <dt className="font-serif text-2xl font-semibold text-[#F5B900] sm:text-3xl">{value}</dt>
-                  <dd className="mt-1.5 text-xs leading-snug text-white/75 sm:text-sm">{label}</dd>
-                </div>
-              ))}
-            </dl>
+            <Reveal variant="left" delay={240}>
+              <dl className="mt-9 grid grid-cols-3 divide-x divide-white/15 border-y border-white/15 py-5">
+                {facts.map(({ value, suffix, label }) => (
+                  <div key={label} className="px-3 first:pl-0 sm:px-5">
+                    <dt className="font-serif text-2xl font-semibold text-[#F5B900] sm:text-3xl">
+                      <CountUp value={value} suffix={suffix} />
+                    </dt>
+                    <dd className="mt-1.5 text-xs leading-snug text-white/75 sm:text-sm">{label}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
 
             <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
               <Link

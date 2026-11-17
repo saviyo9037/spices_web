@@ -8,7 +8,6 @@ import { products } from "@/data/products";
 import { defaultWeight } from "@/lib/catalog";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/context/ToastContext";
-import PageHero from "@/components/PageHero";
 
 const STEPS = [
   { icon: MousePointerClick, title: "Pick your spices", text: "Tap the ones you cook with." },
@@ -111,20 +110,47 @@ export default function ComboBuilder() {
 
   return (
     <div className="bg-white text-forest">
-      <PageHero
-        crumb="Combos"
-        eyebrow="Spice Combos"
-        title="Build your own"
-        accent="spice combo"
-        text="Pick the spices you cook with and a pack size for each, then add them to your cart together."
-        image="/images/Rustic Bowl of Cloves in Nature.png"
-        imageAlt="A rustic bowl of cloves"
-        circleImage="/gallary/nutmeg.jpg"
-        watermark="Combo"
-        className="pb-28 sm:pb-32"
-      />
+      <section aria-labelledby="combo-heading" className="relative isolate overflow-hidden bg-[#F6F1E4] text-[#123B22]">
+        <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 -z-10 h-80 w-80 rounded-full bg-[#F5B900]/30 blur-3xl" />
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 pb-28 pt-8 sm:px-6 sm:pb-32 sm:pt-12 lg:grid-cols-12 lg:gap-8 lg:px-8">
+          <div className="lg:col-span-7">
+            <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-[#123B22]/75">
+              <Link href="/" className="hover:text-[#B07D22]">Home</Link>
+              <ChevronRight className="h-3 w-3" aria-hidden="true" />
+              <span className="font-semibold text-[#123B22]">Combos</span>
+            </nav>
+            <p className="mt-8 text-[11px] font-bold uppercase tracking-[0.3em] text-[#3f6a12]">Spice combos</p>
+            <h1 id="combo-heading" className="mt-3 font-serif text-5xl font-semibold leading-[1.02] tracking-tight sm:text-7xl">
+              Build your own
+              <span className="block font-script text-[1.2em] font-bold leading-[0.95] text-[#B87919]">spice combo</span>
+            </h1>
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-[#123B22]/85 sm:text-lg">
+              Pick the spices you cook with and a pack size for each, then add them to your cart together.
+            </p>
+            <a href="#combo-picker" className="mt-7 inline-flex min-h-[48px] items-center gap-2 rounded-full bg-[#123B22] px-8 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#1c5336] active:scale-95">
+              Start picking
+            </a>
+          </div>
 
-      <div className="relative z-10 mx-auto -mt-16 max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* fanned product photos */}
+          <div aria-hidden="true" className="relative mx-auto h-56 w-full max-w-sm sm:h-72 lg:col-span-5 lg:h-80 lg:max-w-none">
+            {[
+              ["black-pepper", "left-[6%] top-6 -rotate-6 z-10"],
+              ["cardamom", "left-[30%] top-0 rotate-2 z-20"],
+              ["turmeric-powder", "left-[54%] top-8 rotate-8 z-10"],
+            ].map(([slug, pos]) => {
+              const pr = products.find((x) => x.slug === slug);
+              return pr ? (
+                <div key={slug} className={`absolute h-40 w-32 overflow-hidden rounded-2xl border-[6px] border-white shadow-xl sm:h-56 sm:w-44 ${pos}`}>
+                  <Image src={pr.image} alt="" fill sizes="176px" className="object-cover" />
+                </div>
+              ) : null;
+            })}
+          </div>
+        </div>
+      </section>
+
+      <div id="combo-picker" className="relative z-10 mx-auto -mt-16 max-w-7xl px-4 sm:px-6 lg:px-8">
         <ol className="grid gap-3 rounded-2xl border border-line bg-white p-4 shadow-2xl shadow-forest/10 sm:grid-cols-3 sm:p-5">
           {STEPS.map(({ icon: Icon, title, text }, i) => (
             <li key={title} className="flex items-center gap-3.5">

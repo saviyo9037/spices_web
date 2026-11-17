@@ -4,7 +4,8 @@ import { ArrowRight, ChevronRight, Users, Sprout, MapPin, ListChecks } from "luc
 import { products } from "@/data/products";
 import { allSizes } from "@/lib/catalog";
 import FarmJourney from "@/components/FarmJourney";
-import PageHero from "@/components/PageHero";
+import TornEdge from "@/components/TornEdge";
+import MountainDivider from "@/components/MountainDivider";
 
 export const metadata = {
   title: "About Idukki Spices",
@@ -30,18 +31,32 @@ const values = [
 export default function AboutPage() {
   return (
     <div className="bg-white text-forest">
-      <PageHero
-        crumb="About"
-        eyebrow="About Idukki Spices"
-        title="Rooted in the hills"
-        accent="of Idukki"
-        text="Spices from the high ranges of Kerala, brought to your kitchen with their natural aroma and flavour intact."
-        image="/images/Golden Spice Valley at Sunset.png"
-        imageAlt="Golden spice valley at sunset in the hills of Idukki"
-        circleImage="/gallary/web-clove-buds.jpg"
-        watermark="Idukki"
-        className="pb-28 sm:pb-32"
-      />
+      <section aria-labelledby="about-heading" className="relative isolate overflow-hidden bg-[#062D1B] text-white">
+        <Image src="/images/idukki-landscape.webp" alt="" fill priority sizes="100vw" className="-z-10 object-cover object-[60%_50%]" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-[#062D1B] via-[#062D1B]/55 to-[#062D1B]/25" />
+
+        <div className="mx-auto flex min-h-[28rem] max-w-7xl flex-col justify-between px-4 pb-28 pt-8 sm:min-h-[34rem] sm:px-6 sm:pb-32 sm:pt-12 lg:px-8">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/80">
+            <Link href="/" className="hover:text-gold">Home</Link>
+            <ChevronRight className="h-3 w-3" aria-hidden="true" />
+            <span className="text-white">About</span>
+          </nav>
+
+          <div className="mt-16 grid items-end gap-6 lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-8">
+              <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#F5B900]">About Idukki Spices</p>
+              <h1 id="about-heading" className="mt-3 font-serif text-5xl font-semibold leading-[1.02] tracking-tight sm:text-7xl">
+                Rooted in the hills
+                <span className="block font-script text-[1.2em] font-bold leading-[0.95] text-[#F5B900]">of Idukki</span>
+              </h1>
+            </div>
+            <p className="max-w-md text-base leading-relaxed text-white/90 sm:text-lg lg:col-span-4">
+              Spices from the high ranges of Kerala, brought to your kitchen with their natural aroma and flavour intact.
+            </p>
+          </div>
+        </div>
+        <TornEdge position="bottom" fill="#FFFFFF" seed={2} className="z-20 h-[56px] sm:h-[72px]" />
+      </section>
 
       <div className="relative z-10 mx-auto -mt-14 max-w-7xl px-4 sm:px-6 lg:px-8">
         <dl className="grid grid-cols-2 divide-x divide-y divide-line overflow-hidden rounded-2xl border border-line bg-white shadow-2xl shadow-forest/10 lg:grid-cols-4 lg:divide-y-0">
@@ -90,7 +105,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-deep py-16 text-white sm:py-24" aria-labelledby="values">
+      <section className="relative isolate overflow-hidden bg-deep py-16 text-white sm:py-24" aria-labelledby="values">
+        <MountainDivider position="top" fill="#FFFFFF" className="z-20 h-10 sm:h-14 lg:h-16" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gold">What we stand for</p>
@@ -127,6 +143,7 @@ export default function AboutPage() {
       </section>
 
       <section className="relative isolate overflow-hidden bg-night py-16 text-white sm:py-20">
+        <TornEdge position="top" fill="#FFFFFF" seed={8} className="z-20 h-[56px] sm:h-[72px]" />
         <Image src="/images/clove-bulk-background.webp" alt="" fill loading="lazy" sizes="100vw" className="-z-10 object-cover object-[12%_85%]" />
         <div className="absolute inset-0 -z-10 bg-night/75" />
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">

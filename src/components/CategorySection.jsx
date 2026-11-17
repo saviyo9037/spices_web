@@ -23,7 +23,7 @@ const SPICES = [
     theme: "green",
     badge: { icon: "👑", label: "Bestseller", color: "text-[#D97706]" },
     description: "Bold, aromatic pepper from the misty hills of Idukki.",
-    image: "/images/explorer/black-pepper-transparent.png",
+    image: "/category-photos/black-pepper.jpg",
   },
   {
     slug: "cardamom",
@@ -31,7 +31,7 @@ const SPICES = [
     theme: "orange",
     badge: { icon: "⭐", label: "Premium", color: "text-[#D97706]" },
     description: "Aromatic and flavorful cardamom, naturally grown in Idukki.",
-    image: "/images/explorer/green-cardamom-transparent.png",
+    image: "/category-photos/cardamom.jpg",
   },
   {
     slug: "cinnamon-sticks",
@@ -39,7 +39,7 @@ const SPICES = [
     theme: "green",
     badge: null,
     description: "Rich, warm and fragrant cinnamon with natural essential oils.",
-    image: "/images/explorer/cinnamon-transparent.png",
+    image: "/category-photos/cinnamon.jpg",
   },
   {
     slug: "cloves",
@@ -47,7 +47,7 @@ const SPICES = [
     theme: "orange",
     badge: null,
     description: "Strong, aromatic cloves with high essential oil content.",
-    image: "/images/explorer/cloves-transparent.png",
+    image: "/category-photos/cloves.jpg",
   },
   {
     slug: "turmeric-powder",
@@ -55,7 +55,7 @@ const SPICES = [
     theme: "green",
     badge: null,
     description: "Pure and high-curcumin turmeric from the hills of Idukki.",
-    image: "/images/explorer/turmeric-transparent.png",
+    image: "/category-photos/turmeric.jpg",
   },
   {
     slug: "red-chilli-powder",
@@ -63,7 +63,7 @@ const SPICES = [
     theme: "orange",
     badge: { icon: "🔥", label: "Popular", color: "text-[#DC2626]" },
     description: "Vibrant, naturally dried red chillies with rich flavor and color.",
-    image: "/images/explorer/red-chilli-transparent.png",
+    image: "/category-photos/red-chilli.jpg",
   },
 ];
 
@@ -110,8 +110,9 @@ function SpiceCard({ spice, isGrid = false }) {
           src={spice.image}
           alt={spice.name}
           width={220}
-          height={160}
-          className="relative z-10 object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.35)] transition-transform duration-500 ease-out group-hover:scale-108"
+          height={165}
+          sizes="(max-width: 640px) 165px, 220px"
+          className="relative z-10 h-full w-full rounded-xl object-cover shadow-[0_8px_16px_rgba(0,0,0,0.35)] ring-1 ring-white/30 transition-transform duration-500 ease-out group-hover:scale-[1.04]"
         />
       </div>
 
@@ -333,6 +334,11 @@ export default function CategorySection() {
             </div>
           </div>
         </div>
+
+        <p className="mt-6 text-center text-[11px] leading-relaxed text-[#55695E]">
+          Photos via Wikimedia Commons: Misterneedlemouse (black pepper, cardamom, CC0), Jorge Barrios (cloves, public domain),
+          Luc Viatour (cinnamon, CC BY-SA 3.0), Simon A. Eugster (turmeric, CC BY-SA 3.0), Sabina Bajracharya (red chilli, CC BY-SA 4.0).
+        </p>
       </div>
     </section>
   );

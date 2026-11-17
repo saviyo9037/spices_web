@@ -8,7 +8,7 @@ import { Search, RotateCcw, ChevronRight, Sparkles, X, Check, UtensilsCrossed, P
 import { products } from "@/data/products";
 import { FORMS, USE_TAGS, allSizes, productUses, productSizes } from "@/lib/catalog";
 import ProductCard from "./ProductCard";
-import PageHero from "@/components/PageHero";
+import MountainDivider from "./MountainDivider";
 
 function Chip({ active, onClick, children }) {
   return (
@@ -80,18 +80,39 @@ export default function SpiceFinder() {
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-forest">
       {/* Hero Header */}
-      <PageHero
-        crumb="Spice Finder"
-        eyebrow="Interactive Catalogue"
-        title="Find the Right Spice"
-        accent="for Your Kitchen"
-        text="Select your preferences below to discover hand-harvested Kerala spices tailored to your recipes, form, and pack requirements."
-        image="/images/Rustic Star Anise and Fresh Herbs.png"
-        imageAlt="Star anise and fresh herbs"
-        circleImage="/gallary/web-vanilla-pods.jpg"
-        watermark="Find"
-        className="pb-24 sm:pb-28"
-      />
+      <section aria-labelledby="finder-heading" className="relative isolate overflow-hidden bg-[#062D1B] text-white">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_80%_at_50%_0%,rgba(112,168,44,0.28),transparent_70%)]" />
+        <div className="mx-auto max-w-4xl px-4 pb-28 pt-8 text-center sm:px-6 sm:pb-32 sm:pt-12">
+          <nav aria-label="Breadcrumb" className="flex items-center justify-center gap-1.5 text-xs text-white/70">
+            <Link href="/" className="hover:text-gold">Home</Link>
+            <ChevronRight className="h-3 w-3" aria-hidden="true" />
+            <span className="text-white">Spice Finder</span>
+          </nav>
+
+          <p className="mt-8 text-[11px] font-bold uppercase tracking-[0.3em] text-[#F5B900]">Interactive catalogue</p>
+          <h1 id="finder-heading" className="mt-3 font-serif text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
+            Find the right spice
+            <span className="mt-1 block font-script text-[1.2em] font-bold leading-[0.95] text-[#F5B900]">for your kitchen</span>
+          </h1>
+          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
+            Pick how you cook, the form you want and a pack size. We show the Kerala spices that match.
+          </p>
+
+          <ol className="mx-auto mt-8 grid max-w-2xl gap-2 sm:grid-cols-3 sm:gap-3">
+            {[
+              [UtensilsCrossed, "Cooking use"],
+              [Layers, "Whole or ground"],
+              [Package, "Pack size"],
+            ].map(([Icon, label], i) => (
+              <li key={label} className="flex items-center justify-center gap-3 rounded-full bg-white/10 px-4 py-2.5 text-sm font-semibold ring-1 ring-white/15">
+                <span className="grid h-6 w-6 place-items-center rounded-full bg-[#F5B900] text-xs font-extrabold text-[#062D1B]">{i + 1}</span>
+                <Icon className="h-4 w-4 text-[#F5B900]" aria-hidden="true" />
+                {label}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
       {/* Floating Interactive Finder Card */}
       <div className="relative z-10 mx-auto -mt-14 max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -271,6 +292,22 @@ export default function SpiceFinder() {
           </div>
         )}
       </div>
+
+      {/* Bottom Mountain Transition into Footer */}
+      <section className="relative isolate overflow-hidden bg-night py-12 text-white sm:py-16 mt-14 sm:mt-20">
+        <MountainDivider position="top" fill="#FFFFFF" className="z-20 h-10 sm:h-14 lg:h-16" />
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 relative z-10">
+          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#F5B900]">Need Guidance?</p>
+          <p className="mt-2 font-serif text-xl sm:text-2xl text-white/90">
+            Unsure which spice fits your recipe? Check out our cooking notes &amp; spice guides.
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Link href="/blog" className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3 text-xs sm:text-sm font-bold text-night hover:bg-gold-light">
+              Explore Recipes &amp; Guides →
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { GALLERY_CATEGORIES, GALLERY_PHOTOS } from "@/data/gallery";
 import Reveal from "@/components/Reveal";
+import TornEdge from "@/components/TornEdge";
 
 export default function GalleryPage() {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -150,6 +151,7 @@ export default function GalleryPage() {
             </div>
           </Reveal>
         </div>
+        <TornEdge position="bottom" fill="#FAF7EF" seed={11} className="z-20 h-[56px] sm:h-[72px]" />
       </section>
 
       {/* ── FILTER & CONTROLS BAR ─────────────────────────────────── */}
@@ -372,7 +374,8 @@ export default function GalleryPage() {
       </section>
 
       {/* ── TERROIR JOURNAL BANNER ───────────────────────────────── */}
-      <section className="relative my-12 overflow-hidden bg-[#08271D] py-16 text-white sm:py-24">
+      <section className="relative isolate overflow-hidden bg-[#08271D] py-20 text-white sm:py-28">
+        <TornEdge position="top" fill="#FAF7EF" seed={18} />
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,rgba(245,185,0,0.12),transparent_75%)]"
@@ -387,6 +390,7 @@ export default function GalleryPage() {
             — Estate Master Planter, Idukki Range
           </p>
         </div>
+        <TornEdge position="bottom" fill="#FAF7EF" seed={19} className="z-20 h-[56px] sm:h-[72px]" />
       </section>
 
       {/* ── CTA TO SHOP ─────────────────────────────────────────── */}
@@ -413,6 +417,22 @@ export default function GalleryPage() {
             >
               <Compass className="h-4 w-4 text-[#C58A27]" />
               <span>Interactive Spice Finder</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Closing Terroir Transition into Footer ── */}
+      <section className="relative isolate overflow-hidden bg-night py-14 text-white sm:py-18">
+        <TornEdge position="top" fill="#FAF7EF" seed={16} className="z-20 h-[48px] sm:h-[64px]" />
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 relative z-10">
+          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#F5B900]">Idukki Terroir &amp; Harvests</p>
+          <p className="mt-3 font-serif text-xl sm:text-2xl text-white/90">
+            Taste the aromatic difference that mist, altitude and volcanic soil create.
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Link href="/shop" className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3 text-xs sm:text-sm font-bold text-night hover:bg-gold-light">
+              Shop our spices <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>

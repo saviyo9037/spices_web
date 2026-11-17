@@ -57,10 +57,9 @@ export default function FeaturedProducts() {
     <section
       id="featured"
       aria-labelledby="featured-heading"
-      className="relative isolate overflow-hidden bg-white pb-20 pt-14 text-[#123B22] sm:pb-32 sm:pt-20"
+      className="relative isolate overflow-hidden bg-white pb-12 pt-14 text-[#123B22] sm:pb-16 sm:pt-20"
     >
       <div aria-hidden="true" className="pointer-events-none absolute -left-32 top-24 -z-10 h-80 w-80 rounded-full bg-[#70A82C]/10 blur-3xl" />
-      <div aria-hidden="true" className="pointer-events-none absolute -right-32 bottom-40 -z-10 h-96 w-96 rounded-full bg-[#F5B900]/10 blur-3xl" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
         <div className="mb-8 flex flex-col gap-5 px-1 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
@@ -113,7 +112,7 @@ export default function FeaturedProducts() {
         </div>
 
         {/* Products grid: 2 per row on phones, 3 per row from tablets up */}
-        <div key={active} className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5 lg:gap-6">
+        <div key={active} className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5 lg:gap-6 xl:grid-cols-4">
           {shown.map((product, i) => (
             <div key={product.id} className="rise-in h-full" style={{ animationDelay: `${Math.min(i, 8) * 55}ms` }}>
               <ProductCardAdvanced product={product} />

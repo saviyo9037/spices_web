@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 
 // Fades/slides content in once as it scrolls into view. Without JS the content simply shows.
-export default function Reveal({ as: Tag = "div", delay = 0, className = "", children, ...rest }) {
+// variant: "up" (default), "left", "right", "zoom" or "fade".
+export default function Reveal({ as: Tag = "div", delay = 0, variant = "up", className = "", children, ...rest }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export default function Reveal({ as: Tag = "div", delay = 0, className = "", chi
   }, []);
 
   return (
-    <Tag ref={ref} className={`reveal ${className}`} style={{ "--reveal-delay": `${delay}ms` }} {...rest}>
+    <Tag ref={ref} data-reveal={variant} className={`reveal ${className}`} style={{ "--reveal-delay": `${delay}ms` }} {...rest}>
       {children}
     </Tag>
   );

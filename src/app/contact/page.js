@@ -19,8 +19,8 @@ import {
   Sprout,
 } from "lucide-react";
 import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_ADDRESS, CONTACT_HOURS } from "@/lib/site";
+import TornEdge from "@/components/TornEdge";
 import { submitEnquiry } from "@/lib/enquiry";
-import PageHero from "@/components/PageHero";
 
 const SUBJECTS = ["Order enquiry", "Product question", "Bulk / wholesale", "Feedback"];
 
@@ -101,26 +101,37 @@ export default function ContactPage() {
   ].filter(Boolean);
 
   return (
-    <div className="bg-white text-forest">
-      <PageHero
-        crumb="Contact"
-        eyebrow="Contact us"
-        title="We are happy"
-        accent="to help"
-        text="Questions about an order, a spice or a bulk requirement? Send us a message and we will get back to you."
-        image="/images/peppercorn-spoon.webp"
-        imageAlt="A spoon of peppercorns catching the light"
-        circleImage="/gallary/web-cardamom.jpg"
-        watermark="Hello"
-        className="pb-32 sm:pb-36"
-      >
-        <div className="flex flex-wrap gap-3">
-          <a href="#contact-form" className="rounded-full bg-gold px-7 py-3.5 text-sm font-bold text-night transition-colors hover:bg-gold-light">Send a message</a>
-          <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex items-center gap-2 rounded-full border border-white/40 px-7 py-3.5 text-sm font-bold transition-colors hover:border-gold hover:text-gold">
-            <Mail className="h-4 w-4" /> Email us
-          </a>
+    <div className="bg-[#062D1B] text-forest">
+      <section aria-labelledby="contact-heading" className="relative isolate overflow-hidden bg-[#062D1B] text-white">
+        <Image src="/images/Rustic Bowl of Cloves in Nature.png" alt="" fill priority sizes="100vw" className="-z-10 -scale-x-100 object-cover object-[30%_60%]" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-[#062D1B] via-[#062D1B]/80 to-[#062D1B]/10 max-md:bg-gradient-to-b max-md:from-[#062D1B]/90 max-md:via-[#062D1B]/80 max-md:to-[#062D1B]" />
+        <div className="mx-auto max-w-7xl px-4 pb-32 pt-8 sm:px-6 sm:pb-36 sm:pt-12 lg:px-8">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/70">
+            <Link href="/" className="hover:text-gold">Home</Link>
+            <ChevronRight className="h-3 w-3" aria-hidden="true" />
+            <span className="text-white">Contact</span>
+          </nav>
+          <div className="mt-10 max-w-2xl sm:mt-14">
+            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#F5B900]">Contact us</p>
+            <h1 id="contact-heading" className="mt-3 font-serif text-5xl font-semibold leading-[1.02] tracking-tight sm:text-7xl">
+              We are happy
+              <span className="block font-script text-[1.2em] font-bold leading-[0.95] text-[#F5B900]">to help</span>
+            </h1>
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-white/85 sm:text-lg">
+              Questions about an order, a spice or a bulk requirement? Send us a message and we will get back to you.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <a href="#contact-form" className="inline-flex min-h-[48px] items-center rounded-full bg-[#F5B900] px-8 text-sm font-extrabold text-[#062D1B] transition-all hover:-translate-y-0.5 hover:bg-[#ffcb2e] active:scale-95">
+                Send a message
+              </a>
+              <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/40 px-7 text-sm font-bold transition-all hover:-translate-y-0.5 hover:border-[#F5B900] hover:text-[#F5B900] active:scale-95">
+                <Mail className="h-4 w-4" aria-hidden="true" /> Email us
+              </a>
+            </div>
+          </div>
         </div>
-      </PageHero>
+        <TornEdge position="bottom" fill="#08271d" seed={12} className="z-20 h-[56px] sm:h-[72px]" />
+      </section>
 
       <div className="relative z-10 mx-auto -mt-20 max-w-7xl px-4 sm:px-6 lg:px-8">
         <ul className="grid gap-3 sm:grid-cols-3">
@@ -296,9 +307,10 @@ export default function ContactPage() {
           </form>
         </div>
       </div>
+      <TornEdge position="bottom" fill="#FFFFFF" seed={13} className="z-20 h-[56px] sm:h-[72px]" />
       </section>
 
-      <section className="border-t border-line bg-white py-16 sm:py-24" aria-labelledby="faq">
+      <section className="relative isolate overflow-hidden border-t border-line bg-white py-16 sm:py-24" aria-labelledby="faq">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:gap-14 lg:px-8">
           <div className="lg:col-span-5">
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gold-ink">FAQ</p>
@@ -334,9 +346,11 @@ export default function ContactPage() {
             })}
           </div>
         </div>
+        <TornEdge position="bottom" fill="#08271d" seed={14} className="z-20 h-[56px] sm:h-[72px]" />
       </section>
 
       <section className="relative isolate overflow-hidden bg-night py-16 text-white sm:py-20">
+        <TornEdge position="top" fill="#FFFFFF" seed={15} className="z-20 h-[40px] sm:h-[56px]" />
         <Image src="/images/story-hills-sunrise.jpg" alt="" fill loading="lazy" sizes="100vw" className="-z-10 object-cover" />
         <div className="absolute inset-0 -z-10 bg-night/70" />
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">

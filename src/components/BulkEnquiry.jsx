@@ -6,6 +6,8 @@ import { Send, CheckCircle2, AlertCircle, Mail, Sprout, Package, Truck } from "l
 import { products } from "@/data/products";
 import { submitEnquiry } from "@/lib/enquiry";
 import { CONTACT_EMAIL } from "@/lib/site";
+import Reveal from "./Reveal";
+import MountainDivider from "./MountainDivider";
 
 // Clove-specific enquiry: the product defaults to the catalogue clove entry.
 const DEFAULT_PRODUCT = (products.find((p) => p.slug === "cloves") || products[0] || {}).name || "";
@@ -78,12 +80,14 @@ export default function BulkEnquiry() {
 
   return (
     <section id="bulk-order" aria-labelledby="bulk-heading" className="relative isolate overflow-hidden bg-night py-14 text-white sm:py-24 lg:py-28">
+      <MountainDivider position="top" fill="#FAF7EF" className="z-20 h-10 sm:h-14 lg:h-16" />
       <Image src="/images/clove-bulk-background.webp" alt="" fill loading="lazy" sizes="100vw" className="-z-10 object-cover object-[12%_85%]" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-night/90 via-night/70 to-night/80 lg:bg-gradient-to-r lg:from-night/85 lg:via-night/45 lg:to-night/55" />
 
       <div className="mx-auto grid w-full max-w-7xl items-start gap-8 px-4 sm:px-6 lg:grid-cols-12 lg:gap-14 lg:px-8">
         {/* Copy */}
         <div className="lg:sticky lg:top-28 lg:col-span-5">
+          <Reveal variant="left">
           <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#F5B900]">Bulk orders</p>
           <h2 id="bulk-heading" className="mt-3 font-serif text-4xl font-semibold leading-[1.06] tracking-tight text-[#F8F3E8] sm:text-5xl">
             Need larger
@@ -101,10 +105,11 @@ export default function BulkEnquiry() {
               </li>
             ))}
           </ul>
+          </Reveal>
         </div>
 
         {/* Form */}
-        <div className="lg:col-span-7">
+        <Reveal variant="right" delay={120} className="lg:col-span-7">
           {status === "sent" ? (
             <div role="status" className="rounded-2xl border-t-4 border-[#F5B900] bg-white p-8 text-center text-[#123B22] shadow-xl shadow-black/30 sm:p-12">
               <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[#70A82C]/15 text-[#3f6a12]">
@@ -245,7 +250,7 @@ export default function BulkEnquiry() {
               </div>
             </form>
           )}
-        </div>
+        </Reveal>
       </div>
     </section>
   );

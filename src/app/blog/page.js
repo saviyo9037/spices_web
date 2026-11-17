@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { blogPosts } from "@/data/blogPosts";
 import { Clock, ArrowRight, ChevronRight } from "lucide-react";
-import PageHero from "@/components/PageHero";
+import TornEdge from "@/components/TornEdge";
+import MountainDivider from "@/components/MountainDivider";
 
 export const metadata = {
   title: "Recipes & Spice Journal",
@@ -23,18 +24,37 @@ export default function BlogPage() {
 
   return (
     <div className="bg-white text-forest">
-      <PageHero
-        crumb="Recipes"
-        eyebrow="The Spice Journal"
-        title="Recipes, guides"
-        accent="& spice stories"
-        text="Learn how to store, toast and blend spices, and cook with the spices of Idukki."
-        image="/images/journal/06-journal-books-spices.jpg"
-        imageAlt="An open recipe book surrounded by spices"
-        circleImage="/gallary/web-bay-leaves.jpg"
-        watermark="Journal"
-        className="pb-24 sm:pb-28"
-      />
+      <section aria-labelledby="journal-heading" className="relative isolate overflow-hidden bg-[#FAF7EF] text-[#123B22]">
+        <div className="mx-auto max-w-7xl px-4 pb-24 pt-8 sm:px-6 sm:pb-28 sm:pt-12 lg:px-8">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-[#123B22]/75">
+            <Link href="/" className="hover:text-[#B07D22]">Home</Link>
+            <ChevronRight className="h-3 w-3" aria-hidden="true" />
+            <span className="font-semibold text-[#123B22]">Recipes</span>
+          </nav>
+
+          {/* magazine masthead */}
+          <div className="mt-8 border-y-2 border-[#123B22] py-6 text-center sm:py-8">
+            <p className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#3f6a12]">The Spice Journal</p>
+            <h1 id="journal-heading" className="mt-3 font-serif text-5xl font-semibold leading-[1.02] tracking-tight sm:text-7xl lg:text-8xl">
+              Recipes, guides
+              <span className="ml-3 font-script text-[1.1em] font-bold text-[#B87919]">&amp; spice stories</span>
+            </h1>
+          </div>
+          <div className="flex flex-col items-center justify-between gap-3 border-b border-[#123B22]/25 py-3 text-sm sm:flex-row">
+            <p className="text-[#123B22]/85">Learn how to store, toast and blend spices, and cook with the spices of Idukki.</p>
+            <ul className="flex flex-wrap justify-center gap-2" aria-label="Jump to a guide">
+              {guides.map((g) => (
+                <li key={g.title}>
+                  <Link href={g.href} className="inline-flex min-h-[36px] items-center rounded-full border border-[#123B22]/25 px-3.5 text-xs font-semibold transition hover:border-[#123B22] hover:bg-[#123B22] hover:text-white">
+                    {g.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <TornEdge position="bottom" fill="#FFFFFF" seed={9} className="z-20 h-[56px] sm:h-[72px]" />
+      </section>
 
       <div className="relative z-10 mx-auto -mt-14 max-w-7xl px-4 sm:px-6 lg:px-8">
         {featured && (
@@ -111,6 +131,30 @@ export default function BlogPage() {
             </li>
           ))}
         </ul>
+      </section>
+
+      {/* ── Closing Mountain Banner to Footer ── */}
+      <section className="relative isolate overflow-hidden bg-night py-16 text-white sm:py-20">
+        <MountainDivider position="top" fill="#FFFFFF" className="z-20 h-10 sm:h-14 lg:h-16" />
+        <Image src="/images/journal/01-spice-journal-still-life.jpg" alt="" fill loading="lazy" sizes="100vw" className="-z-10 object-cover opacity-25" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-night via-night/85 to-night/60" />
+        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
+          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#F5B900]">Bring recipes to life</p>
+          <h2 className="mt-3 font-serif text-3xl font-bold sm:text-5xl">
+            Cook with authentic <span className="text-gold">Idukki spices</span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-white/80">
+            Every recipe begins with unadulterated freshness. Explore single-origin spices handpicked in Kerala.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link href="/shop" className="inline-flex items-center gap-2 rounded-full bg-gold px-8 py-3.5 text-sm font-bold text-night transition-colors hover:bg-gold-light">
+              Explore the shop <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link href="/spices" className="inline-flex items-center rounded-full border border-white/40 px-8 py-3.5 text-sm font-bold text-white transition-colors hover:border-gold hover:text-gold">
+              Open Spice Finder
+            </Link>
+          </div>
+        </div>
       </section>
     </div>
   );
