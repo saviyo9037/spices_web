@@ -22,10 +22,15 @@ const TORN_PATH = (() => {
 })();
 
 // Hero carousel slides — 4 high-quality spice images
+const HERO_MOBILE = {
+  src: "/images/Condimente.jpg",
+  alt: "Wooden bowls of turmeric, chilli and other spice powders with cinnamon, star anise and cardamom on burlap",
+};
+
 const HERO = {
   src: "/images/Idukki Spices_ Pepper and Aromatic Treasures.png",
   alt: "Hanging green peppercorns and wooden bowls of black pepper, cardamom, turmeric, cinnamon, cloves and red chillies",
-  pos: "object-bottom sm:object-center",
+  pos: "object-center",
 };
 
 export default function HeroSection() {
@@ -57,7 +62,9 @@ export default function HeroSection() {
       aria-labelledby="hero-heading"
       className="relative isolate flex min-h-[640px] items-center overflow-hidden bg-[#062D1B] text-white sm:min-h-[720px] lg:min-h-[800px]"
     >
-      <Image src={HERO.src} alt={HERO.alt} fill sizes="100vw" priority className={`-z-10 object-cover ${HERO.pos}`} />
+      {/* Phones get a portrait photo, larger screens the wide scene */}
+      <Image src={HERO_MOBILE.src} alt={HERO_MOBILE.alt} fill sizes="100vw" priority className="-z-10 object-cover object-bottom sm:hidden" />
+      <Image src={HERO.src} alt={HERO.alt} fill sizes="100vw" priority className={`-z-10 hidden object-cover sm:block ${HERO.pos}`} />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_60%_at_50%_45%,rgba(6,45,27,0.78),rgba(6,45,27,0.55)_60%,rgba(6,45,27,0.85))]" />
 
       <div className="mx-auto w-full max-w-4xl px-5 pb-36 pt-32 text-center sm:px-8 sm:pb-40">
