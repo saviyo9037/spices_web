@@ -9,59 +9,68 @@ const benefits = [
   { icon: MessageCircle, title: "Help when you need it", text: "Questions about an order or a spice? Our contact page has the details." },
 ];
 
-// One rounded green panel: a photo with the heading and action on the left, the four reasons as a clean
-// numbered list on the right. On phones the photo panel sits on top and the list follows.
+// Editorial layout on a cream ground: heading and action on one line, the four reasons as plain columns
+// separated by thin rules (stacked rows on phones), then one wide photograph.
 export default function Benefits() {
   return (
-    <section aria-labelledby="benefits-heading" className="bg-white px-4 py-14 text-[#123B22] sm:px-6 sm:py-24 lg:px-8">
-      <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[1.75rem] bg-[#123B22] text-white shadow-[0_30px_60px_-30px_rgba(9,37,21,0.6)] sm:rounded-[2.25rem] lg:grid-cols-2">
-        {/* Left: photo, heading, action */}
-        <div className="relative isolate flex min-h-[22rem] flex-col justify-end overflow-hidden p-6 sm:min-h-[26rem] sm:p-10 lg:min-h-[34rem] lg:p-12">
-          <Image
-            src="/images/peppercorn-spoon.webp"
-            alt=""
-            fill
-            loading="lazy"
-            sizes="(min-width: 1024px) 640px, 100vw"
-            className="-z-10 object-cover object-[70%_50%]"
-          />
-          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-[#092515] via-[#092515]/65 to-[#092515]/25" />
-
-          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#F5B900]">Why Idukki Spices</p>
-          <h2 id="benefits-heading" className="mt-3 font-serif text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl">
-            Shopping made
-            <span className="ml-2 font-script text-[1.25em] font-bold text-[#F5B900]">simple</span>
-          </h2>
-          <p className="mt-4 max-w-md text-base leading-relaxed text-white/85 sm:text-lg">
-            From our hills to your home, a smooth and trusted shopping experience.
-          </p>
-          <div className="mt-7">
-            <Link
-              href="/contact"
-              className="group inline-flex min-h-[48px] items-center gap-2.5 rounded-full bg-[#F5B900] px-8 text-sm font-extrabold text-[#062D1B] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#ffcb2e] active:scale-95"
-            >
-              Contact us
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-            </Link>
-            <p className="mt-3 text-xs text-white/75 sm:text-sm">For shipping, returns and payment questions.</p>
+    <section aria-labelledby="benefits-heading" className="bg-[#FAF7EF] px-4 py-16 text-[#123B22] sm:px-6 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        {/* Heading row */}
+        <div className="grid items-end gap-6 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-7">
+            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#3f6a12]">Why Idukki Spices</p>
+            <h2 id="benefits-heading" className="mt-3 font-serif text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
+              Shopping made
+              <span className="ml-3 font-script text-[1.25em] font-bold text-[#B87919]">simple</span>
+            </h2>
+          </div>
+          <div className="lg:col-span-5">
+            <p className="max-w-md text-base leading-relaxed text-[#123B22]/85 sm:text-lg">
+              From our hills to your home, a smooth and trusted shopping experience.
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+              <Link
+                href="/contact"
+                className="group inline-flex min-h-[48px] items-center gap-2.5 rounded-full bg-[#123B22] px-7 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1c5336] active:scale-95"
+              >
+                Contact us
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </Link>
+              <span className="text-xs text-[#123B22]/75 sm:text-sm">For shipping, returns and payment questions.</span>
+            </div>
           </div>
         </div>
 
-        {/* Right: the four reasons */}
-        <ol className="flex flex-col justify-center divide-y divide-white/10 p-6 sm:p-10 lg:p-12">
+        {/* The four reasons */}
+        <ol className="mt-12 grid border-y border-[#123B22]/15 sm:mt-16 sm:grid-cols-2 lg:grid-cols-4">
           {benefits.map(({ icon: Icon, title, text }, i) => (
-            <li key={title} className="flex items-start gap-4 py-5 first:pt-0 last:pb-0 sm:gap-5 sm:py-6">
-              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-[#F5B900]/50 text-[#F5B900] sm:h-14 sm:w-14">
-                <Icon className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.6} aria-hidden="true" />
+            <li
+              key={title}
+              className="flex gap-4 border-b border-[#123B22]/15 py-6 last:border-b-0 sm:flex-col sm:gap-5 sm:px-6 sm:py-8 sm:[&:nth-child(2n)]:border-l lg:border-b-0 lg:first:pl-0 lg:[&:not(:first-child)]:border-l"
+            >
+              <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#F5B900] text-[#062D1B]">
+                <Icon className="h-6 w-6" strokeWidth={1.7} aria-hidden="true" />
               </span>
               <div className="min-w-0">
-                <p className="text-xs font-bold tabular-nums tracking-[0.2em] text-[#F5B900]">0{i + 1}</p>
+                <p className="text-xs font-bold tabular-nums tracking-[0.2em] text-[#B87919]">0{i + 1}</p>
                 <h3 className="mt-1 font-serif text-xl font-semibold leading-snug sm:text-2xl">{title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-white/75 sm:text-base">{text}</p>
+                <p className="mt-2 text-sm leading-relaxed text-[#123B22]/80 sm:text-base">{text}</p>
               </div>
             </li>
           ))}
         </ol>
+
+        {/* Wide photograph */}
+        <div className="relative mt-10 aspect-[4/3] overflow-hidden rounded-[1.5rem] sm:mt-14 sm:aspect-[21/9] sm:rounded-[2.25rem]">
+          <Image
+            src="/images/Idukki Spices_ Pepper and Aromatic Treasures.png"
+            alt="Wooden bowls of black pepper, cardamom and turmeric with cinnamon, cloves and red chillies"
+            fill
+            loading="lazy"
+            sizes="(min-width: 1280px) 1216px, 100vw"
+            className="object-cover object-[60%_85%]"
+          />
+        </div>
       </div>
     </section>
   );
